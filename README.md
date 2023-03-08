@@ -23,10 +23,10 @@ Gotową planszę można od razu przetestować oraz przejść.
 
 
 ### Instrukcje sterujące
-* ```if<warunek>(wyrażenia)``` - instrukcja warunkowa, wykona się, jeżeli podany warunek jest prawdziwy
-* ```while<warunek>(wyrażenia)``` - pętla wykonuje się tak długo, dopóki podany warunek jest prawdziwy
-* ```for<liczba>(wyrażenia)``` - pętla wykonująca się podaną liczbę razy (naturalna liczba większa od 0)
-* ```fun nazwa(ciało)``` - funkcja o podanej nazwie
+* ```if(warunek)<wyrażenia>``` - instrukcja warunkowa, wykona się, jeżeli podany warunek jest prawdziwy
+* ```while(warunek)<wyrażenia>``` - pętla wykonuje się tak długo, dopóki podany warunek jest prawdziwy
+* ```for(int)<wyrażenia>``` - pętla wykonująca się podaną liczbę razy (naturalna liczba większa od 0)
+* ```fun nazwa<ciało>``` - funkcja o podanej nazwie
 * ```nazwa``` - wywołanie funckji o podanej nazwie
 
 ### Możliwe warunki
@@ -45,7 +45,7 @@ Gotową planszę można od razu przetestować oraz przejść.
 ## Plik z mapą
 Plik z mapą powinien zawierać x linii tesktu. W kazdej linii powinno być <size> liczb odzielonych przecinkiem. Liczby przedstawiają odpwiednie pola mapy, według następującej listy (TODO):
 ```
-- = 0
+ziemia = 0
 - = 1
 - = 2
 - = 3
