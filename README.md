@@ -1,6 +1,6 @@
 # NAZWA
 ## Ogólne informacje
-Język {INSERT_NAME_HERE} pozwala programiście na utworzenie prostych plansz do gier, razem z przeszkodami oraz programowalnymi przeciwnikami.
+Język {INSERT_NAME_HERE} pozwala programiście na utworzenie prostych plansz do gier, razem z przeszkodami oraz programowalnymi przeciwnikami. Motywem gry jest ucieczka z więzienia.
 
 Język ma na celu w przyjemny sposób wprowadzić użytkowników w tajniki programowania, jednocześnie pozwalająć bardziej kreatywnym twórcom wykazać się w tworzeniu poziomów.
 
@@ -14,16 +14,13 @@ Gotową planszę można od razu przetestować oraz przejść.
 * ``` player ```- pozycja startowa gracza
 
 ### Obiekty
-* ``` wall ```- pozycja bramy
-* ``` enemy ```- pozycja początkowa strażnika
-* ``` trap ```- pozycja pułapki
-* ``` key ```- pozycja klucza do bramy
-* ``` gate ```- pozycja bramy
-* ``` shovel ```- pozycja łopaty
+* ``` wall ```- obiekt bramy
+* ``` guard ```- obiekt strażnika
+* ``` trap ```- obiekt pułapki
+* ``` key ```- obiekt klucza do bramy
+* ``` gate ```- obeiekt bramy
+* ``` shovel ```- obiekt łopaty
 
-
-### Interakcja
-* ``` wasd ```- przechodzi o jedno pole
 
 ### Instrukcje sterujące
 * ```if<warunek>(wyrażenia)``` - instrukcja warunkowa, wykona się, jeżeli podany warunek jest prawdziwy
@@ -34,8 +31,9 @@ Gotową planszę można od razu przetestować oraz przejść.
 
 ### Możliwe warunki
 * ```WALL``` - true jeśli przed postacią jest ściana
-* ```ENEMY``` - true jeśli przed postacią jest wróg
+* ```GUARD``` - true jeśli przed postacią jest wróg
 * ```TRAP``` -  true jeśli przed postacią jest pułapka
+* ``` GATE ```- true jeśli brama wymaga klucza
 * ```NO``` - negacja
 * ```TRUE``` - zawsze zwraca true
 * ```FALSE``` - zawsze zwraca false
@@ -45,7 +43,7 @@ Gotową planszę można od razu przetestować oraz przejść.
 
 
 ## Plik z mapą
-Plik z mapą powinien zawierać 15 linii tesktu. W kazdej linii powinno być <size> liczb odzielonych przecinkiem. Liczby przedstawiają odpwiednie pola mapy, według następującej listy:
+Plik z mapą powinien zawierać x linii tesktu. W kazdej linii powinno być <size> liczb odzielonych przecinkiem. Liczby przedstawiają odpwiednie pola mapy, według następującej listy (TODO):
 ```
 - = 0
 - = 1
@@ -72,3 +70,7 @@ Przykładowy plik z mapą:
 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2
 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
 ```
+
+
+## Interakcja
+* ``` wasd ```- przechodzi o jedno pole
