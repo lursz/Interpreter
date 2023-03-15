@@ -157,7 +157,7 @@ GUARD1
 
 
 ### Gramatyka
-```
+```g4
 kod ::= MAP deklaracja wyrazenie
 deklaracja ::= liczba , liczba
 liczba ::= ['0'-'9']+
