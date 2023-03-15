@@ -6,6 +6,13 @@ Język ma na celu w przyjemny sposób wprowadzić użytkowników w tajniki progr
 
 Gotową planszę można od razu przetestować oraz przejść.
 
+## Wymagania
+Do poprawnego działania wymagane są:
+### ```antlr4```
+* ```$ python3 -m pip install -U antlr4-python3-runtime```
+### ```numpy```
+* ```$ python3 -m pip install -U numpy --user```
+
 
 ## Składnia
 
