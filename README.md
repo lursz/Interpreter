@@ -172,7 +172,7 @@ tekst ::= ['A'-'Z''a'-'z']*
 straznik ::= { instrukcja_straznika }
 instrukcja_straznika ::= instrukcja_straznika instrukcja_straznika | instrukcja | STEP | DIRECTION liczba | TURNLEFT | TURNRIGHT
 ```
-### Kod w ANTLR4
+### Gramatyka w ANTLR4
 ```g4
 grammar Escapists;
 
@@ -189,15 +189,18 @@ object : 'PLAYER' declaration
        | 'WALL' declaration
        | 'GUARD' declaration_guard guard
        | 'GUARD' declaration_guard expression guard
-       ;
+        ;
 
 declaration_guard : number ',' number ',' number ;
 
-instruction : 'for' '(' condition ')' '{' expression '}'
-            | 'fun' text '{' expression '}'
-            | 'random' '(' declaration ')'
-            | 'while' '(' condition ')' '{' expression '}'
-            | 'if' '(' condition ')' '{' expression '}' ;
+instruction : block_scope
+            | 'for' '(' condition ')' block_scope
+            | 'fun' text block_scope
+            | 'random' '(' declaration ')' block_scope
+            | 'while' '(' condition ')' block_scope
+            | 'if' '(' condition ')' block_scope ;
+
+block_scope : '{' expression* '}' ;
 
 condition : logic_conditions
           | conditions
@@ -216,9 +219,10 @@ conditions : 'WALL'
 
 text : ( 'A'..'Z' | 'a'..'z' )* ;
 
-guard : '{' instruction_guard '}' ;
+guard : '{' instruction_guard* '}' ;
 
-instruction_guard : instruction_guard instruction_guard
+instruction_guard : block_scope
+                  | instruction_guard instruction_guard
                   | instruction
                   | 'STEP'
                   | 'DIRECTION' number
