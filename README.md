@@ -24,10 +24,10 @@ Gotową planszę można od razu przetestować oraz przejść.
 
 
 ### Instrukcje sterujące
-* ```if(warunek)<wyrażenia>``` - instrukcja warunkowa, wykona się, jeżeli podany warunek jest prawdziwy
-* ```while(warunek)<wyrażenia>``` - pętla wykonuje się tak długo, dopóki podany warunek jest prawdziwy
-* ```for(int)<wyrażenia>``` - pętla wykonująca się podaną liczbę razy (naturalna liczba większa od 0)
-* ```fun nazwa<ciało>``` - funkcja o podanej nazwie
+* ```if(warunek){wyrażenia}``` - instrukcja warunkowa, wykona się, jeżeli podany warunek jest prawdziwy
+* ```while(warunek){wyrażenia}``` - pętla wykonuje się tak długo, dopóki podany warunek jest prawdziwy
+* ```for(int){wyrażenia}``` - pętla wykonująca się podaną liczbę razy (naturalna liczba większa od 0)
+* ```fun nazwa{ciało}``` - funkcja o podanej nazwie
 * ```nazwa``` - wywołanie funkcji o podanej nazwie
 
 ### Sterowanie strażnikiem
