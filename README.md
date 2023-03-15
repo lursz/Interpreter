@@ -176,7 +176,7 @@ instrukcja_straznika ::= instrukcja_straznika instrukcja_straznika | instrukcja 
 ```g4
 grammar Escapists;
 
-map : declaration expression ;
+start : map ;
 
 declaration : number ',' number ;
 
