@@ -136,6 +136,7 @@ GUARD0
 }
 # strażnik będzie się przemieszczał po każdym ruchu gracza.
 
+# losowo poruszający się strażnik
 GUARD1 
 {
     DIRECTION = random(0, 3)
