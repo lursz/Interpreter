@@ -29,6 +29,7 @@ Gotową planszę można od razu przetestować oraz przejść.
 * ```for(int){wyrażenia}``` - pętla wykonująca się podaną liczbę razy (naturalna liczba większa od 0)
 * ```fun nazwa{ciało}``` - funkcja o podanej nazwie
 * ```nazwa``` - wywołanie funkcji o podanej nazwie
+* ```random(start, end)``` - zwraca pseudorandomowa liczbę z podanego zakresu (włącznie)
 
 ### Sterowanie strażnikiem
 * ```DIRECTION``` - 0 oznacza do góry, 1 w prawo, 2 w dół, 3 w lewo, inne wartości są podmieniane na resztę z dzielenia przez 4
@@ -133,4 +134,15 @@ GUARD0
 
     # instrukcje te będą automatycznie zapętlane
 }
+# strażnik będzie się przemieszczał po każdym ruchu gracza.
+
+GUARD1 
+{
+    DIRECTION = random(0, 3)
+    if (NO WALL AND NO GATE)
+    {
+      STEP
+    }
+}
+
 ```
