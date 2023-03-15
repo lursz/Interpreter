@@ -172,3 +172,61 @@ tekst ::= ['A'-'Z''a'-'z']*
 straznik ::= { instrukcja_straznika }
 instrukcja_straznika ::= instrukcja_straznika instrukcja_straznika | instrukcja | STEP | DIRECTION liczba | TURNLEFT | TURNRIGHT
 ```
+### Kod w ANTLR4
+```g4
+grammar Esc;
+
+map : declaration expression ;
+
+declaration : number ',' number ;
+
+expression : object
+           | instruction
+           | 'null' ;
+
+object : 'PLAYER' declaration
+       | 'EXIT' declaration
+       | 'WALL' declaration
+       | 'GUARD' declaration_guard guard
+       | 'GUARD' declaration_guard expression guard
+       | /* and so on for other objects */ ;
+
+declaration_guard : number ',' number ',' number ;
+
+instruction : 'for' '(' condition ')' '{' expression '}'
+            | 'fun' text '{' expression '}'
+            | 'random' '(' declaration ')'
+            | 'while' '(' condition ')' '{' expression '}'
+            | 'if' '(' condition ')' '{' expression '}' ;
+
+condition : logic_conditions
+          | conditions
+          | logic ;
+
+logic_conditions : condition 'AND' condition
+                 | 'NO' condition
+                 | 'TRUE'
+                 | 'FALSE'
+                 | condition 'OR' condition ;
+
+conditions : 'WALL'
+           | 'GUARD'
+           | 'TRAP'
+           | 'GATE' ;
+
+text : ( 'A'..'Z' | 'a'..'z' )* ;
+
+guard : '{' instruction_guard '}' ;
+
+instruction_guard : instruction_guard instruction_guard
+                  | instruction
+                  | 'STEP'
+                  | 'DIRECTION' number
+                  | 'TURNLEFT'
+                  | 'TURNRIGHT' ;
+
+number : DIGIT+ ;
+fragment DIGIT : [0-9] ;
+
+WS : [ \t\r\n] -> skip ;
+```
