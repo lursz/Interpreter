@@ -194,9 +194,9 @@ object : 'PLAYER' declaration
 declaration_guard : number ',' number ',' number ;
 
 instruction : block_scope
-            | 'for' '(' condition ')' block_scope
             | 'fun' text block_scope
-            | 'random' '(' declaration ')' block_scope
+            | 'random' '(' declaration ')' 
+            | 'for' '(' condition ')' block_scope
             | 'while' '(' condition ')' block_scope
             | 'if' '(' condition ')' block_scope ;
 
