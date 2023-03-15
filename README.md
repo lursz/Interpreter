@@ -95,14 +95,12 @@ WALL = 5,5
 WALL = 6,5
 
 # można ułatwić sobie ustawianie dużej ilości obiektów używając pętli
-for i in 0,9:
+
+# kod poniżej zrobi ściany dookoła mapy
+for i in (0,9)
 {
     WALL = 0,i
     WALL = 9,i
-}
-    
-for i in 1,8:
-{
     WALL = i,0
     WALL = i,9
 }
