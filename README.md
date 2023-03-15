@@ -154,3 +154,21 @@ GUARD1
 }
 
 ```
+
+
+### Gramatyka
+```
+kod ::= MAP deklaracja wyrazenie
+deklaracja ::= liczba , liczba
+liczba ::= ['0'-'9']+
+wyrazenie ::= obiekt | instrukcja | null
+obiekt ::= PLAYER deklaracja | EXIT deklaracja | WALL deklaracja | GUARD deklaracja_straznika straznik | GUARD deklaracja_straznika wyrazenie straznik | itd.
+deklaracja_straznika ::= liczba , liczba , liczba
+instrukcja ::= for (warunek) {wyrazenie}| fun tekst {wyrazenie}| random (deklaracja) | while (warunek) {wyrazenie}| if (warunek) {wyrazenie}
+warunek ::= logika warunki | warunki | logika
+logika ::= warunek AND | NO warunek | TRUE | FALSE | warunek OR
+warunki ::= WALL | GUARD | TRAP | GATE
+tekst ::= ['A'-'Z''a'-'z']*
+straznik ::= { instrukcja_straznika }
+instrukcja_straznika ::= instrukcja_straznika instrukcja_straznika | instrukcja | STEP | DIRECTION liczba | TURNLEFT | TURNRIGHT
+```
