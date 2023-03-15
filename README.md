@@ -174,7 +174,7 @@ instrukcja_straznika ::= instrukcja_straznika instrukcja_straznika | instrukcja 
 ```
 ### Kod w ANTLR4
 ```g4
-grammar Esc;
+grammar Escapists;
 
 map : declaration expression ;
 
@@ -189,7 +189,7 @@ object : 'PLAYER' declaration
        | 'WALL' declaration
        | 'GUARD' declaration_guard guard
        | 'GUARD' declaration_guard expression guard
-       | /* and so on for other objects */ ;
+       ;
 
 declaration_guard : number ',' number ',' number ;
 
