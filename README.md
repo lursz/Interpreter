@@ -114,7 +114,7 @@ instrukcja_straznika ::= instrukcja_straznika instrukcja_straznika | instrukcja 
 </br>
 
 
-```g4
+```
 grammar Escapists;
 
 start : map ;
@@ -241,7 +241,7 @@ warunek: 'IFWALL'
         | warunek 'OR' warunek
         | '(' warunek ')';
 
-COMMENT: '//' ~[\r\n]* -> skip;
+COMMENT: '#' ~[\r\n]* -> skip;
 ID: [a-zA-Z][a-zA-Z0-9]*;
 INT: [1-9][0-9]* | '0' | 'RANDOM' '(' INT ',' INT ')';
 INTGUARD: [1-9][0-9]* | '0';
