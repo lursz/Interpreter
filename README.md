@@ -86,7 +86,96 @@ Przykładowy plik z mapą:
 
 
 ### Gramatyka
+<details>
+<summary>Gramatyka bezkontekstowa</summary>
+</br>
 
+```g4
+kod ::= MAP deklaracja wyrazenie
+deklaracja ::= liczba , liczba
+liczba ::= ['0'-'9']+
+wyrazenie ::= obiekt | instrukcja | null
+obiekt ::= PLAYER deklaracja | EXIT deklaracja | WALL deklaracja | GUARD deklaracja_straznika straznik | GUARD deklaracja_straznika wyrazenie straznik | itd.
+deklaracja_straznika ::= liczba , liczba , liczba
+instrukcja ::= for (warunek) {wyrazenie}| fun tekst {wyrazenie}| random (deklaracja) | while (warunek) {wyrazenie}| if (warunek) {wyrazenie}
+warunek ::= logika warunki | warunki | logika
+logika ::= warunek AND | NO warunek | TRUE | FALSE | warunek OR
+warunki ::= WALL | GUARD | TRAP | GATE
+tekst ::= ['A'-'Z''a'-'z']*
+straznik ::= { instrukcja_straznika }
+instrukcja_straznika ::= instrukcja_straznika instrukcja_straznika | instrukcja | STEP | DIRECTION liczba | TURNLEFT | TURNRIGHT
+```
+</details>
+
+
+
+<details>
+<summary>Gramatyka w ANTLR4</summary>
+</br>
+
+
+```g4
+grammar Escapists;
+
+start : map ;
+
+declaration : number ',' number ;
+
+expression : object
+           | instruction
+           | 'null' ;
+
+object : 'PLAYER' declaration
+       | 'EXIT' declaration
+       | 'WALL' declaration
+       | 'GUARD' declaration_guard guard
+       | 'GUARD' declaration_guard expression guard
+        ;
+
+declaration_guard : number ',' number ',' number ;
+
+instruction : block_scope
+            | 'fun' text block_scope
+            | 'random' '(' declaration ')' 
+            | 'for' '(' condition ')' block_scope
+            | 'while' '(' condition ')' block_scope
+            | 'if' '(' condition ')' block_scope ;
+
+block_scope : '{' expression* '}' ;
+
+condition : logic_conditions
+          | conditions
+          | logic ;
+
+logic_conditions : condition 'AND' condition
+                 | 'NO' condition
+                 | 'TRUE'
+                 | 'FALSE'
+                 | condition 'OR' condition ;
+
+conditions : 'WALL'
+           | 'GUARD'
+           | 'TRAP'
+           | 'GATE' ;
+
+text : ( 'A'..'Z' | 'a'..'z' )* ;
+
+guard : '{' instruction_guard* '}' ;
+
+instruction_guard : block_scope
+                  | instruction_guard instruction_guard
+                  | instruction
+                  | 'STEP'
+                  | 'DIRECTION' number
+                  | 'TURNLEFT'
+                  | 'TURNRIGHT' ;
+
+number : DIGIT+ ;
+fragment DIGIT : [0-9] ;
+
+WS : [ \t\r\n] -> skip ;
+```
+</details>
 
 
 <details>
@@ -105,12 +194,12 @@ kod:  obiekty
     | deklaracja_funkcji
     | COMMENT;
 
-obiekty:  'WALL' '=' (INT | ID) ',' (INT | ID)
-        | 'TRAP' '=' (INT | ID) ',' (INT | ID)
+obiekty:  'WALL' '=' (INT | ID | RAND) ',' (INT | ID | RAND)
+        | 'TRAP' '=' (INT | ID | RAND) ',' (INT | ID | RAND)
         | 'KEY' '=' (INT | ID) ',' (INT | ID)
         | 'GATE' '=' (INT | ID) ',' (INT | ID)
-        | 'GUARD' '=' (INT | ID) ',' (INT | ID) ',' INTGUARD kod*
-        'GUARD' INTGUARD '{' kod_straznika* '}';
+        | 'GUARD' '=' (INT | ID) ',' (INT | ID) ',' INT kod*
+        'GUARD' INT '{' kod_straznika* '}';
 
 instrukcje_warunkowe: 'IF' '(' warunek ')' '{' wyrazenia* '}'
                     | 'WHILE' '(' warunek ')' '{' wyrazenia* '}'
@@ -154,8 +243,8 @@ warunek: 'IFWALL'
 
 COMMENT: '#' ~[\r\n]* -> skip;
 ID: [a-zA-Z][a-zA-Z0-9]*;
-INT: [1-9][0-9]* | '0' | 'RANDOM' '(' INT ',' INT ')';
-INTGUARD: [1-9][0-9]* | '0';
+RAND: 'RANDOM' '(' INT ',' INT ')';
+INT: [1-9][0-9]* | '0';
 WS: [ \t\n\r]+ -> skip;
 ```
 </details>
@@ -169,11 +258,13 @@ WS: [ \t\n\r]+ -> skip;
 
 ```
 # na początku określamy wielkość mapy, podając najpierw współrzędną X, a potem Y
-MAP = 10,10
+MAP=5,5
 
-# następnie dodajemy inne obiekty
+# następnie dodajemy gracza i wyjście
 PLAYER = 1,1
+EXIT=9,5
 
+# następnie inne obiekty
 WALL = 1,5
 WALL = 2,5
 WALL = 3,5
@@ -194,8 +285,6 @@ FOR(i IN 5)
 
 KEY = 2,8
 
-# w tym miejscu znajduje się już ściana, ale program nadpisze ten obiekt
-EXIT = 9,5
 GATE = 8,5
 
 TRAP = 5,5
@@ -205,22 +294,22 @@ TRAP = 3,4
 GUARD = 4,4,0
 
 # aby zadeklarować poruszanie się strażnika trzeba najpierw napisać słowo klucz GUARD, następnie id strażnika
-GUARD0 
+GUARD 0 
 {
     # wykonaj dwa kroki do przodu, następnie zrób obrót w prawo
     STEP
     STEP
     TURNRIGHT
-
+    
     # jeżeli przed strażnikiem nie ma ściany, a brama została otwarta, zrób dodatkowy krok
-    IF(NO WALL AND NO GATE)
+    IF(NO IFWALL AND NO IFGATE)
     {
         STEP
     }
-
+    
     # instrukcje te będą automatycznie zapętlane
 }
-# strażnik będzie się przemieszczał po każdym ruchu gracza.
+# strażnik będzie się przemieszczał po każdym ruchu gracza
 
 # losowo poruszający się strażnik
 GUARD1 
@@ -231,7 +320,6 @@ GUARD1
       STEP
     }
 }
-
 ```
 </details>
 
