@@ -87,7 +87,11 @@ Przykładowy plik z mapą:
 ## Interakcja
 * ``` wasd ```- przechodzi o jedno pole
 
-## Przykład kodu
+
+<details>
+<summary>## Przykład kodu</summary>
+</br>
+
 ```
 # na początku określamy wielkość mapy, podając najpierw współrzędną X, a potem Y
 MAP = 10,10
@@ -154,6 +158,12 @@ GUARD1
 }
 
 ```
+</details>
+
+
+
+
+
 
 
 ### Gramatyka
