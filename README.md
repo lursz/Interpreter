@@ -27,7 +27,6 @@ Do poprawnego działania wymagane są:
 * ``` trap ``` - obiekt pułapki
 * ``` key ``` - obiekt klucza do bramy
 * ``` gate ``` - obiekt bramy
-* ``` shovel ``` - obiekt łopaty
 
 
 ### Instrukcje sterujące
