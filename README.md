@@ -87,66 +87,6 @@ Przykładowy plik z mapą:
 
 ### Gramatyka
 <details>
-<summary>ANTLR4</summary>
-</br>
-
-```css
-grammar JailBreakLang;
-
-mapa: 'MAP' '-' 'wielkość' 'mapy' INT
-    | 'PLAYER' '-' 'pozycja' 'startowa' 'gracza' INT ',' INT
-    | 'EXIT' '-' 'pozycja' 'wyjścia' INT ',' INT
-    | obiekty
-    | instrukcje_sterujace
-    | sterowanie_straznikiem;
-
-obiekty: 'WALL' '-' 'obiekt' 'bramy'
-        | 'GUARD' '-' 'obiekt' 'strażnika'
-        | 'TRAP' '-' 'obiekt' 'pułapki'
-        | 'KEY' '-' 'obiekt' 'klucza' 'do' 'bramy'
-        | 'GATE' '-' 'obiekt' 'bramy';
-
-instrukcje_sterujace: 'IF' '(' warunek ')' '{' wyrazenia '}'
-                    | 'WHILE' '(' warunek ')' '{' wyrazenia '}'
-                    | 'FOR' '(' 'int' ')' '{' wyrazenia '}'
-                    | 'FUN' ID '{' wyrazenia '}'
-                    | ID;
-
-sterowanie_straznikiem: 'DIRECTION'
-                      | 'TURNLEFT'
-                      | 'TURNRIGHT'
-                      | 'STEP';
-
-warunek: 'IFWALL'
-        | 'IFGUARD'
-        | 'IFTRAP'
-        | 'IFGATE'
-        | 'NO' warunek
-        | 'TRUE'
-        | 'FALSE'
-        | warunek 'AND' warunek
-        | warunek 'OR' warunek
-        | '(' warunek ')';
-
-wyrazenia: wyrazenie
-          | wyrazenia wyrazenie;
-
-wyrazenie: warunek
-          | 'RANDOM' '(' INT ',' INT ')';
-
-ID: [a-zA-Z][a-zA-Z0-9]*;
-INT: [1-9][0-9]* | '0';
-WS: [ \t\n\r]+ -> skip;
-```
-</details>
-
-
-
-
-
-
-
-<details>
 <summary>Gramatyka bezkontekstowa</summary>
 </br>
 
@@ -238,6 +178,77 @@ WS : [ \t\r\n] -> skip ;
 </details>
 
 
+<details>
+<summary>ANTLR4</summary>
+</br> 
+
+```g4
+grammar JailBreakLang;
+
+start: COMMENT* 'MAP' '=' INT ',' INT
+       'PLAYER' '=' INT ',' INT
+       'EXIT' '=' INT ',' INT kod*;
+
+kod:  obiekty
+    | instrukcje_warunkowe
+    | deklaracja_funkcji
+    | COMMENT;
+
+obiekty:  'WALL' '=' (INT | ID) ',' (INT | ID)
+        | 'TRAP' '=' (INT | ID) ',' (INT | ID)
+        | 'KEY' '=' (INT | ID) ',' (INT | ID)
+        | 'GATE' '=' (INT | ID) ',' (INT | ID)
+        | 'GUARD' '=' (INT | ID) ',' (INT | ID) ',' INTGUARD kod*
+        'GUARD' INTGUARD '{' kod_straznika* '}';
+
+instrukcje_warunkowe: 'IF' '(' warunek ')' '{' wyrazenia* '}'
+                    | 'WHILE' '(' warunek ')' '{' wyrazenia* '}'
+                    | 'FOR' '(' ID 'IN' INT ')' '{' wyrazenia* '}'
+                    | ID ('(' ID (',' ID)* ')')*;
+
+deklaracja_funkcji: 'FUN' ID ('(' ID (',' ID)* ')')* '{' wyrazenia* '}';
+
+wyrazenia: obiekty
+         | instrukcje_warunkowe_2;
+
+instrukcje_warunkowe_2: 'IF' '(' warunek ')' '{' wyrazenia* '}'
+            | 'WHILE' '(' warunek ')' '{' wyrazenia* '}'
+            | 'FOR' '(' ID 'IN' INT ')' '{' wyrazenia* '}'
+            | ID ('(' ID (',' ID)* ')')*;   
+
+kod_straznika: instrukcje_warunkowe_3
+             | sterowanie_straznikiem;
+
+instrukcje_warunkowe_3: 'IF' '(' warunek ')' '{' kod_straznika* '}'
+            | 'WHILE' '(' warunek ')' '{' kod_straznika* '}'
+            | 'FOR' '(' ID 'IN' INT ')' '{' kod_straznika* '}'
+            | ID ('(' ID (',' ID)* ')')*;  
+
+sterowanie_straznikiem: 'DIRECTION' '=' (INT | ID)
+                      | 'TURNLEFT'
+                      | 'TURNRIGHT'
+                      | 'STEP';
+
+warunek: 'IFWALL'
+        | 'IFDIRECTION' '=' (INT | ID)
+        | 'IFGUARD'
+        | 'IFTRAP'
+        | 'IFGATE'
+        | 'NO' warunek
+        | 'TRUE'
+        | 'FALSE'
+        | warunek 'AND' warunek
+        | warunek 'OR' warunek
+        | '(' warunek ')';
+
+COMMENT: '//' ~[\r\n]* -> skip;
+ID: [a-zA-Z][a-zA-Z0-9]*;
+INT: [1-9][0-9]* | '0' | 'RANDOM' '(' INT ',' INT ')';
+INTGUARD: [1-9][0-9]* | '0';
+WS: [ \t\n\r]+ -> skip;
+```
+</details>
+
 
 
 ## Przykłady kodu
@@ -262,7 +273,7 @@ WALL = 6,5
 # można ułatwić sobie ustawianie dużej ilości obiektów używając pętli
 
 # kod poniżej zrobi ściany dookoła mapy
-for i in (0,9)
+FOR(i IN 5)
 {
     WALL = 0,i
     WALL = 9,i
@@ -283,7 +294,7 @@ TRAP = 3,4
 GUARD = 4,4,0
 
 # aby zadeklarować poruszanie się strażnika trzeba najpierw napisać słowo klucz GUARD, następnie id strażnika
-GUARD0
+GUARD0 
 {
     # wykonaj dwa kroki do przodu, następnie zrób obrót w prawo
     STEP
@@ -291,7 +302,7 @@ GUARD0
     TURNRIGHT
 
     # jeżeli przed strażnikiem nie ma ściany, a brama została otwarta, zrób dodatkowy krok
-    if(NO WALL AND NO GATE)
+    IF(NO WALL AND NO GATE)
     {
         STEP
     }
@@ -303,8 +314,8 @@ GUARD0
 # losowo poruszający się strażnik
 GUARD1 
 {
-    DIRECTION = random(0, 3)
-    if (NO WALL AND NO GATE)
+    DIRECTION = RANDOM(0, 3)
+    IF (NO WALL AND NO GATE)
     {
       STEP
     }
