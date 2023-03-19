@@ -17,25 +17,25 @@ Do poprawnego działania wymagane są:
 ## Składnia
 
 ### Mapa
-* ``` map ```- wielkość mapy
-* ``` player ```- pozycja startowa gracza
-* ``` exit ``` - pozycja wyjścia
+* ``` MAP ```- wielkość mapy
+* ``` PLAYER ```- pozycja startowa gracza
+* ``` EXIT ``` - pozycja wyjścia
 
 ### Obiekty
-* ``` wall ``` - obiekt bramy
-* ``` guard ``` - obiekt strażnika
-* ``` trap ``` - obiekt pułapki
-* ``` key ``` - obiekt klucza do bramy
-* ``` gate ``` - obiekt bramy
+* ``` WALL ``` - obiekt bramy
+* ``` GUARD ``` - obiekt strażnika
+* ``` TRAP ``` - obiekt pułapki
+* ``` KEY ``` - obiekt klucza do bramy
+* ``` GATE ``` - obiekt bramy
 
 
 ### Instrukcje sterujące
-* ```if(warunek){wyrażenia}``` - instrukcja warunkowa, wykona się, jeżeli podany warunek jest prawdziwy
-* ```while(warunek){wyrażenia}``` - pętla wykonuje się tak długo, dopóki podany warunek jest prawdziwy
-* ```for(int){wyrażenia}``` - pętla wykonująca się podaną liczbę razy (naturalna liczba większa od 0)
-* ```fun nazwa{ciało}``` - funkcja o podanej nazwie
+* ```IF(warunek){wyrażenia}``` - instrukcja warunkowa, wykona się, jeżeli podany warunek jest prawdziwy
+* ```WHILE(warunek){wyrażenia}``` - pętla wykonuje się tak długo, dopóki podany warunek jest prawdziwy
+* ```FOR(int){wyrażenia}``` - pętla wykonująca się podaną liczbę razy (naturalna liczba większa od 0)
+* ```FUN nazwa{ciało}``` - funkcja o podanej nazwie
 * ```nazwa``` - wywołanie funkcji o podanej nazwie
-* ```random(start, end)``` - zwraca pseudorandomowa liczbę z podanego zakresu (włącznie)
+* ```RANDOM(start, end)``` - zwraca pseudorandomowa liczbę z podanego zakresu (włącznie)
 
 ### Sterowanie strażnikiem
 * ```DIRECTION``` - 0 oznacza do góry, 1 w prawo, 2 w dół, 3 w lewo, inne wartości są podmieniane na resztę z dzielenia przez 4
@@ -44,10 +44,10 @@ Do poprawnego działania wymagane są:
 * ```STEP``` - sprawia, że strażnik poruszy się do przodu o jedno pole
 
 ### Możliwe warunki
-* ```WALL``` - true jeśli przed postacią jest ściana
-* ```GUARD``` - true jeśli przed postacią jest wróg
-* ```TRAP``` -  true jeśli przed postacią jest pułapka
-* ```GATE```- true jeśli brama wymaga klucza
+* ```IFWALL``` - true jeśli przed postacią jest ściana
+* ```IFGUARD``` - true jeśli przed postacią jest wróg
+* ```IFTRAP``` -  true jeśli przed postacią jest pułapka
+* ```IFGATE```- true jeśli brama wymaga klucza
 * ```NO``` - negacja
 * ```TRUE``` - zawsze zwraca true
 * ```FALSE``` - zawsze zwraca false
@@ -86,6 +86,66 @@ Przykładowy plik z mapą:
 
 
 ### Gramatyka
+<details>
+<summary>ANTLR4</summary>
+</br>
+
+```css
+grammar JailBreakLang;
+
+mapa: 'MAP' '-' 'wielkość' 'mapy' INT
+    | 'PLAYER' '-' 'pozycja' 'startowa' 'gracza' INT ',' INT
+    | 'EXIT' '-' 'pozycja' 'wyjścia' INT ',' INT
+    | obiekty
+    | instrukcje_sterujace
+    | sterowanie_straznikiem;
+
+obiekty: 'WALL' '-' 'obiekt' 'bramy'
+        | 'GUARD' '-' 'obiekt' 'strażnika'
+        | 'TRAP' '-' 'obiekt' 'pułapki'
+        | 'KEY' '-' 'obiekt' 'klucza' 'do' 'bramy'
+        | 'GATE' '-' 'obiekt' 'bramy';
+
+instrukcje_sterujace: 'IF' '(' warunek ')' '{' wyrazenia '}'
+                    | 'WHILE' '(' warunek ')' '{' wyrazenia '}'
+                    | 'FOR' '(' 'int' ')' '{' wyrazenia '}'
+                    | 'FUN' ID '{' wyrazenia '}'
+                    | ID;
+
+sterowanie_straznikiem: 'DIRECTION'
+                      | 'TURNLEFT'
+                      | 'TURNRIGHT'
+                      | 'STEP';
+
+warunek: 'IFWALL'
+        | 'IFGUARD'
+        | 'IFTRAP'
+        | 'IFGATE'
+        | 'NO' warunek
+        | 'TRUE'
+        | 'FALSE'
+        | warunek 'AND' warunek
+        | warunek 'OR' warunek
+        | '(' warunek ')';
+
+wyrazenia: wyrazenie
+          | wyrazenia wyrazenie;
+
+wyrazenie: warunek
+          | 'RANDOM' '(' INT ',' INT ')';
+
+ID: [a-zA-Z][a-zA-Z0-9]*;
+INT: [1-9][0-9]* | '0';
+WS: [ \t\n\r]+ -> skip;
+```
+</details>
+
+
+
+
+
+
+
 <details>
 <summary>Gramatyka bezkontekstowa</summary>
 </br>
