@@ -11,7 +11,7 @@ Do poprawnego działania wymagane są:
 ### ```antlr4```
 * ```$ python3 -m pip install -U antlr4-python3-runtime```
 ### ```numpy```
-* ```$ python3 -m pip install -U numpy --user```
+* ```$ python3 -m pip install -U numpy```
 
 
 ## Składnia
