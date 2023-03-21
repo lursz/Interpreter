@@ -11,7 +11,7 @@ Do poprawnego działania wymagane są:
 ### ```antlr4```
 * ```$ python3 -m pip install -U antlr4-python3-runtime```
 ### ```numpy```
-* ```$ python3 -m pip install -U numpy```
+* ```$ python3 -m pip install -U numpy --user```
 
 
 ## Składnia
@@ -61,21 +61,21 @@ Gotowa do gry mapa jest wynikiem kompilacji kodu. Odpowiednie symbole będą rep
 ```
 , = ziemia
 # = ściana
-o = gracz
-O = strażnik
+O = gracz
+8 = strażnik
 ! = pułapka
 * = klucz
-$ = brama
-X = wyjście
+G = brama
+E = wyjście
  ```
 Przykładowy plik z mapą:
 ```
 ##########
-#o,,,,,,,#
+#O,,,,,,,#
 #,,,,,,,,#
 #,,,!,,,,#
-#,,,O,,,,#
-#,,,,!,,$X
+#,,,8,,,,#
+#,,,,!,,GE
 ######,,,#
 #,,,,,,,,#
 #*,,,,,,,#
@@ -85,10 +85,7 @@ Przykładowy plik z mapą:
 
 
 
-## Gramatyka
-
-
-
+### Gramatyka
 <details>
 <summary>ANTLR4</summary>
 </br> 
@@ -96,14 +93,13 @@ Przykładowy plik z mapą:
 ```g4
 grammar JailBreakLang;
 
-start: COMMENT* 'MAP' '=' INT ',' INT
+start: 'MAP' '=' INT ',' INT
        'PLAYER' '=' INT ',' INT
        'EXIT' '=' INT ',' INT kod*;
 
 kod:  obiekty
     | instrukcje_warunkowe
-    | deklaracja_funkcji
-    | COMMENT;
+    | deklaracja_funkcji;
 
 obiekty:  'WALL' '=' (INT | ID | RAND) ',' (INT | ID | RAND)
         | 'TRAP' '=' (INT | ID | RAND) ',' (INT | ID | RAND)
@@ -175,7 +171,7 @@ MAP=5,5
 PLAYER = 1,1
 EXIT=9,5
 
-# następnie inne obiekty
+# dopiero potem możemy dodawać inne obiekty
 WALL = 1,5
 WALL = 2,5
 WALL = 3,5
@@ -232,7 +228,13 @@ GUARD1
     }
 }
 ```
+
+### Drzewo wyprowadzenia kodu:
+
+![pobrany plik](https://user-images.githubusercontent.com/92331353/226716062-dc7a5c32-20d7-4dde-8b61-28fca4b69470.svg)
 </details>
+
+
 
 ## Interakcja
 * ``` wasd ```- przechodzi o jedno pole
