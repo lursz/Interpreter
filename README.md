@@ -85,7 +85,7 @@ Przykładowy plik z mapą:
 
 
 
-### Gramatyka
+## Gramatyka
 
 
 
