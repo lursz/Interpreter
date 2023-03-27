@@ -3,6 +3,7 @@
 # Use of this file is governed by the BSD 3-clause license that
 # can be found in the LICENSE.txt file in the project root.
 #
+import unittest
 
 
 #
@@ -12,7 +13,6 @@ from antlr4.Token import Token
 
 
 class InputStream (object):
-    __slots__ = ('name', 'strdata', '_index', 'data', '_size')
 
     def __init__(self, data: str):
         self.name = "<empty>"
@@ -85,3 +85,20 @@ class InputStream (object):
 
     def __str__(self):
         return self.strdata
+
+
+class TestInputStream(unittest.TestCase):
+
+    def testStream(self):
+        stream = InputStream("abcde")
+        self.assertEqual(0, stream.index)
+        self.assertEqual(5, stream.size)
+        self.assertEqual(ord("a"), stream.LA(1))
+        stream.consume()
+        self.assertEqual(1, stream.index)
+        stream.seek(5)
+        self.assertEqual(Token.EOF, stream.LA(1))
+        self.assertEqual("bcd", stream.getText(1, 3))
+        stream.reset()
+        self.assertEqual(0, stream.index)
+

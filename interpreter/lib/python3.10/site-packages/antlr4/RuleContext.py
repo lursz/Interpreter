@@ -33,7 +33,7 @@ RuleContext = None
 Parser = None
 
 class RuleContext(RuleNode):
-    __slots__ = ('parentCtx', 'invokingState')
+
     EMPTY = None
 
     def __init__(self, parent:RuleContext=None, invokingState:int=-1):
@@ -225,3 +225,4 @@ class RuleContext(RuleNode):
 
             buf.write("]")
             return buf.getvalue()
+

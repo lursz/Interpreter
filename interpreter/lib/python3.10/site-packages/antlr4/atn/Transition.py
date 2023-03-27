@@ -26,8 +26,6 @@ ATNState = None
 RuleStartState = None
 
 class Transition (object):
-    __slots__ = ('target','isEpsilon','label')
-
     # constants for serialization
     EPSILON			= 1
     RANGE			= 2
@@ -68,7 +66,6 @@ class Transition (object):
 
 # TODO: make all transitions sets? no, should remove set edges
 class AtomTransition(Transition):
-    __slots__ = ('label_', 'serializationType')
 
     def __init__(self, target:ATNState, label:int):
         super().__init__(target)
@@ -88,7 +85,6 @@ class AtomTransition(Transition):
         return str(self.label_)
 
 class RuleTransition(Transition):
-    __slots__ = ('ruleIndex', 'precedence', 'followState', 'serializationType')
 
     def __init__(self, ruleStart:RuleStartState, ruleIndex:int, precedence:int, followState:ATNState):
         super().__init__(ruleStart)
@@ -103,7 +99,6 @@ class RuleTransition(Transition):
 
 
 class EpsilonTransition(Transition):
-    __slots__ = ('serializationType', 'outermostPrecedenceReturn')
 
     def __init__(self, target, outermostPrecedenceReturn=-1):
         super(EpsilonTransition, self).__init__(target)
@@ -118,7 +113,6 @@ class EpsilonTransition(Transition):
         return "epsilon"
 
 class RangeTransition(Transition):
-    __slots__ = ('serializationType', 'start', 'stop')
 
     def __init__(self, target:ATNState, start:int, stop:int):
         super().__init__(target)
@@ -145,7 +139,6 @@ class AbstractPredicateTransition(Transition):
 
 
 class PredicateTransition(AbstractPredicateTransition):
-    __slots__ = ('serializationType', 'ruleIndex', 'predIndex', 'isCtxDependent')
 
     def __init__(self, target:ATNState, ruleIndex:int, predIndex:int, isCtxDependent:bool):
         super().__init__(target)
@@ -165,7 +158,6 @@ class PredicateTransition(AbstractPredicateTransition):
         return "pred_" + str(self.ruleIndex) + ":" + str(self.predIndex)
 
 class ActionTransition(Transition):
-    __slots__ = ('serializationType', 'ruleIndex', 'actionIndex', 'isCtxDependent')
 
     def __init__(self, target:ATNState, ruleIndex:int, actionIndex:int=-1, isCtxDependent:bool=False):
         super().__init__(target)
@@ -183,7 +175,6 @@ class ActionTransition(Transition):
 
 # A transition containing a set of values.
 class SetTransition(Transition):
-    __slots__ = 'serializationType'
 
     def __init__(self, target:ATNState, set:IntervalSet):
         super().__init__(target)
@@ -216,7 +207,6 @@ class NotSetTransition(SetTransition):
 
 
 class WildcardTransition(Transition):
-    __slots__ = 'serializationType'
 
     def __init__(self, target:ATNState):
         super().__init__(target)
@@ -230,7 +220,6 @@ class WildcardTransition(Transition):
 
 
 class PrecedencePredicateTransition(AbstractPredicateTransition):
-    __slots__ = ('serializationType', 'precedence')
 
     def __init__(self, target:ATNState, precedence:int):
         super().__init__(target)

@@ -10,7 +10,6 @@ from io import StringIO
 
 
 class Token (object):
-    __slots__ = ('source', 'type', 'channel', 'start', 'stop', 'tokenIndex', 'line', 'column', '_text')
 
     INVALID_TYPE = 0
 
@@ -68,6 +67,7 @@ class Token (object):
         return self.source[1]
 
 class CommonToken(Token):
+
 
     # An empty {@link Pair} which is used as the default value of
     # {@link #source} for tokens that do not have a source.

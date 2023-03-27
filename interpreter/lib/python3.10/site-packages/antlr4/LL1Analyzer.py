@@ -14,7 +14,6 @@ from antlr4.atn.Transition import WildcardTransition, NotSetTransition, Abstract
 
 
 class LL1Analyzer (object):
-    __slots__ = 'atn'
 
     #* Special value added to the lookahead sets to indicate that we hit
     #  a predicate during analysis if {@code seeThruPreds==false}.
@@ -132,16 +131,16 @@ class LL1Analyzer (object):
                 return
 
             if ctx != PredictionContext.EMPTY:
-                removed = s.ruleIndex in calledRuleStack
-                try:
-                    calledRuleStack.discard(s.ruleIndex)
-                    # run thru all possible stack tops in ctx
-                    for i in range(0, len(ctx)):
-                        returnState = self.atn.states[ctx.getReturnState(i)]
+                # run thru all possible stack tops in ctx
+                for i in range(0, len(ctx)):
+                    returnState = self.atn.states[ctx.getReturnState(i)]
+                    removed = returnState.ruleIndex in calledRuleStack
+                    try:
+                        calledRuleStack.discard(returnState.ruleIndex)
                         self._LOOK(returnState, stopState, ctx.getParent(i), look, lookBusy, calledRuleStack, seeThruPreds, addEOF)
-                finally:
-                    if removed:
-                        calledRuleStack.add(s.ruleIndex)
+                    finally:
+                        if removed:
+                            calledRuleStack.add(returnState.ruleIndex)
                 return
 
         for t in s.transitions:

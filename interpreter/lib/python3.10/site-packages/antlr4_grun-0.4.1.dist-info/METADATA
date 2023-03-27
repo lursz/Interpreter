@@ -1,0 +1,33 @@
+Metadata-Version: 2.1
+Name: antlr4-grun
+Version: 0.4.1
+Summary: Pure-Python replacement of `org.antlr.v4.gui.TestRig` (aka `grun`)
+Home-page: https://github.com/charmoniumQ/antlr4-python-grun
+License: MIT
+Author: Samuel Grayson
+Author-email: sam@samgrayson.me
+Requires-Python: >=3.7,<4.0
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Dist: antlr4-python3-runtime (>=4.8,<4.9)
+Requires-Dist: typer (>=0.4.0,<0.5.0)
+Project-URL: Repository, https://github.com/charmoniumQ/antlr4-python-grun
+Description-Content-Type: text/x-rst
+
+Pure-Python replacement of the `antlr <https://www.antlr.org/>`__ test
+rig, ``org.antlr.v4.gui.TestRig`` (aka ``grun``).
+
+There are a few places this executable differs in the interest of better
+or more Pythonic design. For example,
+
+-  I use `click <https://click.palletsprojects.com/en/8.0.x/>`__'s
+   conventions for CLI argument parsing, which have a double-dash for
+   long-options, rather than Java's convention, which have a
+   single-dash.
+
+-  I use JSON strings to escape source lexemes. This is more elegant and
+   is easily parsed in whatever next phase of processing exists.
+

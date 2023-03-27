@@ -11,8 +11,6 @@ from antlr4.atn.SemanticContext import SemanticContext
 
 
 class PredPrediction(object):
-    __slots__ = ('alt', 'pred')
-
     def __init__(self, pred:SemanticContext, alt:int):
         self.alt = alt
         self.pred = pred
@@ -45,10 +43,6 @@ class PredPrediction(object):
 #  meaning that state was reached via a different set of rule invocations.</p>
 #/
 class DFAState(object):
-    __slots__ = (
-        'stateNumber', 'configs', 'edges', 'isAcceptState', 'prediction',
-        'lexerActionExecutor', 'requiresFullContext', 'predicates'
-    )
 
     def __init__(self, stateNumber:int=-1, configs:ATNConfigSet=ATNConfigSet()):
         self.stateNumber = stateNumber

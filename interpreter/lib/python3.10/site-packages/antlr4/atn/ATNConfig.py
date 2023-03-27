@@ -21,10 +21,6 @@ from antlr4.atn.SemanticContext import SemanticContext
 ATNConfig = None
 
 class ATNConfig(object):
-    __slots__ = (
-        'state', 'alt', 'context', 'semanticContext', 'reachesIntoOuterContext',
-        'precedenceFilterSuppressed'
-    )
 
     def __init__(self, state:ATNState=None, alt:int=None, context:PredictionContext=None, semantic:SemanticContext=None, config:ATNConfig=None):
         if config is not None:
@@ -114,7 +110,6 @@ class ATNConfig(object):
 LexerATNConfig = None
 
 class LexerATNConfig(ATNConfig):
-    __slots__ = ('lexerActionExecutor', 'passedThroughNonGreedyDecision')
 
     def __init__(self, state:ATNState, alt:int=None, context:PredictionContext=None, semantic:SemanticContext=SemanticContext.NONE,
                  lexerActionExecutor:LexerActionExecutor=None, config:LexerATNConfig=None):

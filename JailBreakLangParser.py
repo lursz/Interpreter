@@ -258,6 +258,12 @@ class JailBreakLangParser ( Parser ):
             if hasattr( listener, "exitStart" ):
                 listener.exitStart(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStart" ):
+                return visitor.visitStart(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -347,6 +353,12 @@ class JailBreakLangParser ( Parser ):
             if hasattr( listener, "exitKod" ):
                 listener.exitKod(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitKod" ):
+                return visitor.visitKod(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -434,6 +446,12 @@ class JailBreakLangParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitObiekty" ):
                 listener.exitObiekty(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitObiekty" ):
+                return visitor.visitObiekty(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -645,6 +663,12 @@ class JailBreakLangParser ( Parser ):
             if hasattr( listener, "exitInstrukcje_warunkowe" ):
                 listener.exitInstrukcje_warunkowe(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInstrukcje_warunkowe" ):
+                return visitor.visitInstrukcje_warunkowe(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -810,6 +834,12 @@ class JailBreakLangParser ( Parser ):
             if hasattr( listener, "exitDeklaracja_funkcji" ):
                 listener.exitDeklaracja_funkcji(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDeklaracja_funkcji" ):
+                return visitor.visitDeklaracja_funkcji(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -899,6 +929,12 @@ class JailBreakLangParser ( Parser ):
             if hasattr( listener, "exitWyrazenia" ):
                 listener.exitWyrazenia(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWyrazenia" ):
+                return visitor.visitWyrazenia(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -969,6 +1005,12 @@ class JailBreakLangParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInstrukcje_warunkowe_2" ):
                 listener.exitInstrukcje_warunkowe_2(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInstrukcje_warunkowe_2" ):
+                return visitor.visitInstrukcje_warunkowe_2(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1130,6 +1172,12 @@ class JailBreakLangParser ( Parser ):
             if hasattr( listener, "exitKod_straznika" ):
                 listener.exitKod_straznika(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitKod_straznika" ):
+                return visitor.visitKod_straznika(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1200,6 +1248,12 @@ class JailBreakLangParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInstrukcje_warunkowe_3" ):
                 listener.exitInstrukcje_warunkowe_3(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInstrukcje_warunkowe_3" ):
+                return visitor.visitInstrukcje_warunkowe_3(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1359,6 +1413,12 @@ class JailBreakLangParser ( Parser ):
             if hasattr( listener, "exitSterowanie_straznikiem" ):
                 listener.exitSterowanie_straznikiem(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSterowanie_straznikiem" ):
+                return visitor.visitSterowanie_straznikiem(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1442,6 +1502,12 @@ class JailBreakLangParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitWarunek" ):
                 listener.exitWarunek(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWarunek" ):
+                return visitor.visitWarunek(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
