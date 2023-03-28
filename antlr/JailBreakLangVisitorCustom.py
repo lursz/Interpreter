@@ -1,128 +1,89 @@
-import sys
-sys.path.append('..')
 from antlr4 import *
-from JailBreakLangParser import JailBreakLangParser
-from JailBreakLangVisitor import JailBreakLangVisitor
-from GameClass import Gameclass;
-
+from antlr.JailBreakLangParser import JailBreakLangParser
+from antlr.JailBreakLangVisitor import JailBreakLangVisitor
+import GameObjects
+import GameLogic
 
 
 class JailBreakLang(JailBreakLangVisitor):
     def __init__(self):
-        self.game = Gameclass()
-
-
+        self.game = GameObjects.GameObjects()
+    
+    # Visit Start
     def visitStart(self, ctx):
         lines = list(ctx.getChildren())
 
         for i in range(len(lines) - 1):
             self.visit(lines[i])
+        
+        GameLogic.Gamelogic(self.game)
 
+    # Visit Code
     def visitCode(self, ctx):
         codes = list(ctx.getChildren())
 
         for i in range(len(codes)):
             self.visit(codes[i])
 
+    # Visit Objects
     def visitObjects(self, ctx):
         codes = list(ctx.getChildren())
-        # if ctx.MAP():
-        #     print("\nMAPA\n")
-        test = "siur"
-        match test:
-            case "siur":
-                print("asdf")
-            case "asdffasdfas":
-                print("zjebalo sie")
-        # match codes[0].getText():
-        #     case "MAP":
-        #         print("madnasdiassjkd")
+        match codes[0].getText():
+            case "MAP":
+                rows = int(codes[2].getText())
+                cols = int(codes[4].getText())
+                #print("robie mape o wymiarach ", rows, " ", cols)
+                self.game.createMap(rows, cols)
+                #return map_array
+                return
+            case "PLAYER":
+                row = int(codes[2].getText())-1
+                col = int(codes[4].getText())-1
+                #print("gracz na kordach ", row, " ", col)
+                self.game.createPlayer(row, col)
+                return row, col
+            case "EXIT":
+                row = int(codes[2].getText())-1
+                col = int(codes[4].getText())-1
+                #print("wyjscie na kordach ", row, " ", col)
+                self.game.createExit(row, col)
+                return row, col
+            case "WALL":
+                row = int(codes[2].getText())-1
+                col = int(codes[4].getText())-1
+                #print("sciana na kordach ", row, " ", col)
+                self.game.createWall(row, col)
+                return row, col
+            case "TRAP":
+                row = int(codes[2].getText())-1
+                col = int(codes[4].getText())-1
+                #print("trap na kordach ", row, " ", col)
+                self.game.createTrap(row, col)
+                return row, col
+            case "KEY":
+                row = int(codes[2].getText())-1
+                col = int(codes[4].getText())-1
+                #print("klucz na kordach ", row, " ", col)
+                self.game.createKey(row, col)
+                return row, col
+            case "GATE":
+                row = int(codes[2].getText())-1
+                col = int(codes[4].getText())-1
+                #print("gate na kordach ", row, " ", col)
+                self.game.createGate(row, col)
+                return row, col
+            case "GUARD":
+                row = int(codes[2].getText())-1
+                col = int(codes[4].getText())-1
+                guard_id = codes[6].getText()
+                #print("straznik na kordach ", row, " ", col, " ID: ", guard_id)
+                self.game.createGuard(row, col, guard_id)
+                
+                codes = list(ctx.getChildren())
+                for i in range(len(codes)):
+                    self.visit(codes[i])
 
-        # if codes[0].getText() == "MAP":
-        #     x = int(codes[1].getText())
-        #     y = int(codes[3].getText())
+                return row, col, guard_id
             
-        #     self.data.map = [x, y]
-        #     return self.data.map
-    
-    def visitMap(self, ctx):
-        dimensions = ctx.dimensions.text.split(",")
-        rows = int(dimensions[0])
-        cols = int(dimensions[1])
-        print("gowno")
-        map_array = [[0 for j in range(cols)] for i in range(rows)]
+            
 
-        return map_array
-
-
-    # def visitCommands(self, ctx: JailBreakLangParser.CommandsContext):
-    #     match ctx.getText():
-    #         case "IF":
-                
-    #         case "WHILE":
-                
-    #         case "FOR":
-                
-  
-    #     return self.visitChildren(ctx)
-
-# ---------------------------- EXAMPLES FROM JAVA ---------------------------- #
-# private List<JavaProgramCode> getNArgumentsForPattern(PatternGrammarParser.ArgumentsContext ctx, int n) {
-#         List<JavaProgramCode> ans = new ArrayList<>();
-
-#         ans.add(visitPattern(ctx.pattern()));
-#         for (int i = 0; i < n - 1; i++) {
-#             ctx = ctx.args_with_delim.arguments;
-#             ans.add(visitPattern(ctx.pattern()));
-#         }
-
-#         return ans;
-#     }
-
-#     private JavaProgramCode createLoop(PatternGrammarParser.PatternContext ctx) {
-#         List<JavaProgramCode> loopArguments = getNArgumentsForPattern(ctx.arguments, 4);
-
-#         JavaProgramCode code = loopArguments.get(0);
-#         JavaProgramCode conditionCode = loopArguments.get(1);
-#         JavaProgramCode bodyCode = loopArguments.get(2);
-#         JavaProgramCode followingCode = loopArguments.get(3);
-
-#         code.appendToLastLineOfCode(";");
-#         code.appendLineOfCode("while (", 0);
-#         code.addCodeAsBooleanFunction(conditionCode);
-#         code.appendToLastLineOfCode(") {");
-#         code.appendCode(bodyCode, 1);
-#         code.appendToLastLineOfCode(";");
-#         code.appendLineOfCode("}", -1);
-#         code.appendCode(followingCode, 0);
-
-#         code.setAsContainingOnlyAtomicFunction(false);
-
-#         return code;
-
-# -------------------------------- TO CO BYLO -------------------------------- #
-    # def __init__(self,game_field):
-    #     self.game_field = game_field
-    #     self.game_field.start()
-
-    # def visitStart(self, ctx: GrammarParser.StartContext):
-    #     statements_to_execute = []
-    #     statements_to_execute = self.visit(ctx.statements)
-    #     for stat in statements_to_execute:
-    #         stat.execute()
-
-
-    # def visitStatements(self, ctx: GrammarParser.StatementsContext):
-    #     if ctx.statements is not None:
-    #         statements_to_execute = self.visit(ctx.statements)
-    #     statements_to_execute.append(self.visit(ctx.statement))
-    #     return statements_to_execute
-
-    # def visitStatement(self, ctx:GrammarParser.StatementContext):
-    #     if ctx.if_statement():
-    #         ifstatement = self.visit(ctx.if_statement())
-
-    # def visitIf_statement(self, ctx:GrammarParser.If_statementContext):
-    #     cond = self.visit(ctx.cond_help())
-    #     if cond:
-    #         return self.visit(ctx.statements)

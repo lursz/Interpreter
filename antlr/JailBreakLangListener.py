@@ -53,12 +53,12 @@ class JailBreakLangListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by JailBreakLangParser#wyrazenia.
-    def enterWyrazenia(self, ctx:JailBreakLangParser.WyrazeniaContext):
+    # Enter a parse tree produced by JailBreakLangParser#expressions.
+    def enterExpressions(self, ctx:JailBreakLangParser.ExpressionsContext):
         pass
 
-    # Exit a parse tree produced by JailBreakLangParser#wyrazenia.
-    def exitWyrazenia(self, ctx:JailBreakLangParser.WyrazeniaContext):
+    # Exit a parse tree produced by JailBreakLangParser#expressions.
+    def exitExpressions(self, ctx:JailBreakLangParser.ExpressionsContext):
         pass
 
 

@@ -18,7 +18,7 @@ def main(argv):
     #   walker = ParseTreeWalker()
     #   walker.walk(htmlChat, tree)
 
-    v = HeroVisitor()
+    v = JailBreakLangVisitor()
     v.visit(tree)
 
     output.close()

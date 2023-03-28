@@ -34,8 +34,8 @@ class JailBreakLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by JailBreakLangParser#wyrazenia.
-    def visitWyrazenia(self, ctx:JailBreakLangParser.WyrazeniaContext):
+    # Visit a parse tree produced by JailBreakLangParser#expressions.
+    def visitExpressions(self, ctx:JailBreakLangParser.ExpressionsContext):
         return self.visitChildren(ctx)
 
 
