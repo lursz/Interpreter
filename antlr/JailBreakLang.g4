@@ -1,9 +1,6 @@
 grammar JailBreakLang;
 
-start:
-	'MAP' '=' INT ',' INT 
-        'PLAYER' '=' INT ',' INT 
-        'EXIT' '=' INT ',' INT code*;
+start: code+ EOF;
 
 code: objects | commands | function_declaration;
 
@@ -12,18 +9,21 @@ objects:
 	| 'TRAP' '=' (INT | ID | RAND) ',' (INT | ID | RAND)
 	| 'KEY' '=' (INT | ID) ',' (INT | ID)
 	| 'GATE' '=' (INT | ID) ',' (INT | ID)
-	| 'GUARD' '=' (INT | ID) ',' (INT | ID) ',' INT code* 'GUARD' INT '{' guard_extra_code* '}';
+	| 'GUARD' '=' (INT | ID) ',' (INT | ID) ',' INT code* 'GUARD' INT '{' guard_extra_code* '}'
+	| 'MAP' '=' INT ',' INT 
+    | 'PLAYER' '=' INT ',' INT 
+    | 'EXIT' '=' INT ',' INT;
 
 commands:
-	'IF' '(' condition ')' '{' wyrazenia* '}'
-	| 'WHILE' '(' condition ')' '{' wyrazenia* '}'
-	| 'FOR' '(' ID 'IN' INT ')' '{' wyrazenia* '}'
-	| ID ('(' ID (',' ID)* ')')*;
+	'IF' '(' condition ')' '{' expressions* '}'
+	| 'WHILE' '(' condition ')' '{' expressions* '}'
+	| 'FOR' '(' ID 'IN' INT ')' '{' expressions* '}'
+	| ID ('(' ID (',' ID)* ')')?;
 
 function_declaration:
-	'FUN' ID ('(' ID (',' ID)* ')')* '{' wyrazenia* '}';
+	'FUN' ID ('(' ID (',' ID)* ')')? '{' expressions* '}';
 
-wyrazenia: objects | commands;
+expressions: objects | commands;
 
 guard_extra_code: commands | guard_control;
 

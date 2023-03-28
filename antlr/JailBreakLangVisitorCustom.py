@@ -1,21 +1,70 @@
 import sys
+sys.path.append('..')
 from antlr4 import *
 from JailBreakLangParser import JailBreakLangParser
 from JailBreakLangVisitor import JailBreakLangVisitor
-# from Gameclass import Gameclass
+from GameClass import Gameclass;
+
 
 
 class JailBreakLang(JailBreakLangVisitor):
-    def visitCommands(self, ctx: JailBreakLangParser.CommandsContext):
-        match ctx.getText():
-            case "IF":
+    def __init__(self):
+        self.game = Gameclass()
+
+
+    def visitStart(self, ctx):
+        lines = list(ctx.getChildren())
+
+        for i in range(len(lines) - 1):
+            self.visit(lines[i])
+
+    def visitCode(self, ctx):
+        codes = list(ctx.getChildren())
+
+        for i in range(len(codes)):
+            self.visit(codes[i])
+
+    def visitObjects(self, ctx):
+        codes = list(ctx.getChildren())
+        # if ctx.MAP():
+        #     print("\nMAPA\n")
+        test = "siur"
+        match test:
+            case "siur":
+                print("asdf")
+            case "asdffasdfas":
+                print("zjebalo sie")
+        # match codes[0].getText():
+        #     case "MAP":
+        #         print("madnasdiassjkd")
+
+        # if codes[0].getText() == "MAP":
+        #     x = int(codes[1].getText())
+        #     y = int(codes[3].getText())
+            
+        #     self.data.map = [x, y]
+        #     return self.data.map
+    
+    def visitMap(self, ctx):
+        dimensions = ctx.dimensions.text.split(",")
+        rows = int(dimensions[0])
+        cols = int(dimensions[1])
+        print("gowno")
+        map_array = [[0 for j in range(cols)] for i in range(rows)]
+
+        return map_array
+
+
+    # def visitCommands(self, ctx: JailBreakLangParser.CommandsContext):
+    #     match ctx.getText():
+    #         case "IF":
                 
-            case "WHILE":
+    #         case "WHILE":
                 
-            case "FOR":
+    #         case "FOR":
                 
   
-        return self.visitChildren(ctx)
+    #     return self.visitChildren(ctx)
 
 # ---------------------------- EXAMPLES FROM JAVA ---------------------------- #
 # private List<JavaProgramCode> getNArgumentsForPattern(PatternGrammarParser.ArgumentsContext ctx, int n) {

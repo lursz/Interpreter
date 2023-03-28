@@ -1,0 +1,4 @@
+MAP=1,5
+MAP=1,9
+FUN asdf {}
+PLAYER=2,2
