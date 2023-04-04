@@ -15,6 +15,7 @@ class Gamelogic:
 
     def startGame(self):
         while self.game.is_alive:
+            print('runda: ', self.round)
             self.printMap()
             command = input().lower()
             x, y = self.game.player_position['row'], self.game.player_position['col']

@@ -135,13 +135,13 @@ class GameObjects:
             new_y = guard.guard_position['col']
             match command: 
                 case "LEFT":
-                    new_x -= 1
-                case "RIGHT":
-                    new_x += 1
-                case "UP":
-                    new_y += 1
-                case "DOWN":
                     new_y -= 1
+                case "RIGHT":
+                    new_y += 1
+                case "UP":
+                    new_x -= 1
+                case "DOWN":
+                    new_x += 1
 
             # Forbid movement into walls and out of map
             if new_x > len(self.game_board) - 1 or new_x < 0:
