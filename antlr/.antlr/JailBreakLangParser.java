@@ -37,9 +37,9 @@ public class JailBreakLangParser extends Parser {
 		return new String[] {
 			null, "'WALL'", "'='", "','", "'TRAP'", "'KEY'", "'GATE'", "'GUARD'", 
 			"'{'", "'}'", "'MAP'", "'PLAYER'", "'EXIT'", "'IF'", "'('", "')'", "'WHILE'", 
-			"'FOR'", "'IN'", "'FUN'", "'DIRECTION'", "'TURNLEFT'", "'TURNRIGHT'", 
-			"'STEP'", "'IFWALL'", "'IFDIRECTION'", "'IFGUARD'", "'IFTRAP'", "'IFGATE'", 
-			"'NO'", "'TRUE'", "'FALSE'", "'AND'", "'OR'"
+			"'FOR'", "'IN'", "'FUN'", "'LEFT'", "'RIGHT'", "'UP'", "'DOWN'", "'IFWALL'", 
+			"'IFDIRECTION'", "'IFGUARD'", "'IFTRAP'", "'IFGATE'", "'NO'", "'TRUE'", 
+			"'FALSE'", "'AND'", "'OR'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -234,12 +234,6 @@ public class JailBreakLangParser extends Parser {
 		public TerminalNode RAND(int i) {
 			return getToken(JailBreakLangParser.RAND, i);
 		}
-		public List<CodeContext> code() {
-			return getRuleContexts(CodeContext.class);
-		}
-		public CodeContext code(int i) {
-			return getRuleContext(CodeContext.class,i);
-		}
 		public List<Guard_extra_codeContext> guard_extra_code() {
 			return getRuleContexts(Guard_extra_codeContext.class);
 		}
@@ -257,8 +251,7 @@ public class JailBreakLangParser extends Parser {
 		enterRule(_localctx, 4, RULE_objects);
 		int _la;
 		try {
-			int _alt;
-			setState(88);
+			setState(80);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__0:
@@ -418,88 +411,68 @@ public class JailBreakLangParser extends Parser {
 				match(T__2);
 				setState(56);
 				match(INT);
-				setState(60);
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-					if ( _alt==1 ) {
-						{
-						{
-						setState(57);
-						code();
-						}
-						} 
-					}
-					setState(62);
-					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-				}
-				setState(63);
-				match(T__6);
-				setState(64);
-				match(INT);
-				setState(65);
+				setState(57);
 				match(T__7);
-				setState(69);
+				setState(61);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__12) | (1L << T__15) | (1L << T__16) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << ID))) != 0)) {
 					{
 					{
-					setState(66);
+					setState(58);
 					guard_extra_code();
 					}
 					}
-					setState(71);
+					setState(63);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(72);
+				setState(64);
 				match(T__8);
 				}
 				break;
 			case T__9:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(73);
+				setState(65);
 				match(T__9);
-				setState(74);
+				setState(66);
 				match(T__1);
-				setState(75);
+				setState(67);
 				match(INT);
-				setState(76);
+				setState(68);
 				match(T__2);
-				setState(77);
+				setState(69);
 				match(INT);
 				}
 				break;
 			case T__10:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(78);
+				setState(70);
 				match(T__10);
-				setState(79);
+				setState(71);
 				match(T__1);
-				setState(80);
+				setState(72);
 				match(INT);
-				setState(81);
+				setState(73);
 				match(T__2);
-				setState(82);
+				setState(74);
 				match(INT);
 				}
 				break;
 			case T__11:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(83);
+				setState(75);
 				match(T__11);
-				setState(84);
+				setState(76);
 				match(T__1);
-				setState(85);
+				setState(77);
 				match(INT);
-				setState(86);
+				setState(78);
 				match(T__2);
-				setState(87);
+				setState(79);
 				match(INT);
 				}
 				break;
@@ -544,137 +517,137 @@ public class JailBreakLangParser extends Parser {
 		enterRule(_localctx, 6, RULE_commands);
 		int _la;
 		try {
-			setState(143);
+			setState(135);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__12:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(90);
+				setState(82);
 				match(T__12);
-				setState(91);
+				setState(83);
 				match(T__13);
-				setState(92);
+				setState(84);
 				condition(0);
-				setState(93);
+				setState(85);
 				match(T__14);
-				setState(94);
+				setState(86);
 				match(T__7);
-				setState(98);
+				setState(90);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__12) | (1L << T__15) | (1L << T__16) | (1L << ID))) != 0)) {
 					{
 					{
-					setState(95);
+					setState(87);
 					expressions();
 					}
 					}
-					setState(100);
+					setState(92);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(101);
+				setState(93);
 				match(T__8);
 				}
 				break;
 			case T__15:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(103);
+				setState(95);
 				match(T__15);
-				setState(104);
+				setState(96);
 				match(T__13);
-				setState(105);
+				setState(97);
 				condition(0);
-				setState(106);
+				setState(98);
 				match(T__14);
-				setState(107);
+				setState(99);
 				match(T__7);
-				setState(111);
+				setState(103);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__12) | (1L << T__15) | (1L << T__16) | (1L << ID))) != 0)) {
 					{
 					{
-					setState(108);
+					setState(100);
 					expressions();
 					}
 					}
-					setState(113);
+					setState(105);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(114);
+				setState(106);
 				match(T__8);
 				}
 				break;
 			case T__16:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(116);
+				setState(108);
 				match(T__16);
-				setState(117);
+				setState(109);
 				match(T__13);
-				setState(118);
+				setState(110);
 				match(ID);
-				setState(119);
+				setState(111);
 				match(T__17);
-				setState(120);
+				setState(112);
 				match(INT);
-				setState(121);
+				setState(113);
 				match(T__14);
-				setState(122);
+				setState(114);
 				match(T__7);
-				setState(126);
+				setState(118);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__12) | (1L << T__15) | (1L << T__16) | (1L << ID))) != 0)) {
 					{
 					{
-					setState(123);
+					setState(115);
 					expressions();
 					}
 					}
-					setState(128);
+					setState(120);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(129);
+				setState(121);
 				match(T__8);
 				}
 				break;
 			case ID:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(130);
+				setState(122);
 				match(ID);
-				setState(141);
+				setState(133);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==T__13) {
 					{
-					setState(131);
+					setState(123);
 					match(T__13);
-					setState(132);
+					setState(124);
 					match(ID);
-					setState(137);
+					setState(129);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					while (_la==T__2) {
 						{
 						{
-						setState(133);
+						setState(125);
 						match(T__2);
-						setState(134);
+						setState(126);
 						match(ID);
 						}
 						}
-						setState(139);
+						setState(131);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					}
-					setState(140);
+					setState(132);
 					match(T__14);
 					}
 				}
@@ -720,57 +693,57 @@ public class JailBreakLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(145);
+			setState(137);
 			match(T__18);
-			setState(146);
+			setState(138);
 			match(ID);
-			setState(157);
+			setState(149);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__13) {
 				{
-				setState(147);
+				setState(139);
 				match(T__13);
-				setState(148);
+				setState(140);
 				match(ID);
-				setState(153);
+				setState(145);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__2) {
 					{
 					{
-					setState(149);
+					setState(141);
 					match(T__2);
-					setState(150);
+					setState(142);
 					match(ID);
 					}
 					}
-					setState(155);
+					setState(147);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(156);
+				setState(148);
 				match(T__14);
 				}
 			}
 
-			setState(159);
+			setState(151);
 			match(T__7);
-			setState(163);
+			setState(155);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__12) | (1L << T__15) | (1L << T__16) | (1L << ID))) != 0)) {
 				{
 				{
-				setState(160);
+				setState(152);
 				expressions();
 				}
 				}
-				setState(165);
+				setState(157);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(166);
+			setState(158);
 			match(T__8);
 			}
 		}
@@ -802,7 +775,7 @@ public class JailBreakLangParser extends Parser {
 		ExpressionsContext _localctx = new ExpressionsContext(_ctx, getState());
 		enterRule(_localctx, 10, RULE_expressions);
 		try {
-			setState(170);
+			setState(162);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__0:
@@ -815,7 +788,7 @@ public class JailBreakLangParser extends Parser {
 			case T__11:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(168);
+				setState(160);
 				objects();
 				}
 				break;
@@ -825,7 +798,7 @@ public class JailBreakLangParser extends Parser {
 			case ID:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(169);
+				setState(161);
 				commands();
 				}
 				break;
@@ -861,7 +834,7 @@ public class JailBreakLangParser extends Parser {
 		Guard_extra_codeContext _localctx = new Guard_extra_codeContext(_ctx, getState());
 		enterRule(_localctx, 12, RULE_guard_extra_code);
 		try {
-			setState(174);
+			setState(166);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__12:
@@ -870,7 +843,7 @@ public class JailBreakLangParser extends Parser {
 			case ID:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(172);
+				setState(164);
 				commands();
 				}
 				break;
@@ -880,7 +853,7 @@ public class JailBreakLangParser extends Parser {
 			case T__22:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(173);
+				setState(165);
 				guard_control();
 				}
 				break;
@@ -900,8 +873,6 @@ public class JailBreakLangParser extends Parser {
 	}
 
 	public static class Guard_controlContext extends ParserRuleContext {
-		public TerminalNode INT() { return getToken(JailBreakLangParser.INT, 0); }
-		public TerminalNode ID() { return getToken(JailBreakLangParser.ID, 0); }
 		public Guard_controlContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -913,51 +884,18 @@ public class JailBreakLangParser extends Parser {
 		enterRule(_localctx, 14, RULE_guard_control);
 		int _la;
 		try {
-			setState(182);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case T__19:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(176);
-				match(T__19);
-				setState(177);
-				match(T__1);
-				setState(178);
-				_la = _input.LA(1);
-				if ( !(_la==ID || _la==INT) ) {
-				_errHandler.recoverInline(this);
-				}
-				else {
-					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-					_errHandler.reportMatch(this);
-					consume();
-				}
-				}
-				break;
-			case T__20:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(179);
-				match(T__20);
-				}
-				break;
-			case T__21:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(180);
-				match(T__21);
-				}
-				break;
-			case T__22:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(181);
-				match(T__22);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(168);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -1002,22 +940,22 @@ public class JailBreakLangParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(200);
+			setState(186);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__23:
 				{
-				setState(185);
+				setState(171);
 				match(T__23);
 				}
 				break;
 			case T__24:
 				{
-				setState(186);
+				setState(172);
 				match(T__24);
-				setState(187);
+				setState(173);
 				match(T__1);
-				setState(188);
+				setState(174);
 				_la = _input.LA(1);
 				if ( !(_la==ID || _la==INT) ) {
 				_errHandler.recoverInline(this);
@@ -1031,49 +969,49 @@ public class JailBreakLangParser extends Parser {
 				break;
 			case T__25:
 				{
-				setState(189);
+				setState(175);
 				match(T__25);
 				}
 				break;
 			case T__26:
 				{
-				setState(190);
+				setState(176);
 				match(T__26);
 				}
 				break;
 			case T__27:
 				{
-				setState(191);
+				setState(177);
 				match(T__27);
 				}
 				break;
 			case T__28:
 				{
-				setState(192);
+				setState(178);
 				match(T__28);
-				setState(193);
+				setState(179);
 				condition(6);
 				}
 				break;
 			case T__29:
 				{
-				setState(194);
+				setState(180);
 				match(T__29);
 				}
 				break;
 			case T__30:
 				{
-				setState(195);
+				setState(181);
 				match(T__30);
 				}
 				break;
 			case T__13:
 				{
-				setState(196);
+				setState(182);
 				match(T__13);
-				setState(197);
+				setState(183);
 				condition(0);
-				setState(198);
+				setState(184);
 				match(T__14);
 				}
 				break;
@@ -1081,26 +1019,26 @@ public class JailBreakLangParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(210);
+			setState(196);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,19,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(208);
+					setState(194);
 					_errHandler.sync(this);
-					switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
+					switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 					case 1:
 						{
 						_localctx = new ConditionContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_condition);
-						setState(202);
+						setState(188);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-						setState(203);
+						setState(189);
 						match(T__31);
-						setState(204);
+						setState(190);
 						condition(4);
 						}
 						break;
@@ -1108,20 +1046,20 @@ public class JailBreakLangParser extends Parser {
 						{
 						_localctx = new ConditionContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_condition);
-						setState(205);
+						setState(191);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(206);
+						setState(192);
 						match(T__32);
-						setState(207);
+						setState(193);
 						condition(3);
 						}
 						break;
 					}
 					} 
 				}
-				setState(212);
+				setState(198);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,19,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
 			}
 			}
 		}
@@ -1154,76 +1092,70 @@ public class JailBreakLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3(\u00d8\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3(\u00ca\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\6\2"+
 		"\26\n\2\r\2\16\2\27\3\2\3\2\3\3\3\3\3\3\5\3\37\n\3\3\4\3\4\3\4\3\4\3\4"+
 		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
-		"\4\3\4\3\4\3\4\3\4\3\4\7\4=\n\4\f\4\16\4@\13\4\3\4\3\4\3\4\3\4\7\4F\n"+
-		"\4\f\4\16\4I\13\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4"+
-		"\3\4\3\4\3\4\5\4[\n\4\3\5\3\5\3\5\3\5\3\5\3\5\7\5c\n\5\f\5\16\5f\13\5"+
-		"\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5p\n\5\f\5\16\5s\13\5\3\5\3\5\3\5\3"+
-		"\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5\177\n\5\f\5\16\5\u0082\13\5\3\5\3\5\3\5"+
-		"\3\5\3\5\3\5\7\5\u008a\n\5\f\5\16\5\u008d\13\5\3\5\5\5\u0090\n\5\5\5\u0092"+
-		"\n\5\3\6\3\6\3\6\3\6\3\6\3\6\7\6\u009a\n\6\f\6\16\6\u009d\13\6\3\6\5\6"+
-		"\u00a0\n\6\3\6\3\6\7\6\u00a4\n\6\f\6\16\6\u00a7\13\6\3\6\3\6\3\7\3\7\5"+
-		"\7\u00ad\n\7\3\b\3\b\5\b\u00b1\n\b\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u00b9\n"+
-		"\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\n"+
-		"\u00cb\n\n\3\n\3\n\3\n\3\n\3\n\3\n\7\n\u00d3\n\n\f\n\16\n\u00d6\13\n\3"+
-		"\n\2\3\22\13\2\4\6\b\n\f\16\20\22\2\4\3\2%\'\4\2%%\'\'\2\u00f4\2\25\3"+
-		"\2\2\2\4\36\3\2\2\2\6Z\3\2\2\2\b\u0091\3\2\2\2\n\u0093\3\2\2\2\f\u00ac"+
-		"\3\2\2\2\16\u00b0\3\2\2\2\20\u00b8\3\2\2\2\22\u00ca\3\2\2\2\24\26\5\4"+
-		"\3\2\25\24\3\2\2\2\26\27\3\2\2\2\27\25\3\2\2\2\27\30\3\2\2\2\30\31\3\2"+
-		"\2\2\31\32\7\2\2\3\32\3\3\2\2\2\33\37\5\6\4\2\34\37\5\b\5\2\35\37\5\n"+
-		"\6\2\36\33\3\2\2\2\36\34\3\2\2\2\36\35\3\2\2\2\37\5\3\2\2\2 !\7\3\2\2"+
-		"!\"\7\4\2\2\"#\t\2\2\2#$\7\5\2\2$[\t\2\2\2%&\7\6\2\2&\'\7\4\2\2\'(\t\2"+
-		"\2\2()\7\5\2\2)[\t\2\2\2*+\7\7\2\2+,\7\4\2\2,-\t\3\2\2-.\7\5\2\2.[\t\3"+
-		"\2\2/\60\7\b\2\2\60\61\7\4\2\2\61\62\t\3\2\2\62\63\7\5\2\2\63[\t\3\2\2"+
-		"\64\65\7\t\2\2\65\66\7\4\2\2\66\67\t\3\2\2\678\7\5\2\289\t\3\2\29:\7\5"+
-		"\2\2:>\7\'\2\2;=\5\4\3\2<;\3\2\2\2=@\3\2\2\2><\3\2\2\2>?\3\2\2\2?A\3\2"+
-		"\2\2@>\3\2\2\2AB\7\t\2\2BC\7\'\2\2CG\7\n\2\2DF\5\16\b\2ED\3\2\2\2FI\3"+
-		"\2\2\2GE\3\2\2\2GH\3\2\2\2HJ\3\2\2\2IG\3\2\2\2J[\7\13\2\2KL\7\f\2\2LM"+
-		"\7\4\2\2MN\7\'\2\2NO\7\5\2\2O[\7\'\2\2PQ\7\r\2\2QR\7\4\2\2RS\7\'\2\2S"+
-		"T\7\5\2\2T[\7\'\2\2UV\7\16\2\2VW\7\4\2\2WX\7\'\2\2XY\7\5\2\2Y[\7\'\2\2"+
-		"Z \3\2\2\2Z%\3\2\2\2Z*\3\2\2\2Z/\3\2\2\2Z\64\3\2\2\2ZK\3\2\2\2ZP\3\2\2"+
-		"\2ZU\3\2\2\2[\7\3\2\2\2\\]\7\17\2\2]^\7\20\2\2^_\5\22\n\2_`\7\21\2\2`"+
-		"d\7\n\2\2ac\5\f\7\2ba\3\2\2\2cf\3\2\2\2db\3\2\2\2de\3\2\2\2eg\3\2\2\2"+
-		"fd\3\2\2\2gh\7\13\2\2h\u0092\3\2\2\2ij\7\22\2\2jk\7\20\2\2kl\5\22\n\2"+
-		"lm\7\21\2\2mq\7\n\2\2np\5\f\7\2on\3\2\2\2ps\3\2\2\2qo\3\2\2\2qr\3\2\2"+
-		"\2rt\3\2\2\2sq\3\2\2\2tu\7\13\2\2u\u0092\3\2\2\2vw\7\23\2\2wx\7\20\2\2"+
-		"xy\7%\2\2yz\7\24\2\2z{\7\'\2\2{|\7\21\2\2|\u0080\7\n\2\2}\177\5\f\7\2"+
-		"~}\3\2\2\2\177\u0082\3\2\2\2\u0080~\3\2\2\2\u0080\u0081\3\2\2\2\u0081"+
-		"\u0083\3\2\2\2\u0082\u0080\3\2\2\2\u0083\u0092\7\13\2\2\u0084\u008f\7"+
-		"%\2\2\u0085\u0086\7\20\2\2\u0086\u008b\7%\2\2\u0087\u0088\7\5\2\2\u0088"+
-		"\u008a\7%\2\2\u0089\u0087\3\2\2\2\u008a\u008d\3\2\2\2\u008b\u0089\3\2"+
-		"\2\2\u008b\u008c\3\2\2\2\u008c\u008e\3\2\2\2\u008d\u008b\3\2\2\2\u008e"+
-		"\u0090\7\21\2\2\u008f\u0085\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0092\3"+
-		"\2\2\2\u0091\\\3\2\2\2\u0091i\3\2\2\2\u0091v\3\2\2\2\u0091\u0084\3\2\2"+
-		"\2\u0092\t\3\2\2\2\u0093\u0094\7\25\2\2\u0094\u009f\7%\2\2\u0095\u0096"+
-		"\7\20\2\2\u0096\u009b\7%\2\2\u0097\u0098\7\5\2\2\u0098\u009a\7%\2\2\u0099"+
-		"\u0097\3\2\2\2\u009a\u009d\3\2\2\2\u009b\u0099\3\2\2\2\u009b\u009c\3\2"+
-		"\2\2\u009c\u009e\3\2\2\2\u009d\u009b\3\2\2\2\u009e\u00a0\7\21\2\2\u009f"+
-		"\u0095\3\2\2\2\u009f\u00a0\3\2\2\2\u00a0\u00a1\3\2\2\2\u00a1\u00a5\7\n"+
-		"\2\2\u00a2\u00a4\5\f\7\2\u00a3\u00a2\3\2\2\2\u00a4\u00a7\3\2\2\2\u00a5"+
-		"\u00a3\3\2\2\2\u00a5\u00a6\3\2\2\2\u00a6\u00a8\3\2\2\2\u00a7\u00a5\3\2"+
-		"\2\2\u00a8\u00a9\7\13\2\2\u00a9\13\3\2\2\2\u00aa\u00ad\5\6\4\2\u00ab\u00ad"+
-		"\5\b\5\2\u00ac\u00aa\3\2\2\2\u00ac\u00ab\3\2\2\2\u00ad\r\3\2\2\2\u00ae"+
-		"\u00b1\5\b\5\2\u00af\u00b1\5\20\t\2\u00b0\u00ae\3\2\2\2\u00b0\u00af\3"+
-		"\2\2\2\u00b1\17\3\2\2\2\u00b2\u00b3\7\26\2\2\u00b3\u00b4\7\4\2\2\u00b4"+
-		"\u00b9\t\3\2\2\u00b5\u00b9\7\27\2\2\u00b6\u00b9\7\30\2\2\u00b7\u00b9\7"+
-		"\31\2\2\u00b8\u00b2\3\2\2\2\u00b8\u00b5\3\2\2\2\u00b8\u00b6\3\2\2\2\u00b8"+
-		"\u00b7\3\2\2\2\u00b9\21\3\2\2\2\u00ba\u00bb\b\n\1\2\u00bb\u00cb\7\32\2"+
-		"\2\u00bc\u00bd\7\33\2\2\u00bd\u00be\7\4\2\2\u00be\u00cb\t\3\2\2\u00bf"+
-		"\u00cb\7\34\2\2\u00c0\u00cb\7\35\2\2\u00c1\u00cb\7\36\2\2\u00c2\u00c3"+
-		"\7\37\2\2\u00c3\u00cb\5\22\n\b\u00c4\u00cb\7 \2\2\u00c5\u00cb\7!\2\2\u00c6"+
-		"\u00c7\7\20\2\2\u00c7\u00c8\5\22\n\2\u00c8\u00c9\7\21\2\2\u00c9\u00cb"+
-		"\3\2\2\2\u00ca\u00ba\3\2\2\2\u00ca\u00bc\3\2\2\2\u00ca\u00bf\3\2\2\2\u00ca"+
-		"\u00c0\3\2\2\2\u00ca\u00c1\3\2\2\2\u00ca\u00c2\3\2\2\2\u00ca\u00c4\3\2"+
-		"\2\2\u00ca\u00c5\3\2\2\2\u00ca\u00c6\3\2\2\2\u00cb\u00d4\3\2\2\2\u00cc"+
-		"\u00cd\f\5\2\2\u00cd\u00ce\7\"\2\2\u00ce\u00d3\5\22\n\6\u00cf\u00d0\f"+
-		"\4\2\2\u00d0\u00d1\7#\2\2\u00d1\u00d3\5\22\n\5\u00d2\u00cc\3\2\2\2\u00d2"+
-		"\u00cf\3\2\2\2\u00d3\u00d6\3\2\2\2\u00d4\u00d2\3\2\2\2\u00d4\u00d5\3\2"+
-		"\2\2\u00d5\23\3\2\2\2\u00d6\u00d4\3\2\2\2\26\27\36>GZdq\u0080\u008b\u008f"+
-		"\u0091\u009b\u009f\u00a5\u00ac\u00b0\u00b8\u00ca\u00d2\u00d4";
+		"\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4>\n\4\f\4\16\4A\13\4\3\4\3\4\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4S\n\4\3\5\3\5\3\5\3\5"+
+		"\3\5\3\5\7\5[\n\5\f\5\16\5^\13\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5h"+
+		"\n\5\f\5\16\5k\13\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5w\n\5\f"+
+		"\5\16\5z\13\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5\u0082\n\5\f\5\16\5\u0085\13"+
+		"\5\3\5\5\5\u0088\n\5\5\5\u008a\n\5\3\6\3\6\3\6\3\6\3\6\3\6\7\6\u0092\n"+
+		"\6\f\6\16\6\u0095\13\6\3\6\5\6\u0098\n\6\3\6\3\6\7\6\u009c\n\6\f\6\16"+
+		"\6\u009f\13\6\3\6\3\6\3\7\3\7\5\7\u00a5\n\7\3\b\3\b\5\b\u00a9\n\b\3\t"+
+		"\3\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5"+
+		"\n\u00bd\n\n\3\n\3\n\3\n\3\n\3\n\3\n\7\n\u00c5\n\n\f\n\16\n\u00c8\13\n"+
+		"\3\n\2\3\22\13\2\4\6\b\n\f\16\20\22\2\5\3\2%\'\4\2%%\'\'\3\2\26\31\2\u00e2"+
+		"\2\25\3\2\2\2\4\36\3\2\2\2\6R\3\2\2\2\b\u0089\3\2\2\2\n\u008b\3\2\2\2"+
+		"\f\u00a4\3\2\2\2\16\u00a8\3\2\2\2\20\u00aa\3\2\2\2\22\u00bc\3\2\2\2\24"+
+		"\26\5\4\3\2\25\24\3\2\2\2\26\27\3\2\2\2\27\25\3\2\2\2\27\30\3\2\2\2\30"+
+		"\31\3\2\2\2\31\32\7\2\2\3\32\3\3\2\2\2\33\37\5\6\4\2\34\37\5\b\5\2\35"+
+		"\37\5\n\6\2\36\33\3\2\2\2\36\34\3\2\2\2\36\35\3\2\2\2\37\5\3\2\2\2 !\7"+
+		"\3\2\2!\"\7\4\2\2\"#\t\2\2\2#$\7\5\2\2$S\t\2\2\2%&\7\6\2\2&\'\7\4\2\2"+
+		"\'(\t\2\2\2()\7\5\2\2)S\t\2\2\2*+\7\7\2\2+,\7\4\2\2,-\t\3\2\2-.\7\5\2"+
+		"\2.S\t\3\2\2/\60\7\b\2\2\60\61\7\4\2\2\61\62\t\3\2\2\62\63\7\5\2\2\63"+
+		"S\t\3\2\2\64\65\7\t\2\2\65\66\7\4\2\2\66\67\t\3\2\2\678\7\5\2\289\t\3"+
+		"\2\29:\7\5\2\2:;\7\'\2\2;?\7\n\2\2<>\5\16\b\2=<\3\2\2\2>A\3\2\2\2?=\3"+
+		"\2\2\2?@\3\2\2\2@B\3\2\2\2A?\3\2\2\2BS\7\13\2\2CD\7\f\2\2DE\7\4\2\2EF"+
+		"\7\'\2\2FG\7\5\2\2GS\7\'\2\2HI\7\r\2\2IJ\7\4\2\2JK\7\'\2\2KL\7\5\2\2L"+
+		"S\7\'\2\2MN\7\16\2\2NO\7\4\2\2OP\7\'\2\2PQ\7\5\2\2QS\7\'\2\2R \3\2\2\2"+
+		"R%\3\2\2\2R*\3\2\2\2R/\3\2\2\2R\64\3\2\2\2RC\3\2\2\2RH\3\2\2\2RM\3\2\2"+
+		"\2S\7\3\2\2\2TU\7\17\2\2UV\7\20\2\2VW\5\22\n\2WX\7\21\2\2X\\\7\n\2\2Y"+
+		"[\5\f\7\2ZY\3\2\2\2[^\3\2\2\2\\Z\3\2\2\2\\]\3\2\2\2]_\3\2\2\2^\\\3\2\2"+
+		"\2_`\7\13\2\2`\u008a\3\2\2\2ab\7\22\2\2bc\7\20\2\2cd\5\22\n\2de\7\21\2"+
+		"\2ei\7\n\2\2fh\5\f\7\2gf\3\2\2\2hk\3\2\2\2ig\3\2\2\2ij\3\2\2\2jl\3\2\2"+
+		"\2ki\3\2\2\2lm\7\13\2\2m\u008a\3\2\2\2no\7\23\2\2op\7\20\2\2pq\7%\2\2"+
+		"qr\7\24\2\2rs\7\'\2\2st\7\21\2\2tx\7\n\2\2uw\5\f\7\2vu\3\2\2\2wz\3\2\2"+
+		"\2xv\3\2\2\2xy\3\2\2\2y{\3\2\2\2zx\3\2\2\2{\u008a\7\13\2\2|\u0087\7%\2"+
+		"\2}~\7\20\2\2~\u0083\7%\2\2\177\u0080\7\5\2\2\u0080\u0082\7%\2\2\u0081"+
+		"\177\3\2\2\2\u0082\u0085\3\2\2\2\u0083\u0081\3\2\2\2\u0083\u0084\3\2\2"+
+		"\2\u0084\u0086\3\2\2\2\u0085\u0083\3\2\2\2\u0086\u0088\7\21\2\2\u0087"+
+		"}\3\2\2\2\u0087\u0088\3\2\2\2\u0088\u008a\3\2\2\2\u0089T\3\2\2\2\u0089"+
+		"a\3\2\2\2\u0089n\3\2\2\2\u0089|\3\2\2\2\u008a\t\3\2\2\2\u008b\u008c\7"+
+		"\25\2\2\u008c\u0097\7%\2\2\u008d\u008e\7\20\2\2\u008e\u0093\7%\2\2\u008f"+
+		"\u0090\7\5\2\2\u0090\u0092\7%\2\2\u0091\u008f\3\2\2\2\u0092\u0095\3\2"+
+		"\2\2\u0093\u0091\3\2\2\2\u0093\u0094\3\2\2\2\u0094\u0096\3\2\2\2\u0095"+
+		"\u0093\3\2\2\2\u0096\u0098\7\21\2\2\u0097\u008d\3\2\2\2\u0097\u0098\3"+
+		"\2\2\2\u0098\u0099\3\2\2\2\u0099\u009d\7\n\2\2\u009a\u009c\5\f\7\2\u009b"+
+		"\u009a\3\2\2\2\u009c\u009f\3\2\2\2\u009d\u009b\3\2\2\2\u009d\u009e\3\2"+
+		"\2\2\u009e\u00a0\3\2\2\2\u009f\u009d\3\2\2\2\u00a0\u00a1\7\13\2\2\u00a1"+
+		"\13\3\2\2\2\u00a2\u00a5\5\6\4\2\u00a3\u00a5\5\b\5\2\u00a4\u00a2\3\2\2"+
+		"\2\u00a4\u00a3\3\2\2\2\u00a5\r\3\2\2\2\u00a6\u00a9\5\b\5\2\u00a7\u00a9"+
+		"\5\20\t\2\u00a8\u00a6\3\2\2\2\u00a8\u00a7\3\2\2\2\u00a9\17\3\2\2\2\u00aa"+
+		"\u00ab\t\4\2\2\u00ab\21\3\2\2\2\u00ac\u00ad\b\n\1\2\u00ad\u00bd\7\32\2"+
+		"\2\u00ae\u00af\7\33\2\2\u00af\u00b0\7\4\2\2\u00b0\u00bd\t\3\2\2\u00b1"+
+		"\u00bd\7\34\2\2\u00b2\u00bd\7\35\2\2\u00b3\u00bd\7\36\2\2\u00b4\u00b5"+
+		"\7\37\2\2\u00b5\u00bd\5\22\n\b\u00b6\u00bd\7 \2\2\u00b7\u00bd\7!\2\2\u00b8"+
+		"\u00b9\7\20\2\2\u00b9\u00ba\5\22\n\2\u00ba\u00bb\7\21\2\2\u00bb\u00bd"+
+		"\3\2\2\2\u00bc\u00ac\3\2\2\2\u00bc\u00ae\3\2\2\2\u00bc\u00b1\3\2\2\2\u00bc"+
+		"\u00b2\3\2\2\2\u00bc\u00b3\3\2\2\2\u00bc\u00b4\3\2\2\2\u00bc\u00b6\3\2"+
+		"\2\2\u00bc\u00b7\3\2\2\2\u00bc\u00b8\3\2\2\2\u00bd\u00c6\3\2\2\2\u00be"+
+		"\u00bf\f\5\2\2\u00bf\u00c0\7\"\2\2\u00c0\u00c5\5\22\n\6\u00c1\u00c2\f"+
+		"\4\2\2\u00c2\u00c3\7#\2\2\u00c3\u00c5\5\22\n\5\u00c4\u00be\3\2\2\2\u00c4"+
+		"\u00c1\3\2\2\2\u00c5\u00c8\3\2\2\2\u00c6\u00c4\3\2\2\2\u00c6\u00c7\3\2"+
+		"\2\2\u00c7\23\3\2\2\2\u00c8\u00c6\3\2\2\2\24\27\36?R\\ix\u0083\u0087\u0089"+
+		"\u0093\u0097\u009d\u00a4\u00a8\u00bc\u00c4\u00c6";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

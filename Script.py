@@ -1,11 +1,12 @@
-from antlr4 import *
+from antlr4 import FileStream, CommonTokenStream
+from antlr4.error.ErrorListener import ErrorListener
 import sys
 # sys.path.append('antlr')
 from antlr.JailBreakLangLexer import JailBreakLangLexer
 from antlr.JailBreakLangParser import JailBreakLangParser
 from antlr.JailBreakLangVisitorCustom import JailBreakLang
 
-class MyErrorListener(error.ErrorListener.ErrorListener):
+class MyErrorListener(ErrorListener):
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
         raise ValueError(f"Syntax error on line {line}, column {column}: {msg}")
 

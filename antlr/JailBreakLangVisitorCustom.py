@@ -3,6 +3,7 @@ from antlr.JailBreakLangParser import JailBreakLangParser
 from antlr.JailBreakLangVisitor import JailBreakLangVisitor
 import GameObjects
 import GameLogic
+import warnings
 
 
 class JailBreakLang(JailBreakLangVisitor):
@@ -76,13 +77,20 @@ class JailBreakLang(JailBreakLangVisitor):
                 row = int(codes[2].getText())-1
                 col = int(codes[4].getText())-1
                 guard_id = codes[6].getText()
+                list_of_commands = codes[8:-1]
+                list_of_commands = [i.getText() for i in list_of_commands]
+                # print(list_of_commands)
+
                 #print("straznik na kordach ", row, " ", col, " ID: ", guard_id)
-                self.game.createGuard(row, col, guard_id)
                 
+                # Create a guard and append it to the list of guards
+                self.game.createGuard(row, col, guard_id, list_of_commands)
+
+
                 codes = list(ctx.getChildren())
                 for i in range(len(codes)):
                     self.visit(codes[i])
-
+                    #print('test: ', i, codes[i])
                 return row, col, guard_id
             
             

@@ -1,0 +1,15 @@
+MAP=5,5
+PLAYER=1,1
+EXIT=5,5
+GATE=2,2
+KEY=1,5
+WALL=4,3
+GUARD=5,3,0
+{
+    LEFT
+    RIGHT
+    UP
+    DOWN
+}
+
+WALL = 2,5

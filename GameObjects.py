@@ -1,20 +1,21 @@
-# , = ziemia
-# # = sciana
-# O = gracz
-# 8 = straznik
-# ! = pulapka
-# * = klucz
-# G = brama
-# E = wyjscie
+# , = dirt
+# # = wall
+# O = player
+# 8 = guard
+# ! = trap
+# * = key
+# G = gate
+# E = exit
 
 # ---------------------------------------------------------------------------- #
 #                                  GameObjects                                 #
 # ---------------------------------------------------------------------------- #
+
 class GameObjects:
     def __init__(self) -> None:
         self.game_board = []
         self.player_position = {"row": 0, "col": 0}
-        self.guards = {}
+        self.guards = []
         self.is_player_defined = False
         self.is_map_defined = False
         self.key_number = 0
@@ -28,7 +29,13 @@ class GameObjects:
     
     
     def checkCoords(self, row, col):
-        if len(self.game_board) < row or len(self.game_board[0]) < col:
+        if len(self.game_board) < row or len(self.game_board[0]) < col or row < 0 or col < 0:
+            return False
+        return True
+    
+
+    def checkIfPositive(self, row, col):
+        if row <= 0 or col <= 0:
             return False
         return True
     
@@ -65,10 +72,10 @@ class GameObjects:
         if not self.checkIfExists():
             return
         if not self.checkCoords(row, col):
-            return
+            raise Exception("Object cannot be placed out of bounds")
         if self.is_player_defined:
             raise Exception("Player is already defined")
-
+        
         self.game_board[row][col] = "O"
         self.player_position = {"row": row, "col": col}
         self.is_player_defined = True
@@ -97,18 +104,6 @@ class GameObjects:
             return
         self.game_board[row][col] = "G"
         
-    # Guard
-    def createGuard(self, row, col, guard_id):
-        if not self.checkIfExists():
-            return
-        if not self.checkCoords(row, col):
-            return
-        
-        self.game_board[row][col] = "8"
-        self.guards[guard_id] = {
-            "row": row,
-            "col": col
-        }
 
     # Exit
     def createExit(self, row, col):
@@ -117,3 +112,60 @@ class GameObjects:
         if not self.checkCoords(row, col):
             return
         self.game_board[row][col] = "E"
+    
+        
+    # Guard
+    def createGuard(self, row, col, guard_id, list_of_commands):
+        if not self.checkIfExists():
+            return
+        if not self.checkCoords(row, col):
+            return
+        
+        self.game_board[row][col] = "8"
+        self.guards.append(Guard(row, col, guard_id, list_of_commands))
+
+
+    def moveGuards(self, round):
+        for guard in self.guards:
+            # Indefinitely loop through the list of commands
+            command = guard.list_of_commands[round % len(guard.list_of_commands)]
+            
+            # Move the guard accordingly
+            new_x = guard.guard_position['row']
+            new_y = guard.guard_position['col']
+            match command: 
+                case "LEFT":
+                    new_x -= 1
+                case "RIGHT":
+                    new_x += 1
+                case "UP":
+                    new_y += 1
+                case "DOWN":
+                    new_y -= 1
+
+            # Forbid movement into walls and out of map
+            if new_x > len(self.game_board) - 1 or new_x < 0:
+                continue
+            if new_y > len(self.game_board[0]) - 1 or new_y < 0:
+                continue
+
+            # Forbid entering the wall
+            if self.game_board[new_x][new_y] in ['#', 'E', '*', 'G', '!','8'] :
+                continue
+            
+            self.game_board[new_x][new_y] = '8'
+            self.game_board[guard.guard_position['row']][guard.guard_position['col']] = ','
+            guard.guard_position['row'] = new_x
+            guard.guard_position['col'] = new_y
+        
+
+
+
+class Guard:
+    def __init__(self, row, col, guard_id, list_of_commands) -> None:
+        self.guard_position = {"row": row, "col": col}
+        self.guard_id = guard_id
+        self.list_of_commands = list_of_commands
+
+    def updateCoords(self, row, col):
+        self.guard_position = {"row": row, "col": col}

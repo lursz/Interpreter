@@ -9,7 +9,7 @@ objects:
 	| 'TRAP' '=' (INT | ID | RAND) ',' (INT | ID | RAND)
 	| 'KEY' '=' (INT | ID) ',' (INT | ID)
 	| 'GATE' '=' (INT | ID) ',' (INT | ID)
-	| 'GUARD' '=' (INT | ID) ',' (INT | ID) ',' INT code* 'GUARD' INT '{' guard_extra_code* '}'
+	| 'GUARD' '=' (INT | ID) ',' (INT | ID) ',' INT '{' guard_extra_code* '}'
 	| 'MAP' '=' INT ',' INT 
     | 'PLAYER' '=' INT ',' INT 
     | 'EXIT' '=' INT ',' INT;
@@ -28,10 +28,10 @@ expressions: objects | commands;
 guard_extra_code: commands | guard_control;
 
 guard_control:
-	'DIRECTION' '=' (INT | ID)
-	| 'TURNLEFT'
-	| 'TURNRIGHT'
-	| 'STEP';
+	'LEFT'
+	| 'RIGHT'
+	| 'UP'
+	| 'DOWN';
 
 condition:
 	'IFWALL'

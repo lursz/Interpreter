@@ -6,7 +6,29 @@ from GameObjects import GameObjects
 class Gamelogic:
     def __init__(self, game_objects: GameObjects) -> None:
         self.game = game_objects
+        self.round = 0
         self.startGame()
+        
+        
+    def winGame(self):
+        print("DAMN, YOU ARE THE GREATEST STUDENT TO HAVE EVER EXISTED!!!!")
+
+    def startGame(self):
+        while self.game.is_alive:
+            self.printMap()
+            command = input().lower()
+            x, y = self.game.player_position['row'], self.game.player_position['col']
+            match command:
+                case "w":
+                    self.updatePlayerCoords(x-1, y)
+                case "a":
+                    self.updatePlayerCoords(x, y-1)
+                case "s":
+                    self.updatePlayerCoords(x+1, y)
+                case "d":
+                    self.updatePlayerCoords(x, y+1)
+                case _:
+                    print("Wrong command!")
 
     def printMap(self):
         num_rows = len(self.game.game_board)
@@ -35,10 +57,22 @@ class Gamelogic:
         print()
         print("Your keys: ", self.game.key_number)
 
-    
+
+    # --------------------------------- Movement --------------------------------- #
+    def gameTick(self):
+        # parse one command from every guard's list_of_commands and move the guards in the correct direction
+        self.game.moveGuards(self.round)
+        self.round += 1
+
+        
     def updatePlayerCoords(self, x, y):
-        # TODO: Move the guards
-        # gametick()
+        self.gameTick()
+
+        # Forbid movement into walls and out of map
+        if x > len(self.game.game_board) - 1 or x < 0:
+            return
+        if y > len(self.game.game_board[0]) - 1 or y < 0:
+            return
 
         # If player enters exit, instantly win the game
         # TODO: Currently also kills the player, maybe make it do something different?
@@ -46,11 +80,7 @@ class Gamelogic:
             self.winGame()
             self.game.is_alive = False
 
-        # Forbid movement into walls and out of map
-        if x > len(self.game.game_board) or x < 0:
-            return
-        if y > len(self.game.game_board[0]) or y < 0:
-            return
+        
         
         # Forbid entering the wall
         if self.game.game_board[x][y] == '#':
@@ -89,22 +119,3 @@ class Gamelogic:
         # updating new player position
         self.game.game_board[x][y] = 'O'
 
-    def winGame(self):
-        print("DAMN, YOU ARE THE GREATEST STUDENT WHO HAS EVER EXISTED!!!!")
-
-    def startGame(self):
-        while self.game.is_alive:
-            self.printMap()
-            command = input().lower()
-            x, y = self.game.player_position['row'], self.game.player_position['col']
-            match command:
-                case "w":
-                    self.updatePlayerCoords(x-1, y)
-                case "a":
-                    self.updatePlayerCoords(x, y-1)
-                case "s":
-                    self.updatePlayerCoords(x+1, y)
-                case "d":
-                    self.updatePlayerCoords(x, y+1)
-                case _:
-                    print("Wrong command!")

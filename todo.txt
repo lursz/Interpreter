@@ -1,1 +1,11 @@
 jak nie zadeklaruje mapy/gracza/exitu to zglos error
+poprawic gramatyke straznika (wywalic robienie obiektow w kodzie straznika)
+
+Add smart guard (one that automaticly follows the player)
+Don't allow creating other objects on player
+(maybe don't allow creating objects on other objects at all, idk)
+
+allow guards to walk on some objects (and make them not vanish)
+
+
+have more IQ <--------
