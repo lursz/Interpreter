@@ -1,48 +1,49 @@
 # JailBreakLang
-## About
-The JailBreakLang language enables a programmer to create simple game boards, complete with obstacles and programmable enemies. The game's theme is centered around escaping from a prison.
+## Ogólne informacje
+Język JailBreakLang pozwala programiście na utworzenie prostych plansz do gier, razem z przeszkodami oraz programowalnymi przeciwnikami. Motywem gry jest ucieczka z więzienia.
 
-The language aims to introduce users to the intricacies of programming in an enjoyable manner, while also allowing more creative developers to showcase their skills in level creation.
+Język ma na celu w przyjemny sposób wprowadzić użytkowników w tajniki programowania, jednocześnie pozwalająć bardziej kreatywnym twórcom wykazać się w tworzeniu poziomów.
 
-Once completed, the game board can be immediately tested and completed.
+Gotową planszę można od razu przetestować oraz przejść.
 
-## Run
-Install Python3 (ver >= 3.10.8), then install all dependencies from `requirements.txt`
-```
-pip install requirements.txt
-```
-
-__________________________________________
-## Syntax
-
-### Map
-* ``` MAP ```- size of the map
-* ``` PLAYER ```- starting position of the player
-* ``` EXIT ``` - position of the exit
-
-### Objects
-* ``` WALL ``` - object representing a wall
-* ``` GUARD ``` - object representing a guard
-* ``` TRAP ``` - object representing a trap
-* ``` KEY ``` - object representing a key to unlock a gate
-* ``` GATE ``` - object representing a gate
+## Wymagania
+Do poprawnego działania wymagane są:
+### ```antlr4```
+* ```$ python3 -m pip install -U antlr4-python3-runtime```
+### ```numpy```
+* ```$ python3 -m pip install -U numpy --user```
 
 
-### Control Instructions
-* ```IF(warunek){wyrażenia}``` - conditional instruction, will execute if the given condition is true
-* ```WHILE(warunek){wyrażenia}``` - loop executes as long as the given condition is true
-* ```FOR(int){wyrażenia}``` - loop that executes a specified number of times (a natural number greater than 0)
-* ```FUN nazwa{ciało}``` - function with the given name
-* ```nazwa``` - call a function with the given name
-* ```RANDOM(start, end)``` - returns a pseudorandom number within the given range (inclusive)
+## Składnia
 
-### Guard Controls
+### Mapa
+* ``` MAP ```- wielkość mapy
+* ``` PLAYER ```- pozycja startowa gracza
+* ``` EXIT ``` - pozycja wyjścia
+
+### Obiekty
+* ``` WALL ``` - obiekt bramy
+* ``` GUARD ``` - obiekt strażnika
+* ``` TRAP ``` - obiekt pułapki
+* ``` KEY ``` - obiekt klucza do bramy
+* ``` GATE ``` - obiekt bramy
+
+
+### Instrukcje sterujące
+* ```IF(warunek){wyrażenia}``` - instrukcja warunkowa, wykona się, jeżeli podany warunek jest prawdziwy
+* ```WHILE(warunek){wyrażenia}``` - pętla wykonuje się tak długo, dopóki podany warunek jest prawdziwy
+* ```FOR(int){wyrażenia}``` - pętla wykonująca się podaną liczbę razy (naturalna liczba większa od 0)
+* ```FUN nazwa{ciało}``` - funkcja o podanej nazwie
+* ```nazwa``` - wywołanie funkcji o podanej nazwie
+* ```RANDOM(start, end)``` - zwraca pseudorandomowa liczbę z podanego zakresu (włącznie)
+
+### Sterowanie strażnikiem
 * ```DIRECTION``` - 0 oznacza do góry, 1 w prawo, 2 w dół, 3 w lewo, inne wartości są podmieniane na resztę z dzielenia przez 4
 * ```TURNLEFT``` - obróć strażnika w lewo (równoważne ze zmniejszeniem DIRECTION o 1)
 * ```TURNRIGHT``` - obróć strażnika w prawo (równoważne ze zwiększeniem DIRECTION o 1)
 * ```STEP``` - sprawia, że strażnik poruszy się do przodu o jedno pole
 
-### Possible Conditions
+### Możliwe warunki
 * ```IFWALL``` - true jeśli przed postacią jest ściana
 * ```IFGUARD``` - true jeśli przed postacią jest wróg
 * ```IFTRAP``` -  true jeśli przed postacią jest pułapka

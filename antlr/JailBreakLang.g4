@@ -2,22 +2,34 @@ grammar JailBreakLang;
 
 start: code+ EOF;
 
-code: objects | commands | function_declaration;
+code: objects | commands | function_declaration | variables;
 
 objects:
-	'WALL' '=' (INT | ID | RAND) ',' (INT | ID | RAND)
-	| 'TRAP' '=' (INT | ID | RAND) ',' (INT | ID | RAND)
-	| 'KEY' '=' (INT | ID) ',' (INT | ID)
-	| 'GATE' '=' (INT | ID) ',' (INT | ID)
-	| 'GUARD' '=' (INT | ID) ',' (INT | ID) ',' INT '{' guard_extra_code* '}'
-	| 'MAP' '=' INT ',' INT 
-    | 'PLAYER' '=' INT ',' INT 
-    | 'EXIT' '=' INT ',' INT;
+	'WALL' '=' (expr | ID | RAND) ',' (expr | ID | RAND)
+	| 'TRAP' '=' (expr | ID | RAND) ',' (expr | ID | RAND)
+	| 'KEY' '=' (expr | ID) ',' (expr | ID)
+	| 'GATE' '=' (expr | ID) ',' (expr | ID)
+	| 'GUARD' '=' (expr | ID) ',' (expr | ID) ',' expr '{' guard_extra_code* '}'
+	| 'MAP' '=' expr ',' expr 
+    | 'PLAYER' '=' expr ',' expr 
+    | 'EXIT' '=' expr ',' expr;
 
+// INT
+variables: 'INT' ID '=' expr
+		   | ID '=' expr;
+
+expr: term ((ADD | SUB) term)*;
+
+term: factor ((MUL | DIV) factor)*;
+
+factor: ID | INT | LPAREN expr RPAREN;
+
+
+// LOGIC
 commands:
 	'IF' '(' condition ')' '{' expressions* '}'
 	| 'WHILE' '(' condition ')' '{' expressions* '}'
-	| 'FOR' '(' ID 'IN' INT ')' '{' expressions* '}'
+	| 'FOR' '(' ID 'IN' expr ')' '{' expressions* '}'
 	| ID ('(' ID (',' ID)* ')')?;
 
 function_declaration:
@@ -35,7 +47,6 @@ guard_control:
 
 condition:
 	'IFWALL'
-	| 'IFDIRECTION' '=' (INT | ID)
 	| 'IFGUARD'
 	| 'IFTRAP'
 	| 'IFGATE'
@@ -46,6 +57,12 @@ condition:
 	| condition 'OR' condition
 	| '(' condition ')';
 
+LPAREN: '(';
+RPAREN: ')';
+MUL: '*';
+DIV: '/';
+ADD: '+';
+SUB: '-';
 COMMENT: '#' ~[\r\n]* -> skip;
 ID: [a-zA-Z][a-zA-Z0-9]*;
 RAND: 'RANDOM' '(' INT ',' INT ')';

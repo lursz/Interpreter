@@ -32,6 +32,7 @@ class Gamelogic:
                     print("Wrong command!")
 
     def printMap(self):
+        return
         num_rows = len(self.game.game_board)
         num_cols = len(self.game.game_board[0])
         # First row

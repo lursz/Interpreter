@@ -3,6 +3,10 @@ PLAYER=1,1
 EXIT=5,5
 GATE=2,2
 KEY=1,5
+INT asdfasd23 = 3
+INT b = 3+asdfasd23
+
+#Guard declaration
 GUARD=3,3,0
 {
     LEFT
@@ -10,5 +14,3 @@ GUARD=3,3,0
     UP
     DOWN
 }
-
-WALL = 2,5

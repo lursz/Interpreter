@@ -35,6 +35,42 @@ class JailBreakLangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by JailBreakLangParser#variables.
+    def enterVariables(self, ctx:JailBreakLangParser.VariablesContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#variables.
+    def exitVariables(self, ctx:JailBreakLangParser.VariablesContext):
+        pass
+
+
+    # Enter a parse tree produced by JailBreakLangParser#expr.
+    def enterExpr(self, ctx:JailBreakLangParser.ExprContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#expr.
+    def exitExpr(self, ctx:JailBreakLangParser.ExprContext):
+        pass
+
+
+    # Enter a parse tree produced by JailBreakLangParser#term.
+    def enterTerm(self, ctx:JailBreakLangParser.TermContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#term.
+    def exitTerm(self, ctx:JailBreakLangParser.TermContext):
+        pass
+
+
+    # Enter a parse tree produced by JailBreakLangParser#factor.
+    def enterFactor(self, ctx:JailBreakLangParser.FactorContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#factor.
+    def exitFactor(self, ctx:JailBreakLangParser.FactorContext):
+        pass
+
+
     # Enter a parse tree produced by JailBreakLangParser#commands.
     def enterCommands(self, ctx:JailBreakLangParser.CommandsContext):
         pass

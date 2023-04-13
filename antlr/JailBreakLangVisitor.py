@@ -24,6 +24,26 @@ class JailBreakLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by JailBreakLangParser#variables.
+    def visitVariables(self, ctx:JailBreakLangParser.VariablesContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#expr.
+    def visitExpr(self, ctx:JailBreakLangParser.ExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#term.
+    def visitTerm(self, ctx:JailBreakLangParser.TermContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#factor.
+    def visitFactor(self, ctx:JailBreakLangParser.FactorContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by JailBreakLangParser#commands.
     def visitCommands(self, ctx:JailBreakLangParser.CommandsContext):
         return self.visitChildren(ctx)
