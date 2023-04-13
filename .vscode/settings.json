@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
         "./antlr"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }
