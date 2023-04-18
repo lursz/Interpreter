@@ -1,7 +1,5 @@
-antlr4-grun==0.4.1
-antlr4-python3-runtime==4.8
+antlr4-python3-runtime==4.12.0
 antlr4-tools==0.2
 install-jdk==1.0.2
 numpy==1.24.2
 pygame==2.3.0
-typer==0.4.2
