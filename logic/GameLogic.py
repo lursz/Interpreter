@@ -1,4 +1,4 @@
-from GameObjects import GameObjects
+from logic.GameObjects import GameObjects
 
 # ---------------------------------------------------------------------------- #
 #                                   GameLogic                                  #

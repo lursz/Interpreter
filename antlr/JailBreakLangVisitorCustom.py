@@ -1,9 +1,9 @@
 from antlr4 import *
 from antlr.JailBreakLangParser import JailBreakLangParser
 from antlr.JailBreakLangVisitor import JailBreakLangVisitor
-import GameObjects
-import GameLogic
-import Calculator
+import logic.GameObjects as GameObjects
+import logic.GameLogic as GameLogic
+import logic.Calculator as Calculator
 import warnings
 
 
