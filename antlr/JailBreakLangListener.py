@@ -44,6 +44,15 @@ class JailBreakLangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by JailBreakLangParser#comparison.
+    def enterComparison(self, ctx:JailBreakLangParser.ComparisonContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#comparison.
+    def exitComparison(self, ctx:JailBreakLangParser.ComparisonContext):
+        pass
+
+
     # Enter a parse tree produced by JailBreakLangParser#expr.
     def enterExpr(self, ctx:JailBreakLangParser.ExprContext):
         pass
@@ -113,6 +122,15 @@ class JailBreakLangListener(ParseTreeListener):
 
     # Exit a parse tree produced by JailBreakLangParser#guard_control.
     def exitGuard_control(self, ctx:JailBreakLangParser.Guard_controlContext):
+        pass
+
+
+    # Enter a parse tree produced by JailBreakLangParser#booleanValue.
+    def enterBooleanValue(self, ctx:JailBreakLangParser.BooleanValueContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#booleanValue.
+    def exitBooleanValue(self, ctx:JailBreakLangParser.BooleanValueContext):
         pass
 
 

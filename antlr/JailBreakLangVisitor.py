@@ -29,6 +29,11 @@ class JailBreakLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by JailBreakLangParser#comparison.
+    def visitComparison(self, ctx:JailBreakLangParser.ComparisonContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by JailBreakLangParser#expr.
     def visitExpr(self, ctx:JailBreakLangParser.ExprContext):
         return self.visitChildren(ctx)
@@ -66,6 +71,11 @@ class JailBreakLangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by JailBreakLangParser#guard_control.
     def visitGuard_control(self, ctx:JailBreakLangParser.Guard_controlContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#booleanValue.
+    def visitBooleanValue(self, ctx:JailBreakLangParser.BooleanValueContext):
         return self.visitChildren(ctx)
 
 

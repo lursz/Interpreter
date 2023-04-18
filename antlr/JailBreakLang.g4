@@ -16,7 +16,10 @@ objects:
 
 // INT
 variables: 'INT' ID '=' expr
-		   | ID '=' expr;
+		   | ID '=' expr
+		   | 'BOOLEAN' ID '=' condition;
+
+comparison: expr (EQUALS | NOT_EQUALS | LESS_THAN | GREATER_THAN) expr;
 
 expr: term ((ADD | SUB) term)*;
 
@@ -24,10 +27,8 @@ term: factor ((MUL | DIV) factor)*;
 
 factor: ID | INT | LPAREN expr RPAREN;
 
-
-// LOGIC
 commands:
-	'IF' '(' condition ')' '{' expressions* '}'
+	'IF' '(' condition ')' '{' expressions* '}' ('ELSE' '{' expressions* '}')?
 	| 'WHILE' '(' condition ')' '{' expressions* '}'
 	| 'FOR' '(' ID 'IN' expr ')' '{' expressions* '}'
 	| ID ('(' ID (',' ID)* ')')?;
@@ -45,18 +46,21 @@ guard_control:
 	| 'UP'
 	| 'DOWN';
 
-condition:
-	'IFWALL'
-	| 'IFGUARD'
-	| 'IFTRAP'
-	| 'IFGATE'
-	| 'NO' condition
-	| 'TRUE'
-	| 'FALSE'
-	| condition 'AND' condition
-	| condition 'OR' condition
-	| '(' condition ')';
+booleanValue : 'TRUE' | 'FALSE' ;
 
+condition : '(' condition ')'                
+                | 'NOT' condition                  
+                | condition 'AND' condition 
+                | condition 'OR' condition  
+                | booleanValue 
+				| comparison;
+
+
+
+EQUALS : '==' ;
+NOT_EQUALS : '!=' ;
+LESS_THAN : '<' ;
+GREATER_THAN : '>' ;
 LPAREN: '(';
 RPAREN: ')';
 MUL: '*';
