@@ -1,4 +1,5 @@
 __pycache__/
 /antlr/__pycache__/
+/logic/__pycache__/
 .vscode/
 .venv/
