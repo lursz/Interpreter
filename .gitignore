@@ -1,3 +1,4 @@
 __pycache__/
 /antlr/__pycache__/
 .vscode/
+.venv/
