@@ -46,7 +46,15 @@ guard_control:
 	| 'UP'
 	| 'DOWN';
 
-booleanValue : 'TRUE' | 'FALSE' ;
+value_comparison: expr (EQUALS | NOT_EQUALS | LESS_THAN | GREATER_THAN) expr;
+
+booleanValue : 'TRUE'
+	| 'FALSE'
+	| value_comparison
+	| variable_value
+	;
+
+variable_value: ID;
 
 condition :                
 	| condition_product ('OR' condition)*

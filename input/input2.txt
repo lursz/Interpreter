@@ -1,16 +1,20 @@
 INT a = 3
-INT asdfasd23 = (2 + 2) * 2
+INT zmienna = (2 + 2) * 2
 INT b = 1+a
 
+BOOLEAN elomelo = TRUE
 MAP=5,5
 PLAYER=2+2,b
 EXIT=2*2,17/5
 GATE=2,2
 KEY=1,5
 
-IF ( TRUE AND NOT ( FALSE AND FALSE ) ) {
+IF ( elomelo) {
     WALL = 1,1
     WALL = 1,3
+    IF ( TRUE OR FALSE ) {
+        WALL = 1,2
+    }
 }
 ELSE {
     

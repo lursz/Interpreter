@@ -109,7 +109,7 @@ class JailBreakLang(JailBreakLangVisitor):
                         self.variables[codes[i].getText()] = 0
                         var_name = codes[i].getText()
                 elif i == 3:
-                    self.variables[var_name] = self.visit(codes[i])
+                    self.booleans[var_name] = self.variables[var_name] = self.visit(codes[i])
             # Mode 1 - redefine existing variable   
             else:
                 if i == 0:
@@ -118,7 +118,7 @@ class JailBreakLang(JailBreakLangVisitor):
                     else:
                         var_name = codes[i].getText()
                 elif i == 2:
-                    self.variables[var_name] = self.visit(codes[i])
+                    self.booleans[var_name] = self.variables[var_name] = self.visit(codes[i])
         #print(self.variables)
 
 
@@ -143,8 +143,33 @@ class JailBreakLang(JailBreakLangVisitor):
             exit()
         return int(x)
     
+    def visitValue_comparison(self, ctx: JailBreakLangParser.Value_comparisonContext):
+        operators = {
+            "<": lambda x, y: x < y,
+            ">": lambda x, y: x > y,
+            "==": lambda x, y: x == y,
+            "!=": lambda x, y: x != y,
+        }
+        
+        codes = list(ctx.getChildren())
+        
+        return operators[codes[1].getText()](self.visit(codes[0]), self.visit(codes[2]))
+        
+    def visitVariable_value(self, ctx):
+        codes = list(ctx.getChildren())
+        # print(self.booleans)
+        # print(codes[0].getText())
+        if codes[0].getText() not in self.booleans:
+            return self.visit(codes[0])
+
+        return self.booleans[codes[0].getText()]
 
     def visitBooleanValue(self, ctx):
+        codes = list(ctx.getChildren())
+        
+        if codes[0].getText() not in ['TRUE', 'FALSE']:
+            return self.visit(codes[0])
+        
         if ctx.getText() == "TRUE":
             return True
         else:
@@ -154,7 +179,6 @@ class JailBreakLang(JailBreakLangVisitor):
         codes = list(ctx.getChildren())
         
         condition_value = False
-        # print("TERAZ SIE ZACZYNA")
         for condition_product in codes[::2]:
             print(condition_product.getText())
             condition_value = condition_value or self.visit(condition_product)

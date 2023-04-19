@@ -125,12 +125,30 @@ class JailBreakLangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by JailBreakLangParser#value_comparison.
+    def enterValue_comparison(self, ctx:JailBreakLangParser.Value_comparisonContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#value_comparison.
+    def exitValue_comparison(self, ctx:JailBreakLangParser.Value_comparisonContext):
+        pass
+
+
     # Enter a parse tree produced by JailBreakLangParser#booleanValue.
     def enterBooleanValue(self, ctx:JailBreakLangParser.BooleanValueContext):
         pass
 
     # Exit a parse tree produced by JailBreakLangParser#booleanValue.
     def exitBooleanValue(self, ctx:JailBreakLangParser.BooleanValueContext):
+        pass
+
+
+    # Enter a parse tree produced by JailBreakLangParser#variable_value.
+    def enterVariable_value(self, ctx:JailBreakLangParser.Variable_valueContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#variable_value.
+    def exitVariable_value(self, ctx:JailBreakLangParser.Variable_valueContext):
         pass
 
 

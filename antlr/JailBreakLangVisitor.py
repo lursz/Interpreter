@@ -74,8 +74,18 @@ class JailBreakLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by JailBreakLangParser#value_comparison.
+    def visitValue_comparison(self, ctx:JailBreakLangParser.Value_comparisonContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by JailBreakLangParser#booleanValue.
     def visitBooleanValue(self, ctx:JailBreakLangParser.BooleanValueContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#variable_value.
+    def visitVariable_value(self, ctx:JailBreakLangParser.Variable_valueContext):
         return self.visitChildren(ctx)
 
 
