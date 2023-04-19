@@ -48,12 +48,16 @@ guard_control:
 
 booleanValue : 'TRUE' | 'FALSE' ;
 
-condition : '(' condition ')'                
-                | 'NOT' condition                  
-                | condition 'AND' condition 
-                | condition 'OR' condition  
-                | booleanValue 
-				| comparison;
+condition :                
+	| condition_product ('OR' condition)*
+	;      
+
+condition_product : '(' condition ')'
+	| booleanValue ('AND' condition_product)*
+	| 'NOT' booleanValue
+	| 'NOT' '(' condition ')'
+	| '(' condition ')'
+	;	
 
 
 

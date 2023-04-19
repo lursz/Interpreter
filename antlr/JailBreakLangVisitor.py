@@ -84,5 +84,10 @@ class JailBreakLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by JailBreakLangParser#condition_product.
+    def visitCondition_product(self, ctx:JailBreakLangParser.Condition_productContext):
+        return self.visitChildren(ctx)
+
+
 
 del JailBreakLangParser

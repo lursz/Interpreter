@@ -143,5 +143,14 @@ class JailBreakLangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by JailBreakLangParser#condition_product.
+    def enterCondition_product(self, ctx:JailBreakLangParser.Condition_productContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#condition_product.
+    def exitCondition_product(self, ctx:JailBreakLangParser.Condition_productContext):
+        pass
+
+
 
 del JailBreakLangParser

@@ -145,29 +145,39 @@ class JailBreakLang(JailBreakLangVisitor):
     
 
     def visitBooleanValue(self, ctx):
-        codes = list(ctx.getChildren())
-        if codes[0] == "TRUE":
+        if ctx.getText() == "TRUE":
             return True
         else:
             return False
 
     def visitCondition(self, ctx):
         codes = list(ctx.getChildren())
-        if codes[0].getText() == 'TRUE':
-            return True
-        else:
-            return False
-        if (codes[1].getText() == 'AND'):
-            print(self.visit(codes[0]) and self.visit(codes[2]))
-            return self.visit(codes[0]) and self.visit(codes[2])
-
-        if (codes[1].getText() == 'OR'):
-            print(self.visit(codes[0]) or self.visit(codes[2]))
-            return self.visit(codes[0]) or self.visit(codes[2])
         
-        for command in codes:
-            print('CONDITION', command.getText())
+        condition_value = False
+        # print("TERAZ SIE ZACZYNA")
+        for condition_product in codes[::2]:
+            print(condition_product.getText())
+            condition_value = condition_value or self.visit(condition_product)
+        # print("Wartosc: ", condition_value)
+        return condition_value
+    
+    def visitCondition_product(self, ctx):
+        codes = list(ctx.getChildren())
 
+        # print("Condition product")
+        if codes[0].getText() == '(':
+                return self.visit(codes[1])
+        if codes[0].getText() == 'NOT':
+            if len(codes) > 2:
+                return not self.visit(codes[2])
+            return not self.visit(codes[1])
+        
+        condition_value = True
+        for condition_product in codes[::2]:
+            # print("Condition product:", condition_product.getText())
+            condition_value = condition_value and self.visit(condition_product)
+            # print("Condition value:", condition_value)
+        return condition_value
         
     # If statement, 
     def visitCommands(self, ctx):
