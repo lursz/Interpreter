@@ -2,14 +2,13 @@ INT a = 3
 INT zmienna = (2 + 2) * 2
 INT b = 1+a
 
-BOOLEAN elomelo = TRUE
 MAP=5,5
 PLAYER=2+2,b
 EXIT=2*2,17/5
 GATE=2,2
 KEY=1,5
 
-IF ( elomelo) {
+IF ( 1 + 2 > 2 ) {
     WALL = 1,1
     WALL = 1,3
     IF ( TRUE OR FALSE ) {

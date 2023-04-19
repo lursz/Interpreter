@@ -180,7 +180,7 @@ class JailBreakLang(JailBreakLangVisitor):
         
         condition_value = False
         for condition_product in codes[::2]:
-            print(condition_product.getText())
+            # print(condition_product.getText())
             condition_value = condition_value or self.visit(condition_product)
         # print("Wartosc: ", condition_value)
         return condition_value
