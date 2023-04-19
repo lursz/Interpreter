@@ -88,6 +88,9 @@ class JailBreakLang(JailBreakLangVisitor):
                     self.visit(codes[i])
                     #print('test: ', i, codes[i])
                 return row, col, guard_id
+            case "PRINT":
+                expression = self.visitExpr(codes[2])
+                print(expression)
             
     
 

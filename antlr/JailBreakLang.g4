@@ -12,7 +12,8 @@ objects:
 	| 'GUARD' '=' (expr | ID) ',' (expr | ID) ',' expr '{' guard_extra_code* '}'
 	| 'MAP' '=' expr ',' expr 
     | 'PLAYER' '=' expr ',' expr 
-    | 'EXIT' '=' expr ',' expr;
+    | 'EXIT' '=' expr ',' expr
+	| 'PRINT' '(' expr ')';
 
 // INT
 variables: 'INT' ID '=' expr
