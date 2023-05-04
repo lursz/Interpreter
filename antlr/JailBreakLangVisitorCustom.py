@@ -86,7 +86,6 @@ class JailBreakLang(JailBreakLangVisitor):
                 codes = list(ctx.getChildren())
                 for i in range(len(codes)):
                     self.visit(codes[i])
-                    #print('test: ', i, codes[i])
                 return row, col, guard_id
             case "PRINT":
                 expression = self.visitExpr(codes[2])
@@ -99,30 +98,50 @@ class JailBreakLang(JailBreakLangVisitor):
     def visitVariables(self, ctx):
         codes = list(ctx.getChildren())
         # mode 0 - declare new variable, mode 1 - redefine existing variable
-        mode = 0 if codes[0].getText() == 'INT' else 1
+        mode = 0 if (codes[0].getText() in ['INT', 'BOOLEAN']) else 1
         var_name = ""
         for i in range(len(codes)):
+            print(i, codes[i].getText())
             # Mode 0 - declare new variable
             if mode == 0:
                 if i == 1:
-                    # Dictionary
+                    # Check if the variable exists. If yes, raise an error.
                     if codes[i].getText() in self.variables.keys() or codes[i].getText() in self.booleans.keys():
                         warnings.warn("Variable already exists")
                     else:
-                        self.variables[codes[i].getText()] = 0
-                        var_name = codes[i].getText()
+                        # If declaring INT - create a new variable in the integers dictionary
+                        if codes[0].getText() == "INT":
+                            self.variables[codes[i].getText()] = 0
+                            var_name = codes[i].getText()
+                        # If declaring BOOLEAN - create a new variable in the booleans dictionary
+                        else:
+                            self.booleans[codes[i].getText()] = False
+                            var_name = codes[i].getText()
                 elif i == 3:
-                    self.booleans[var_name] = self.variables[var_name] = self.visit(codes[i])
+                    # If declaring INT - insert the actual value of int to the integers dictionary
+                    if codes[0].getText() == "INT":
+                        self.variables[var_name] = self.visit(codes[i])
+                    # Same but with booleans
+                    else:
+                        self.booleans[var_name] = self.visit(codes[i])
             # Mode 1 - redefine existing variable   
             else:
                 if i == 0:
-                    if codes[i].getText() not in self.variables.keys():
+                    # Check if the variable exists. If no, raise an error.
+                    if codes[i].getText() not in self.variables.keys() and codes[i].getText() not in self.booleans.keys():
                         warnings.warn("Variable doesn't exist")
                     else:
                         var_name = codes[i].getText()
                 elif i == 2:
-                    self.booleans[var_name] = self.variables[var_name] = self.visit(codes[i])
-        #print(self.variables)
+                    # Redeclare INT
+                    if var_name in self.variables.keys():
+                        self.variables[var_name] = self.visit(codes[i])
+                    # Redeclare BOOL
+                    else:
+                        self.booleans[var_name] = self.visit(codes[i])
+        print("BOOLS: ", self.booleans)
+        print("VARS: ", self.variables)
+
 
 
     # Parse int from 'INT'
@@ -181,8 +200,8 @@ class JailBreakLang(JailBreakLangVisitor):
     def visitCondition(self, ctx):
         codes = list(ctx.getChildren())
         
-        condition_value = False
-        for condition_product in codes[::2]:
+        condition_value = self.visit(codes[0])
+        for condition_product in codes[2:]:
             # print(condition_product.getText())
             condition_value = condition_value or self.visit(condition_product)
         # print("Wartosc: ", condition_value)
@@ -190,7 +209,7 @@ class JailBreakLang(JailBreakLangVisitor):
     
     def visitCondition_product(self, ctx):
         codes = list(ctx.getChildren())
-
+        
         # print("Condition product")
         if codes[0].getText() == '(':
                 return self.visit(codes[1])
@@ -199,11 +218,19 @@ class JailBreakLang(JailBreakLangVisitor):
                 return not self.visit(codes[2])
             return not self.visit(codes[1])
         
-        condition_value = True
-        for condition_product in codes[::2]:
-            # print("Condition product:", condition_product.getText())
-            condition_value = condition_value and self.visit(condition_product)
-            # print("Condition value:", condition_value)
+        condition_value = self.visit(codes[0])
+        print("Codes array: ")
+        print([x.getText() for x in codes])
+      
+        for condition_product in codes[2:]:
+            match codes[1].getText():
+                case "AND":
+                    condition_value = condition_value and self.visit(condition_product)
+                case "==":
+                    condition_value = condition_value == self.visit(condition_product)
+                case "!=":
+                    condition_value = condition_value != self.visit(condition_product)
+
         return condition_value
         
     # If statement, 
@@ -229,6 +256,34 @@ class JailBreakLang(JailBreakLangVisitor):
                         break
                     self.visitExpressions(codes[i]) 
                 #self.visitExpressions(codes[9])
+
+        if codes[0].getText() == 'FOR':
+            # TODO: FOR LOOP
+            # FOR (x IN 10) { code  }
+            #  0   2  3  4     7
+            var_name = codes[2].getText()
+            
+            
+            top_value = int(codes[4].getText())
+
+            while self.variables[var_name] <= top_value:
+                for code in codes[7:-1]:
+                    self.visit(code)
+                self.variables[var_name] += 1
+            
+
+        if codes[0].getText() == 'WHILE':
+            print('WHILE')
+            condition = self.visit(codes[2])
+
+            while condition:
+                for code in codes[5:-1]:
+                    self.visit(code)
+                condition = self.visit(codes[2])
+
+            print(condition)
+
+
 
     def visitExpressions(self, ctx):
         codes = list(ctx.getChildren())

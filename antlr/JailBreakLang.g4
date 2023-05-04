@@ -15,7 +15,8 @@ objects:
     | 'EXIT' '=' expr ',' expr
 	| 'PRINT' '(' expr ')';
 
-// INT
+
+// INT DECLARATION
 variables: 'INT' ID '=' expr
 		   | ID '=' expr
 		   | 'BOOLEAN' ID '=' condition;
@@ -28,17 +29,23 @@ term: factor ((MUL | DIV) factor)*;
 
 factor: ID | INT | LPAREN expr RPAREN;
 
+
+// COMMANDS
 commands:
 	'IF' '(' condition ')' '{' expressions* '}' ('ELSE' '{' expressions* '}')?
 	| 'WHILE' '(' condition ')' '{' expressions* '}'
 	| 'FOR' '(' ID 'IN' expr ')' '{' expressions* '}'
 	| ID ('(' ID (',' ID)* ')')?;
+	//FOR (x IN 10) {*code*}
 
+// FUNCTIONS
 function_declaration:
 	'FUN' ID ('(' ID (',' ID)* ')')? '{' expressions* '}';
 
-expressions: objects | commands;
+expressions: objects | commands | variables;
 
+
+// GUARD
 guard_extra_code: commands | guard_control;
 
 guard_control:
@@ -47,6 +54,7 @@ guard_control:
 	| 'UP'
 	| 'DOWN';
 
+// BOOLEANS
 value_comparison: expr (EQUALS | NOT_EQUALS | LESS_THAN | GREATER_THAN) expr;
 
 booleanValue : 'TRUE'
@@ -63,11 +71,11 @@ condition :
 
 condition_product : '(' condition ')'
 	| booleanValue ('AND' condition_product)*
+	| booleanValue (EQUALS condition_product)*
+	| booleanValue (NOT_EQUALS condition_product)*
 	| 'NOT' booleanValue
 	| 'NOT' '(' condition ')'
-	| '(' condition ')'
 	;	
-
 
 
 EQUALS : '==' ;
