@@ -229,8 +229,4 @@ GUARD1
 ## Interakcja
 * ``` wasd ```- przechodzi o jedno pole
 
-## Guide
-```
-antlr4 -Dlanguage=Python3 JailBreakLang.g4 -visitor
-antlr4-parse JailBreakLang.g4 start -gui    
-```
+

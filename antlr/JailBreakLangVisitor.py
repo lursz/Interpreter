@@ -54,13 +54,43 @@ class JailBreakLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by JailBreakLangParser#expressions.
+    def visitExpressions(self, ctx:JailBreakLangParser.ExpressionsContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by JailBreakLangParser#function_declaration.
     def visitFunction_declaration(self, ctx:JailBreakLangParser.Function_declarationContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by JailBreakLangParser#expressions.
-    def visitExpressions(self, ctx:JailBreakLangParser.ExpressionsContext):
+    # Visit a parse tree produced by JailBreakLangParser#fun_type.
+    def visitFun_type(self, ctx:JailBreakLangParser.Fun_typeContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#var_type.
+    def visitVar_type(self, ctx:JailBreakLangParser.Var_typeContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#fun_expressions.
+    def visitFun_expressions(self, ctx:JailBreakLangParser.Fun_expressionsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#return.
+    def visitReturn(self, ctx:JailBreakLangParser.ReturnContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#fun_commands.
+    def visitFun_commands(self, ctx:JailBreakLangParser.Fun_commandsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#use_fun.
+    def visitUse_fun(self, ctx:JailBreakLangParser.Use_funContext):
         return self.visitChildren(ctx)
 
 

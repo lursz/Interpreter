@@ -89,6 +89,15 @@ class JailBreakLangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by JailBreakLangParser#expressions.
+    def enterExpressions(self, ctx:JailBreakLangParser.ExpressionsContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#expressions.
+    def exitExpressions(self, ctx:JailBreakLangParser.ExpressionsContext):
+        pass
+
+
     # Enter a parse tree produced by JailBreakLangParser#function_declaration.
     def enterFunction_declaration(self, ctx:JailBreakLangParser.Function_declarationContext):
         pass
@@ -98,12 +107,57 @@ class JailBreakLangListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by JailBreakLangParser#expressions.
-    def enterExpressions(self, ctx:JailBreakLangParser.ExpressionsContext):
+    # Enter a parse tree produced by JailBreakLangParser#fun_type.
+    def enterFun_type(self, ctx:JailBreakLangParser.Fun_typeContext):
         pass
 
-    # Exit a parse tree produced by JailBreakLangParser#expressions.
-    def exitExpressions(self, ctx:JailBreakLangParser.ExpressionsContext):
+    # Exit a parse tree produced by JailBreakLangParser#fun_type.
+    def exitFun_type(self, ctx:JailBreakLangParser.Fun_typeContext):
+        pass
+
+
+    # Enter a parse tree produced by JailBreakLangParser#var_type.
+    def enterVar_type(self, ctx:JailBreakLangParser.Var_typeContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#var_type.
+    def exitVar_type(self, ctx:JailBreakLangParser.Var_typeContext):
+        pass
+
+
+    # Enter a parse tree produced by JailBreakLangParser#fun_expressions.
+    def enterFun_expressions(self, ctx:JailBreakLangParser.Fun_expressionsContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#fun_expressions.
+    def exitFun_expressions(self, ctx:JailBreakLangParser.Fun_expressionsContext):
+        pass
+
+
+    # Enter a parse tree produced by JailBreakLangParser#return.
+    def enterReturn(self, ctx:JailBreakLangParser.ReturnContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#return.
+    def exitReturn(self, ctx:JailBreakLangParser.ReturnContext):
+        pass
+
+
+    # Enter a parse tree produced by JailBreakLangParser#fun_commands.
+    def enterFun_commands(self, ctx:JailBreakLangParser.Fun_commandsContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#fun_commands.
+    def exitFun_commands(self, ctx:JailBreakLangParser.Fun_commandsContext):
+        pass
+
+
+    # Enter a parse tree produced by JailBreakLangParser#use_fun.
+    def enterUse_fun(self, ctx:JailBreakLangParser.Use_funContext):
+        pass
+
+    # Exit a parse tree produced by JailBreakLangParser#use_fun.
+    def exitUse_fun(self, ctx:JailBreakLangParser.Use_funContext):
         pass
 
 

@@ -5,11 +5,17 @@ EXIT=3,2
 GATE=2,2
 KEY=1,4
 
-BOOLEAN test = 2 < 5
+INT a = 1
+INT b = 1
 
-INT x = 2
-FOR (x IN 5) 
-{ 
-    WALL=x,5
-    PRINT(x)
+VOID FUN asdf (INT a, BOOLEAN b){
+    PRINT (2342342)
+	RETURN
 }
+
+
+
+
+
+
+

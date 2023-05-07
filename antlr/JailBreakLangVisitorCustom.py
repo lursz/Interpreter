@@ -4,15 +4,34 @@ from antlr.JailBreakLangVisitor import JailBreakLangVisitor
 import logic.GameObjects as GameObjects
 import logic.GameLogic as GameLogic
 import logic.Calculator as Calculator
+import re
 import warnings
 
 
 class JailBreakLang(JailBreakLangVisitor):
     def __init__(self):
         self.game = GameObjects.GameObjects()
+        # Global variables
         self.variables = {}
         self.booleans = {}
+
+        # Stack of variables (used to handle functions)
+        self.function_vars = []
+        self.function_bools = []
     
+
+    def getVariable(self, variableName: str):
+        # TODO: check global and scope
+        if len(self.function_vars) > 0 and variableName in self.function_vars[-1].keys():
+            return self.function_vars[-1][variableName]
+        return self.variables[variableName] if variableName in self.variables.keys() else None
+
+    def setVariable(self, variableName, value):
+        if len(self.function_vars) > 0 and variableName in self.function_vars[-1].keys():
+            self.function_vars[-1][variableName] = value
+        elif variableName in self.variables.keys():
+            self.variables[variableName] = value
+
     # Visit Start
     def visitStart(self, ctx):
         lines = list(ctx.getChildren())
@@ -155,10 +174,12 @@ class JailBreakLang(JailBreakLangVisitor):
         codes = list(ctx.getChildren())
         math_string = ""
         for i in range(0, len(list(ctx.getChildren()))):
-            if codes[i].getText() in self.variables.keys():
-                math_string += str(self.variables[codes[i].getText()])
+            # if codes[i].getText() in self.variables.keys():
+            var_name = codes[i].getText()
+            if var_name in self.variables.keys() or (len(self.function_vars)>0 and var_name in self.function_vars[-1].keys()):
+                math_string += str(self.getVariable(var_name))
             else:
-                math_string += codes[i].getText()
+                math_string += var_name
         x = calc.evaluate(math_string)
         if x == None:
             warnings.warn(math_string + " is not a correct expression")
@@ -258,18 +279,16 @@ class JailBreakLang(JailBreakLangVisitor):
                 #self.visitExpressions(codes[9])
 
         if codes[0].getText() == 'FOR':
-            # TODO: FOR LOOP
             # FOR (x IN 10) { code  }
             #  0   2  3  4     7
             var_name = codes[2].getText()
             
-            
             top_value = int(codes[4].getText())
-
-            while self.variables[var_name] <= top_value:
+            while self.getVariable(var_name) <= top_value:
                 for code in codes[7:-1]:
                     self.visit(code)
-                self.variables[var_name] += 1
+                #self.variables[var_name] += 1
+                self.setVariable(var_name, self.getVariable(var_name))
             
 
         if codes[0].getText() == 'WHILE':
@@ -290,3 +309,100 @@ class JailBreakLang(JailBreakLangVisitor):
         for command in codes:
             #print('COMMAND', command.getText())
             self.visit(command)
+
+    def visitUse_fun(self, ctx):
+        # TODO:
+        codes = list(ctx.getChildren())
+        print('USE FUN')
+        print([x.getText() for x in codes])
+
+    def visitFunction_declaration(self, ctx):
+        codes = list(ctx.getChildren())
+        # print([(key, ctx[key]) for key in ctx.keys()])
+
+        # type fun a(INT a, INT b, INT c)
+        #  0    1  2  4  5   7  8  9   10
+        # -> ['a', 'b', 'c']
+        
+        return_type = codes[0].getText()
+        function_name = codes[2].getText()
+
+        fun_var = {}
+        fun_bool = {}
+
+        start = 0
+        # Extract all the variable names from function declaration
+        for i in range(4, len(codes)):
+            curr_value = codes[i].getText()
+            if curr_value == ')':
+                start = i+2
+                break
+            
+            if curr_value in ['INT', 'BOOLEAN', ',']: 
+                continue
+            # (value, type)
+            if codes[i-1].getText() == 'BOOLEAN':
+                fun_bool[curr_value] = False
+            else:
+                fun_var[curr_value] = 0
+
+
+        self.function_vars.append(fun_var)
+        self.function_bools.append(fun_bool)
+        for i in range(start, len(codes)):
+            curr_value = codes[i].getText()
+            if curr_value == '}':
+                break
+            x = self.visit(codes[i])
+            if x is not None and len(x) == 2 and x[0] == "RETURN":
+                # Check if the returned type matches function type
+                if x[1] == None and return_type == 'VOID':
+                    return x[1]
+                # if type(x[1]) == type(int)
+                elif type(x[1]) == type(1) and return_type == 'INT':
+                    return x[1]
+                elif type(x[1]) == type(True) and return_type == 'BOOLEAN':
+                    return x[1]
+                else:
+                    raise Exception("Function return type does not match")
+
+
+        def callback():
+            self.function_vars.append(fun_var)
+            self.function_bools.append(fun_bool)
+            for i in range(start, len(codes)):
+                curr_value = codes[i].getText()
+                if curr_value == '}':
+                    break
+                x = self.visit(codes[i])
+                if x is not None and len(x) == 2 and x[0] == "RETURN":
+                    # Check if the returned type matches function type
+                    if x[1] == None and return_type == 'VOID':
+                        return x[1]
+                    # if type(x[1]) == type(int)
+                    elif type(x[1]) == type(1) and return_type == 'INT':
+                        return x[1]
+                    elif type(x[1]) == type(True) and return_type == 'BOOLEAN':
+                        return x[1]
+                    else:
+                        raise Exception("Function return type does not match")
+        #TODO: create self.functions in listener
+        #self.functions[function_name] = callback
+    
+    def visitReturn(self, ctx):
+        # It can return integer, boolean or None (for void type)
+        codes = list(ctx.getChildren())
+        # remove from stack
+        self.function_vars.pop()
+        self.function_bools.pop()
+        
+        return_value = None if len(codes) == 1 else self.visit(codes[1])
+        return ("RETURN", return_value)
+
+
+# class FunctionDeclaration:
+#     def __init__(self, name, parameters, return_type, body):
+#         self.name = name
+#         self.parameters = parameters
+#         self.return_type = return_type
+#         self.body = body

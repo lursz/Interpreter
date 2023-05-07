@@ -35,15 +35,37 @@ commands:
 	'IF' '(' condition ')' '{' expressions* '}' ('ELSE' '{' expressions* '}')?
 	| 'WHILE' '(' condition ')' '{' expressions* '}'
 	| 'FOR' '(' ID 'IN' expr ')' '{' expressions* '}'
-	| ID ('(' ID (',' ID)* ')')?;
+	| use_fun;
 	//FOR (x IN 10) {*code*}
-
-// FUNCTIONS
-function_declaration:
-	'FUN' ID ('(' ID (',' ID)* ')')? '{' expressions* '}';
 
 expressions: objects | commands | variables;
 
+// FUNCTIONS
+function_declaration:
+	fun_type 'FUN' ID '('( var_type ID (',' var_type ID)* )?')' '{' fun_expressions* '}';
+// VOID FUN asdf (*typ* *zmienna*, *typ* *zmienna*){
+// 	cholera wie code
+// 	RETURN COŚ
+// }
+
+fun_type: 'VOID'
+		  | 'INT'
+		  | 'BOOLEAN';
+
+var_type: 'INT'
+		  | 'BOOLEAN';
+
+fun_expressions: objects | fun_commands | variables | return;
+
+return: RETURN (expr)?;
+
+fun_commands:
+	'IF' '(' condition ')' '{' fun_expressions* '}' ('ELSE' '{' fun_expressions* '}')?
+	| 'WHILE' '(' condition ')' '{' fun_expressions* '}'
+	| 'FOR' '(' ID 'IN' expr ')' '{' fun_expressions* '}'
+	| use_fun;
+
+use_fun: 'USE' ID ('(' ID (',' ID)* ')')?;
 
 // GUARD
 guard_extra_code: commands | guard_control;
@@ -77,7 +99,7 @@ condition_product : '(' condition ')'
 	| 'NOT' '(' condition ')'
 	;	
 
-
+RETURN: 'RETURN';
 EQUALS : '==' ;
 NOT_EQUALS : '!=' ;
 LESS_THAN : '<' ;
