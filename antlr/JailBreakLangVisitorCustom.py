@@ -18,14 +18,17 @@ class JailBreakLang(JailBreakLangVisitor):
         # Stack of variables (used to handle functions)
         self.function_vars = []
         self.function_bools = []
-    
+
+        # {function_name: {type_arguments: '[INT', 'BOOLEAN', ...], callback: Function}
+        self.functions = {}
 
     def getVariable(self, variableName: str):
         # TODO: check global and scope
         if len(self.function_vars) > 0 and variableName in self.function_vars[-1].keys():
             return self.function_vars[-1][variableName]
-        return self.variables[variableName] if variableName in self.variables.keys() else None
-
+        #return self.variables[variableName] if variableName in self.variables.keys() else None
+        return self.variables[variableName]
+    
     def setVariable(self, variableName, value):
         if len(self.function_vars) > 0 and variableName in self.function_vars[-1].keys():
             self.function_vars[-1][variableName] = value
@@ -35,7 +38,6 @@ class JailBreakLang(JailBreakLangVisitor):
     # Visit Start
     def visitStart(self, ctx):
         lines = list(ctx.getChildren())
-
         for i in range(len(lines) - 1):
             self.visit(lines[i])
         
@@ -96,7 +98,6 @@ class JailBreakLang(JailBreakLangVisitor):
                 guard_id = codes[6].getText()
                 list_of_commands = codes[8:-1]
                 list_of_commands = [i.getText() for i in list_of_commands]
-                # print(list_of_commands)
                 
                 # Create a guard and append it to the list of guards
                 self.game.createGuard(row, col, guard_id, list_of_commands)
@@ -107,6 +108,7 @@ class JailBreakLang(JailBreakLangVisitor):
                     self.visit(codes[i])
                 return row, col, guard_id
             case "PRINT":
+
                 expression = self.visitExpr(codes[2])
                 print(expression)
             
@@ -116,11 +118,11 @@ class JailBreakLang(JailBreakLangVisitor):
     # Declare new variable or redefine an existing one
     def visitVariables(self, ctx):
         codes = list(ctx.getChildren())
+        
         # mode 0 - declare new variable, mode 1 - redefine existing variable
         mode = 0 if (codes[0].getText() in ['INT', 'BOOLEAN']) else 1
         var_name = ""
         for i in range(len(codes)):
-            print(i, codes[i].getText())
             # Mode 0 - declare new variable
             if mode == 0:
                 if i == 1:
@@ -158,8 +160,6 @@ class JailBreakLang(JailBreakLangVisitor):
                     # Redeclare BOOL
                     else:
                         self.booleans[var_name] = self.visit(codes[i])
-        print("BOOLS: ", self.booleans)
-        print("VARS: ", self.variables)
 
 
 
@@ -172,6 +172,8 @@ class JailBreakLang(JailBreakLangVisitor):
     def visitExpr(self, ctx) -> int:
         calc = Calculator.Calculator()
         codes = list(ctx.getChildren())
+        
+        
         math_string = ""
         for i in range(0, len(list(ctx.getChildren()))):
             # if codes[i].getText() in self.variables.keys():
@@ -200,8 +202,7 @@ class JailBreakLang(JailBreakLangVisitor):
         
     def visitVariable_value(self, ctx):
         codes = list(ctx.getChildren())
-        # print(self.booleans)
-        # print(codes[0].getText())
+        
         if codes[0].getText() not in self.booleans:
             return self.visit(codes[0])
 
@@ -223,15 +224,12 @@ class JailBreakLang(JailBreakLangVisitor):
         
         condition_value = self.visit(codes[0])
         for condition_product in codes[2:]:
-            # print(condition_product.getText())
             condition_value = condition_value or self.visit(condition_product)
-        # print("Wartosc: ", condition_value)
         return condition_value
     
     def visitCondition_product(self, ctx):
         codes = list(ctx.getChildren())
         
-        # print("Condition product")
         if codes[0].getText() == '(':
                 return self.visit(codes[1])
         if codes[0].getText() == 'NOT':
@@ -240,8 +238,6 @@ class JailBreakLang(JailBreakLangVisitor):
             return not self.visit(codes[1])
         
         condition_value = self.visit(codes[0])
-        print("Codes array: ")
-        print([x.getText() for x in codes])
       
         for condition_product in codes[2:]:
             match codes[1].getText():
@@ -257,7 +253,6 @@ class JailBreakLang(JailBreakLangVisitor):
     # If statement, 
     def visitCommands(self, ctx):
         codes = list(ctx.getChildren())
-        
         if codes[0].getText() == 'IF':
             result = self.visit(codes[2])
             if result:
@@ -270,7 +265,6 @@ class JailBreakLang(JailBreakLangVisitor):
                     if codes[i].getText() == '}':
                         else_index = i
                         break
-            #print(else_index)
             if len(codes) > (else_index):
                 for i in range(else_index+3, len(codes)):
                     if codes[i].getText() == '}':
@@ -292,7 +286,6 @@ class JailBreakLang(JailBreakLangVisitor):
             
 
         if codes[0].getText() == 'WHILE':
-            print('WHILE')
             condition = self.visit(codes[2])
 
             while condition:
@@ -300,25 +293,55 @@ class JailBreakLang(JailBreakLangVisitor):
                     self.visit(code)
                 condition = self.visit(codes[2])
 
-            print(condition)
+
 
 
 
     def visitExpressions(self, ctx):
         codes = list(ctx.getChildren())
         for command in codes:
-            #print('COMMAND', command.getText())
             self.visit(command)
 
     def visitUse_fun(self, ctx):
-        # TODO:
         codes = list(ctx.getChildren())
-        print('USE FUN')
         print([x.getText() for x in codes])
+    
+        function_name = codes[1].getText()
+        print(self.functions[function_name])
+        type_arguments = self.functions[function_name]["type_arguments"]
+        callback = self.functions[function_name]["callback"]
+        variable_types = self.functions[function_name]["variable_types"]
 
+        arguments = [self.visit(argument) for argument in codes[3:-1] if argument.getText() != ',']
+        print(arguments)
+
+        # TODO: check if types match
+        if len(arguments) != len(type_arguments):
+            raise Exception("Number of arguments does not match")
+
+        fun_var = {}
+        fun_bool = {}
+
+        for i, key in enumerate(variable_types.keys()):
+            argument_type = 'INT' if type(arguments[i]) == type(1) else 'BOOLEAN'
+            # if argument_type != type_arguments[i]:
+            #     raise Exception("Argument type does not match")
+            if argument_type != variable_types[key]:
+                raise Exception("Argument type does not match")
+            if argument_type == 'INT':
+                fun_var[key] = arguments[i]
+            else:
+                fun_bool[key] = arguments[i]
+        print(fun_var)
+        print(fun_bool)
+            
+        self.function_vars.append(fun_var)
+        self.function_bools.append(fun_bool)
+        print(fun_var, fun_bool, "GOWNO")
+        callback()
+            
     def visitFunction_declaration(self, ctx):
         codes = list(ctx.getChildren())
-        # print([(key, ctx[key]) for key in ctx.keys()])
 
         # type fun a(INT a, INT b, INT c)
         #  0    1  2  4  5   7  8  9   10
@@ -326,6 +349,8 @@ class JailBreakLang(JailBreakLangVisitor):
         
         return_type = codes[0].getText()
         function_name = codes[2].getText()
+        type_arguments = []
+        variable_types = {}
 
         fun_var = {}
         fun_bool = {}
@@ -338,7 +363,14 @@ class JailBreakLang(JailBreakLangVisitor):
                 start = i+2
                 break
             
-            if curr_value in ['INT', 'BOOLEAN', ',']: 
+            # save type argument
+            if curr_value in ['INT', 'BOOLEAN']:
+                var_name = codes[i+1].getText()
+                variable_types[var_name] = curr_value
+                type_arguments.append(curr_value)
+                continue
+
+            if curr_value in [',']: 
                 continue
             # (value, type)
             if codes[i-1].getText() == 'BOOLEAN':
@@ -346,35 +378,20 @@ class JailBreakLang(JailBreakLangVisitor):
             else:
                 fun_var[curr_value] = 0
 
-
-        self.function_vars.append(fun_var)
-        self.function_bools.append(fun_bool)
-        for i in range(start, len(codes)):
-            curr_value = codes[i].getText()
-            if curr_value == '}':
-                break
-            x = self.visit(codes[i])
-            if x is not None and len(x) == 2 and x[0] == "RETURN":
-                # Check if the returned type matches function type
-                if x[1] == None and return_type == 'VOID':
-                    return x[1]
-                # if type(x[1]) == type(int)
-                elif type(x[1]) == type(1) and return_type == 'INT':
-                    return x[1]
-                elif type(x[1]) == type(True) and return_type == 'BOOLEAN':
-                    return x[1]
-                else:
-                    raise Exception("Function return type does not match")
-
-
         def callback():
-            self.function_vars.append(fun_var)
-            self.function_bools.append(fun_bool)
             for i in range(start, len(codes)):
+                # print(self.function_vars)
+                # print(self.function_bools)
                 curr_value = codes[i].getText()
+                print(curr_value)
                 if curr_value == '}':
                     break
                 x = self.visit(codes[i])
+                IF(a>5){RETURN
+                        gfsdfg}
+                print(i, x)
+                if x is not None and len(x) == 2 and x[0] == "RETURN":
+                    return x
                 if x is not None and len(x) == 2 and x[0] == "RETURN":
                     # Check if the returned type matches function type
                     if x[1] == None and return_type == 'VOID':
@@ -387,12 +404,19 @@ class JailBreakLang(JailBreakLangVisitor):
                     else:
                         raise Exception("Function return type does not match")
         #TODO: create self.functions in listener
-        #self.functions[function_name] = callback
-    
+        # self.functions[function_name] = callback    
+        self.functions[function_name] = {
+            "type_arguments": type_arguments,
+            "callback": callback,
+            "variable_types": variable_types
+            
+        }   
+
     def visitReturn(self, ctx):
         # It can return integer, boolean or None (for void type)
         codes = list(ctx.getChildren())
         # remove from stack
+        print("popping")
         self.function_vars.pop()
         self.function_bools.pop()
         

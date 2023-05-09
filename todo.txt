@@ -8,7 +8,7 @@ Don't allow creating other objects on player
 comparisons
 bool > int - crashes
 BOOLEAN a = 5 - crashes
-
+TRUE == TRUE == TRUE
 
 fix the variable name checker
 

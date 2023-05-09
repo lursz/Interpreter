@@ -2,7 +2,7 @@ grammar JailBreakLang;
 
 start: code+ EOF;
 
-code: objects | commands | function_declaration | variables;
+code: objects | commands | function_declaration | variables | use_fun;
 
 objects:
 	'WALL' '=' (expr | ID | RAND) ',' (expr | ID | RAND)
@@ -13,7 +13,7 @@ objects:
 	| 'MAP' '=' expr ',' expr 
     | 'PLAYER' '=' expr ',' expr 
     | 'EXIT' '=' expr ',' expr
-	| 'PRINT' '(' expr ')';
+	| 'PRINT' '(' (expr | condition) ')';
 
 
 // INT DECLARATION
@@ -34,8 +34,7 @@ factor: ID | INT | LPAREN expr RPAREN;
 commands:
 	'IF' '(' condition ')' '{' expressions* '}' ('ELSE' '{' expressions* '}')?
 	| 'WHILE' '(' condition ')' '{' expressions* '}'
-	| 'FOR' '(' ID 'IN' expr ')' '{' expressions* '}'
-	| use_fun;
+	| 'FOR' '(' ID 'IN' expr ')' '{' expressions* '}';
 	//FOR (x IN 10) {*code*}
 
 expressions: objects | commands | variables;
@@ -43,10 +42,7 @@ expressions: objects | commands | variables;
 // FUNCTIONS
 function_declaration:
 	fun_type 'FUN' ID '('( var_type ID (',' var_type ID)* )?')' '{' fun_expressions* '}';
-// VOID FUN asdf (*typ* *zmienna*, *typ* *zmienna*){
-// 	cholera wie code
-// 	RETURN COŚ
-// }
+
 
 fun_type: 'VOID'
 		  | 'INT'
@@ -65,7 +61,7 @@ fun_commands:
 	| 'FOR' '(' ID 'IN' expr ')' '{' fun_expressions* '}'
 	| use_fun;
 
-use_fun: 'USE' ID ('(' ID (',' ID)* ')')?;
+use_fun: 'USE' ID '('( (expr | condition) (',' (expr | condition))* )?')';
 
 // GUARD
 guard_extra_code: commands | guard_control;

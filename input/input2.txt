@@ -5,16 +5,21 @@ EXIT=3,2
 GATE=2,2
 KEY=1,4
 
-INT a = 1
-INT b = 1
+INT a = 2
+BOOLEAN b = TRUE
 
 VOID FUN asdf (INT a, BOOLEAN b){
-    PRINT (2342342)
+    IF (a>5){
+        RETURN
+    }
+    RETURN
+    PRINT(6969)
+    PRINT (a)
 	RETURN
+    
 }
 
-
-
+USE asdf (6, TRUE == FALSE)
 
 
 

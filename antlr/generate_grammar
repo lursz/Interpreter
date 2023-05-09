@@ -1,6 +1,6 @@
 #!/bin/bash
 
 antlr4 -Dlanguage=Python3 JailBreakLang.g4 -visitor
-echo "Grammar generated!"
+echo "End"
 
 # antlr4-parse JailBreakLang.g4 start -gui    
