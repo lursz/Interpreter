@@ -35,13 +35,14 @@ commands:
 	'IF' '(' condition ')' '{' expressions* '}' ('ELSE' '{' expressions* '}')?
 	| 'WHILE' '(' condition ')' '{' expressions* '}'
 	| 'FOR' '(' ID 'IN' expr ')' '{' expressions* '}';
+	
 	//FOR (x IN 10) {*code*}
 
-expressions: objects | commands | variables;
+expressions: objects | commands | variables | return | use_fun;
 
 // FUNCTIONS
 function_declaration:
-	fun_type 'FUN' ID '('( var_type ID (',' var_type ID)* )?')' '{' fun_expressions* '}';
+	fun_type 'FUN' ID '('( var_type ID (',' var_type ID)* )?')' '{' expressions* '}';
 
 
 fun_type: 'VOID'

@@ -1,4 +1,4 @@
-
+# START
 MAP=5,5
 PLAYER=2+2,2
 EXIT=3,2
@@ -7,20 +7,19 @@ KEY=1,4
 
 INT a = 2
 BOOLEAN b = TRUE
+INT c = 3
 
-VOID FUN asdf (INT a, BOOLEAN b){
-    IF (a>5){
-        RETURN
-    }
-    RETURN
-    PRINT(6969)
+INT FUN asdf (INT a, BOOLEAN b){
     PRINT (a)
-	RETURN
+    PRINT(b)
+    IF (a>5){
+        RETURN 6
+    }
+    WALL=a,1
+	USE asdf(a+1, TRUE)
     
 }
 
-USE asdf (6, TRUE == FALSE)
 
-
-
-
+#USE asdf(2, TRUE)
+chuj

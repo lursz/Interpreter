@@ -1,7 +1,6 @@
 from antlr4 import FileStream, CommonTokenStream, ParseTreeWalker, ParseTreeListener, Token
 from antlr4.error.ErrorListener import ErrorListener
 import sys
-# sys.path.append('antlr')
 from antlr.JailBreakLangLexer import JailBreakLangLexer
 from antlr.JailBreakLangParser import JailBreakLangParser
 from antlr.JailBreakLangVisitorCustom import JailBreakLang
