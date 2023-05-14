@@ -3,9 +3,10 @@ from antlr4.error.ErrorListener import ErrorListener
 import sys
 from antlr.JailBreakLangLexer import JailBreakLangLexer
 from antlr.JailBreakLangParser import JailBreakLangParser
-from antlr.JailBreakLangVisitorCustom import JailBreakLang
+# from antlr.JailBreakLangVisitorCustom import JailBreakLang
 from antlr.JailBreakLangListenerCustom import JailBreakLangListenerCustom, IDListenerLexer
 from antlr.JailBreakLangLexer import JailBreakLangLexer
+from antlr.visitors.JailBreakLangCustomVisitor import JailBreakLangCustomVisitor
 
 import warnings
 
@@ -63,5 +64,6 @@ find_ids()
 
 # Actual compiling
 lexer = JailBreakLangLexer(input_stream)
-visitor = JailBreakLang()
+visitor = JailBreakLangCustomVisitor()
+# visitor = JailBreakLang()
 visitor.visit(tree)

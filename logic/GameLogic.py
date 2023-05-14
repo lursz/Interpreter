@@ -11,7 +11,7 @@ class Gamelogic:
         
         
     def winGame(self):
-        print("DAMN, YOU ARE THE GREATEST STUDENT TO HAVE EVER EXISTED!!!!")
+        print("Congratulations! You won the game!")
 
     def startGame(self):
         while self.game.is_alive:

@@ -8,18 +8,17 @@ KEY=1,4
 INT a = 2
 BOOLEAN b = TRUE
 INT c = 3
+BOOLEAN d = FALSE
 
-INT FUN asdf (INT a, BOOLEAN b){
+INT FUN asdf (INT a, INT b, BOOLEAN b){
     PRINT (a)
     PRINT(b)
-    IF (a>5){
+    IF (a>4){
         RETURN 6
     }
-    WALL=a,1
-	USE asdf(a+1, TRUE)
-    
+    WALL=a,b
+	USE asdf(a+1, b, TRUE)
 }
 
 
-#USE asdf(2, TRUE)
-chuj
+USE asdf(2, 1, TRUE)

@@ -8,3 +8,14 @@ Don't allow creating other objects on player
 VVVVVVVVVVVVVVVVVVVVVVVVV
 fix the variable name checker
 
+
+antlr
+display
+board (logic)
+interpreter
+	function mappers
+	types
+	tests
+	visitors
+	
+	

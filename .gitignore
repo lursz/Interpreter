@@ -1,5 +1,8 @@
 __pycache__/
 /antlr/__pycache__/
 /logic/__pycache__/
+/antlr/visitors/__pycache__/
 .vscode/
 .venv/
+.ruff_cache/
+.idea/
