@@ -1,9 +1,8 @@
 # START
-MAP=10,10
-PLAYER=2+2*2,2
+MAP=5,5
+PLAYER=2+2,2
 EXIT=3,2
 GATE=2,2
-
 KEY=1,4
 
 INT a = 2
@@ -11,10 +10,11 @@ BOOLEAN b = TRUE
 INT c = 3
 BOOLEAN d = FALSE
 
-
 INT FUN wallprt (INT a, INT b, BOOLEAN c){
     PRINT (a)
     PRINT(b)
+    PRINT(c)
+    PRINT(c AND TRUE)
     IF (a>4){
         RETURN 6
     }

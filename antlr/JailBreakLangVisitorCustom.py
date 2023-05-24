@@ -12,7 +12,7 @@
 
 # class JailBreakLang(JailBreakLangVisitor):
 #     # reducer(akcja: string, value: object):
-#     #     if akcja === 'CHUJ_CI_W_DUPE':
+#     #     if akcja === 'a':
 #     #         return {
 #     #             ...variables,
 #     #             ...objekt

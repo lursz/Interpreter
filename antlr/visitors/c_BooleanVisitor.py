@@ -33,8 +33,9 @@ class BooleanVisitor(VariableVisitor):
             return not self.visit(codes[1])
         
         condition_value = self.visit(codes[0])
-
+        #print(condition_value)
         for condition_product in codes[2::2]:
+            #print("#", codes[0].getText(), codes[1].getText(), codes[2].getText())
             match codes[1].getText():
                 case "AND":
                     condition_value = condition_value and self.visit(condition_product)

@@ -17,8 +17,6 @@ class FunctionsVisitor(BooleanVisitor):
         for command in codes:
             self.visit(command)
 
-    def chuj(self, ctx) -> None:
-        print("chuj")
     
     def visitUse_fun(self, ctx) -> None:
         if self.returnEncountered:
