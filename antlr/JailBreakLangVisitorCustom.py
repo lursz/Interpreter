@@ -12,7 +12,6 @@ from antlr.JailBreakLangVisitor import JailBreakLangVisitor
 
 class JailBreakLang(JailBreakLangVisitor):
 
-    
     def __init__(self):
         self.game = GameObjects.GameObjects()
         # Global variables
@@ -25,75 +24,6 @@ class JailBreakLang(JailBreakLangVisitor):
         self.functions = {}
         self.returnEncountered = False
         self.returnValue = None
-        
-    def getVariable(self, variableName: str) -> int:
-        if len(self.function_vars) > 0 and variableName in self.function_vars[-1].keys():
-            return self.function_vars[-1][variableName]
-        return self.variables[variableName]
-
-    def getBoolean(self, variableName: str) -> (bool | None):
-        if len(self.function_bools) > 0 and variableName in self.function_bools[-1].keys():
-            return self.function_bools[-1][variableName]
-        return self.booleans[variableName] if variableName in self.booleans.keys() else None
-    
-    def setVariable(self, variableName, value) -> None:
-        if len(self.function_vars) > 0 and variableName in self.function_vars[-1].keys():
-            self.function_vars[-1][variableName] = value
-        elif variableName in self.variables.keys():
-            self.variables[variableName] = value
-
-     # Declare new variable or redefine an existing one
-    def visitVariables(self, ctx) -> None:
-        if self.returnEncountered:
-            return
-        codes = list(ctx.getChildren())
-        
-        # mode 0 - declare new variable, mode 1 - redefine existing variable
-        mode = 0 if (codes[0].getText() in ['INT', 'BOOLEAN']) else 1
-        var_name = ""
-        
-        # Loop through each code in the list
-        for i, code in enumerate(codes):
-            if i == 1:
-                var_name = code.getText()
-            # Mode 0 - declare new variable
-            if mode == 0:
-                # If it's the second code block
-                if i == 1:
-                    # Check if the variable already exists. If yes, raise an error.
-                    if var_name in self.variables or var_name in self.booleans:
-                        raise Exception("Variable already exists")
-                    else:
-                        # If declaring INT - create a new variable in the integers dictionary
-                        # If declaring BOOLEAN - create a new variable in the booleans dictionary
-                        self.variables[var_name] = 0 if codes[0].getText() == "INT" else False
-                # If it's the fourth code block
-                elif i == 3:
-                    # If declaring INT - insert the actual value of int to the integers dictionary
-                    # If declaring BOOLEAN - insert the actual value of boolean to the booleans dictionary
-                    if codes[0].getText() == "INT":
-                        self.variables[var_name] = self.visit(code)
-                    else:
-                        self.booleans[var_name] = self.visit(code)
-            # Mode 1 - redefine existing variable   
-            else:
-                # If it's the first code block
-                if i == 0:
-                    # Check if the variable exists. If no, raise a warning.
-                    # Otherwise, set the variable name.
-                    if var_name not in self.variables and var_name not in self.booleans:
-                        raise Exception("Variable doesn't exist")
-                    else:
-                        var_name = var_name
-                # If it's the third code block
-                elif i == 2:
-                    # If redeclaring INT - set the new value in the integers dictionary
-                    # If redeclaring BOOLEAN - set the new value in the booleans dictionary
-                    if var_name in self.variables:
-                        self.variables[var_name] = self.visit(code)
-                    else:
-                        self.booleans[var_name] = self.visit(code)
-
 
 
     # Visit Start
@@ -184,6 +114,83 @@ class JailBreakLang(JailBreakLangVisitor):
                     expression = self.visitExpr(codes[2])
                 print(expression)
     
+    
+    # ---------------------------------------------------------------------------- #
+    #                                   Variables                                  #
+    # ---------------------------------------------------------------------------- #
+   
+
+    def getVariable(self, variableName: str) -> int:
+        if len(self.function_vars) > 0 and variableName in self.function_vars[-1].keys():
+            return self.function_vars[-1][variableName]
+        return self.variables[variableName]
+
+    def getBoolean(self, variableName: str) -> (bool | None):
+        if len(self.function_bools) > 0 and variableName in self.function_bools[-1].keys():
+            return self.function_bools[-1][variableName]
+        return self.booleans[variableName] if variableName in self.booleans.keys() else None
+    
+    def setVariable(self, variableName, value) -> None:
+        if len(self.function_vars) > 0 and variableName in self.function_vars[-1].keys():
+            self.function_vars[-1][variableName] = value
+        elif variableName in self.variables.keys():
+            self.variables[variableName] = value
+
+     # Declare new variable or redefine an existing one
+    def visitVariables(self, ctx) -> None:
+        if self.returnEncountered:
+            return
+        codes = list(ctx.getChildren())
+        
+        # mode 0 - declare new variable, mode 1 - redefine existing variable
+        mode = 0 if (codes[0].getText() in ['INT', 'BOOLEAN']) else 1
+        var_name = ""
+        
+        # Loop through each code in the list
+        for i, code in enumerate(codes):
+            if i == 1:
+                var_name = code.getText()
+            # Mode 0 - declare new variable
+            if mode == 0:
+                # If it's the second code block
+                if i == 1:
+                    # Check if the variable already exists. If yes, raise an error.
+                    if var_name in self.variables or var_name in self.booleans:
+                        raise Exception("Variable already exists")
+                    else:
+                        # If declaring INT - create a new variable in the integers dictionary
+                        # If declaring BOOLEAN - create a new variable in the booleans dictionary
+                        self.variables[var_name] = 0 if codes[0].getText() == "INT" else False
+                # If it's the fourth code block
+                elif i == 3:
+                    # If declaring INT - insert the actual value of int to the integers dictionary
+                    # If declaring BOOLEAN - insert the actual value of boolean to the booleans dictionary
+                    if codes[0].getText() == "INT":
+                        self.variables[var_name] = self.visit(code)
+                    else:
+                        self.booleans[var_name] = self.visit(code)
+            # Mode 1 - redefine existing variable   
+            else:
+                # If it's the first code block
+                if i == 0:
+                    # Check if the variable exists. If no, raise a warning.
+                    # Otherwise, set the variable name.
+                    if var_name not in self.variables and var_name not in self.booleans:
+                        raise Exception("Variable doesn't exist")
+                    else:
+                        var_name = var_name
+                # If it's the third code block
+                elif i == 2:
+                    # If redeclaring INT - set the new value in the integers dictionary
+                    # If redeclaring BOOLEAN - set the new value in the booleans dictionary
+                    if var_name in self.variables:
+                        self.variables[var_name] = self.visit(code)
+                    else:
+                        self.booleans[var_name] = self.visit(code)
+
+
+
+
 
     # Parse int from 'INT'
     def visitInt(self, ctx) -> int:
@@ -262,6 +269,12 @@ class JailBreakLang(JailBreakLangVisitor):
                     condition_value = condition_value != self.visit(condition_product)
         return condition_value
         
+
+    
+    # ---------------------------------------------------------------------------- #
+    #                              Boolean operations                              #
+    # ---------------------------------------------------------------------------- #
+    
     # If statement, 
     def visitCommands(self, ctx) -> None:
         if self.returnEncountered:
@@ -313,7 +326,11 @@ class JailBreakLang(JailBreakLangVisitor):
                     self.visit(code)
                 condition = self.visit(codes[2])
 
-
+    
+    # ---------------------------------------------------------------------------- #
+    #                                   Functions                                  #
+    # ---------------------------------------------------------------------------- #
+    
     def visitFun_commands(self, ctx) -> None:
         codes = list(ctx.getChildren())
         for i in codes:
