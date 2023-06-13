@@ -1,4 +1,5 @@
 from logic.GameObjects import GameObjects
+import os
 
 # ---------------------------------------------------------------------------- #
 #                                   GameLogic                                  #
@@ -7,6 +8,7 @@ class Gamelogic:
     def __init__(self, game_objects: GameObjects) -> None:
         self.game = game_objects
         self.round = 0
+        self.cleared = 0
         self.startGame()
         
         
@@ -32,6 +34,10 @@ class Gamelogic:
                     print("Wrong command!")
 
     def printMap(self):
+        if self.cleared == 1:
+            os.system('cls' if os.name == 'nt' else 'clear')
+        else:
+            self.cleared = 1
         #return
         num_rows = len(self.game.game_board)
         num_cols = len(self.game.game_board[0])
@@ -72,9 +78,9 @@ class Gamelogic:
 
         # Forbid movement into walls and out of map
         if x > len(self.game.game_board) - 1 or x < 0:
-            return
+            x = self.game.player_position['row']
         if y > len(self.game.game_board[0]) - 1 or y < 0:
-            return
+            y = self.game.player_position['col']
 
         # If player enters exit, instantly win the game
         # TODO: Currently also kills the player, maybe make it do something different?

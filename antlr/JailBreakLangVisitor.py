@@ -1,6 +1,6 @@
-# Generated from JailBreakLang.g4 by ANTLR 4.12.0
+# Generated from JailBreakLang.g4 by ANTLR 4.13.0
 from antlr4 import *
-if __name__ is not None and "." in __name__:
+if "." in __name__:
     from .JailBreakLangParser import JailBreakLangParser
 else:
     from JailBreakLangParser import JailBreakLangParser
@@ -21,6 +21,11 @@ class JailBreakLangVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by JailBreakLangParser#objects.
     def visitObjects(self, ctx:JailBreakLangParser.ObjectsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JailBreakLangParser#argument.
+    def visitArgument(self, ctx:JailBreakLangParser.ArgumentContext):
         return self.visitChildren(ctx)
 
 

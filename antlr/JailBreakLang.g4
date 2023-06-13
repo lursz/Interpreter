@@ -13,8 +13,10 @@ objects:
 	| 'MAP' '=' expr ',' expr 
     | 'PLAYER' '=' expr ',' expr 
     | 'EXIT' '=' expr ',' expr
-	| 'PRINT' '(' (expr | condition) ')';
+	| 'PRINT' '(' argument ')';
 
+argument: condition
+		  | expr;
 
 // INT DECLARATION
 variables: 'INT' ID '=' expr
@@ -71,7 +73,10 @@ guard_control:
 	'LEFT'
 	| 'RIGHT'
 	| 'UP'
-	| 'DOWN';
+	| 'DOWN'
+	| 'AUTO'
+	| 'RAND';
+
 
 // BOOLEANS
 value_comparison: expr (EQUALS | NOT_EQUALS | LESS_THAN | GREATER_THAN) expr;
@@ -85,15 +90,15 @@ booleanValue : 'TRUE'
 variable_value: ID;
 
 condition :                
-	| condition_product ('OR' condition)*
+	| condition_product (OR condition)*
 	;      
 
 condition_product : '(' condition ')'
-	| booleanValue ('AND' condition_product)*
+	| booleanValue (AND condition_product)*
 	| booleanValue (EQUALS condition_product)*
 	| booleanValue (NOT_EQUALS condition_product)*
-	| 'NOT' booleanValue
-	| 'NOT' '(' condition ')'
+	| NOT booleanValue
+	| NOT '(' condition ')'
 	;	
 
 RETURN: 'RETURN';
@@ -103,6 +108,9 @@ LESS_THAN : '<' ;
 GREATER_THAN : '>' ;
 LPAREN: '(';
 RPAREN: ')';
+AND: 'AND';
+NOT: 'NOT';
+OR: 'OR';
 MUL: '*';
 DIV: '/';
 ADD: '+';

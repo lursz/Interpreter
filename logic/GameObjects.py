@@ -11,6 +11,9 @@
 #                                  GameObjects                                 #
 # ---------------------------------------------------------------------------- #
 
+import random
+
+
 class GameObjects:
     def __init__(self) -> None:
         self.game_board = []
@@ -126,7 +129,7 @@ class GameObjects:
 
 
     def moveGuards(self, round):
-        for guard in self.guards:
+        for i, guard in enumerate(self.guards):
             # Indefinitely loop through the list of commands
             command = guard.list_of_commands[round % len(guard.list_of_commands)]
             
@@ -142,6 +145,32 @@ class GameObjects:
                     new_x -= 1
                 case "DOWN":
                     new_x += 1
+                case "AUTO":
+                    distance_x, distance_y = self.playerToGuardDistance(i)
+                    if distance_x < distance_y:
+                        if self.player_position['row'] < guard.guard_position['row']:
+                            new_x -= 1
+                        else:
+                            new_x += 1
+                    else:
+                        if self.player_position['col'] < guard.guard_position['col']:
+                            new_y -= 1
+                        else:
+                            new_y += 1
+        
+                case "RAND":
+                    # Randomly choose a direction
+                    random_value = random.randint(0, 3)
+                    if random_value == 0:
+                        new_x -= 1
+                    elif random_value == 1:
+                        new_x += 1
+                    elif random_value == 2:
+                        new_y -= 1
+                    elif random_value == 3:
+                        new_y += 1
+                    else:
+                        pass
 
             # Forbid movement into walls and out of map
             if new_x > len(self.game_board) - 1 or new_x < 0:
@@ -158,6 +187,12 @@ class GameObjects:
             guard.guard_position['row'] = new_x
             guard.guard_position['col'] = new_y
         
+    def playerToGuardDistance(self, i: int):
+        # print("Guard cords: X:", self.guards[0].guard_position['row'], " Y:", self.guards[0].guard_position['col'])
+        # print("Player cords: X:", self.player_position['row'], " Y:", self.player_position['col'])
+        distance_y = abs(self.player_position['row'] - self.guards[i].guard_position['row'])
+        distance_x = abs(self.player_position['col'] - self.guards[i].guard_position['col'])
+        return (distance_x, distance_y)
 
 
 

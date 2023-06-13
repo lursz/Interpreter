@@ -11,16 +11,19 @@ INT c = 3
 BOOLEAN d = FALSE
 
 INT FUN wallprt (INT a, INT b, BOOLEAN c){
-    PRINT (a)
-    PRINT(b)
-    PRINT(c)
-    PRINT(c AND TRUE)
+    PRINT(a)
+    PRINT(c OR a>4)
+    IF(c AND TRUE){
+        PRINT(77777)
+    }
     IF (a>4){
         RETURN 6
     }
+    
     WALL=a,b
 	USE wallprt(a+1, b, TRUE)
 }
 
-
-USE wallprt(2, 1, TRUE)
+PRINT(TRUE)
+PRINT(a)
+USE wallprt(2, 1, FALSE)
