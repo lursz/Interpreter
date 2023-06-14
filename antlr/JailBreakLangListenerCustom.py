@@ -110,8 +110,13 @@ class JailBreakLangListenerCustom(ParseTreeListener):
     # Enter a parse tree produced by JailBreakLangParser#function_declaration.
     def enterFunction_declaration(self, ctx:JailBreakLangParser.Function_declarationContext):
         if ctx.getChild(1).getText() == 'FUN':
-            new_var = ctx.getChild(2).getText()
-            self.declared_vars.add(new_var)
+            vars = list(ctx.getChildren())
+            for i in range(len(vars)):
+                if vars[i].getText() in ['INT', 'BOOLEAN'] and vars[i+1].getText() != 'FUN':
+                    self.declared_vars.add(vars[i+1].getText())
+                elif vars[i].getText() in ['INT', 'BOOLEAN', 'VOID'] and vars[i+1].getText() == 'FUN':
+                    self.declared_vars.add(vars[i+2].getText())
+                # self.declared_vars.add(new_var)
 
     # Exit a parse tree produced by JailBreakLangParser#function_declaration.
     def exitFunction_declaration(self, ctx:JailBreakLangParser.Function_declarationContext):

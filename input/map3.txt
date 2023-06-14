@@ -1,0 +1,18 @@
+MAP=10,10
+PLAYER=6,1
+EXIT=1,6
+
+
+
+
+INT TEST = 0
+
+INT FUN GenerateWalls (){
+}
+PRINT(TEST)
+USE GenerateWalls()
+PRINT(TEST)
+USE GenerateWalls()
+PRINT(TEST)
+USE GenerateWalls()
+

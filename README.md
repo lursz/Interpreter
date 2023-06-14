@@ -11,82 +11,97 @@ Install Python3 (ver >= 3.10.8), then install all dependencies from `requirement
 ```
 pip install requirements.txt
 ```
+Used libraries:
+```
+antlr4-python3-runtime
+antlr4-tools
+install-jdk
+numpy
+```
+
 
 __________________________________________
 ## Syntax
 
 ### Map
-* ``` MAP ```- size of the map
-* ``` PLAYER ```- starting position of the player
-* ``` EXIT ``` - position of the exit
+* ``` MAP = y, x```- size of the map
+* ``` PLAYER = y, x```- starting position of the player
+* ``` EXIT = y, x``` - position of the exit
 
 ### Objects
-* ``` WALL ``` - object representing a wall
-* ``` GUARD ``` - object representing a guard
-* ``` TRAP ``` - object representing a trap
-* ``` KEY ``` - object representing a key to unlock a gate
-* ``` GATE ``` - object representing a gate
+* ``` WALL = y, x``` - object representing a wall
+* ``` GUARD y, x, id {} ``` - object representing a guard
+* ``` TRAP = y, x``` - object representing a trap
+* ``` KEY = y, x``` - object representing a key to unlock a gate
+* ``` GATE = y, x``` - object representing a gate
 
+### Variables
+* ``` INT name = value``` - integer variable
+* ``` BOOLEAN name = value``` - boolean variable
 
 ### Control Instructions
-* ```IF(warunek){wyrażenia}``` - conditional instruction, will execute if the given condition is true
-* ```WHILE(warunek){wyrażenia}``` - loop executes as long as the given condition is true
-* ```FOR(int){wyrażenia}``` - loop that executes a specified number of times (a natural number greater than 0)
-* ```FUN nazwa{ciało}``` - function with the given name
-* ```nazwa``` - call a function with the given name
-* ```RANDOM(start, end)``` - returns a pseudorandom number within the given range (inclusive)
+* ```IF (condition) {code}``` - conditional instruction, will execute if the given condition is true
+* ```WHILE (condition) {code}``` - loop executes as long as the given condition is true
+* ```FOR (int) {code}``` - loop that executes a specified number of times (a natural number greater than 0)
+* ```<TYPE> FUN name (args) {code}``` - function with the given name
+* ```USE name (args)``` - call a function with the given name
 
 ### Guard Controls
-* ```DIRECTION``` - 0 oznacza do góry, 1 w prawo, 2 w dół, 3 w lewo, inne wartości są podmieniane na resztę z dzielenia przez 4
-* ```TURNLEFT``` - obróć strażnika w lewo (równoważne ze zmniejszeniem DIRECTION o 1)
-* ```TURNRIGHT``` - obróć strażnika w prawo (równoważne ze zwiększeniem DIRECTION o 1)
-* ```STEP``` - sprawia, że strażnik poruszy się do przodu o jedno pole
+* ```GUARD {<Place movement instructions here}``` 
+* ```LEFT, RIGHT, UP, DOWN``` - Move the guard in the given direction
+* ```AUTO``` - Guard will move in the direction of the player
+* ```RAND``` - Guard will move in a random direction
 
 ### Possible Conditions
-* ```IFWALL``` - true jeśli przed postacią jest ściana
-* ```IFGUARD``` - true jeśli przed postacią jest wróg
-* ```IFTRAP``` -  true jeśli przed postacią jest pułapka
-* ```IFGATE```- true jeśli brama wymaga klucza
-* ```NO``` - negacja
-* ```TRUE``` - zawsze zwraca true
-* ```FALSE``` - zawsze zwraca false
-* ```AND``` - spójnik logiczny 'i'
-* ```OR``` - spójnik logiczny 'lub'
-* ```(``` i ```)``` - wykorzystywane do nawiasowania warunków
+* ```NO``` - negation
+* ```TRUE``` - always returns true
+* ```FALSE``` - always returns false
+* ```==``` - comparison equality
+* ```!=``` - comparison inequality
+* ```AND``` - logical conjunction
+* ```OR``` - logical disjunction
+* ```(``` i ```)``` - parentheses
+
+### Movement
+* ``` wasd ```- during the game, moves the player around
 
 
-## Mapa
-Gotowa do gry mapa jest wynikiem kompilacji kodu. Odpowiednie symbole będą reprezentować poszczególne obiekty.
+## Code examples
+For code examples visit folder `/input`
+
+
+## Map
+A ready-to-play map is the result of compiling the code. Appropriate symbols will represent individual objects.
 ```
-, = ziemia
-# = ściana
-O = gracz
-8 = strażnik
-! = pułapka
-* = klucz
-G = brama
-E = wyjście
+  = unobstructed path
+# = WALL 
+O = PLAYER
+8 = GUARD
+! = TRAP
+* = KEY
+G = GATE
+E = EXIT
  ```
-Przykładowy plik z mapą:
+
+Example map:
 ```
-##########
-#O,,,,,,,#
-#,,,,,,,,#
-#,,,!,,,,#
-#,,,8,,,,#
-#,,,,!,,GE
-######,,,#
-#,,,,,,,,#
-#*,,,,,,,#
-##########
+┌───┬───┬───┬───┬───┬───┐
+│ 1 │   │   │   │ * │   │
+├───┼───┼───┼───┼───┼───┤
+│ 2 │ # │ G │   │   │   │
+├───┼───┼───┼───┼───┼───┤
+│ 3 │ # │ E │   │   │   │
+├───┼───┼───┼───┼───┼───┤
+│ 4 │ # │ O │   │   │   │
+├───┼───┼───┼───┼───┼───┤
+│ 5 │   │   │   │   │   │
+└───┴───┴───┴───┴───┴───┘
+      1   2   3   4   5 
 ```
 
 
 
-
-### Gramatyka
-
-
+## Grammar
 <details>
 <summary>ANTLR4</summary>
 </br> 
@@ -96,50 +111,119 @@ grammar JailBreakLang;
 
 start: code+ EOF;
 
-code: objects | commands | function_declaration;
+code: objects | commands | function_declaration | variables | use_fun;
 
 objects:
-	'WALL' '=' (INT | ID | RAND) ',' (INT | ID | RAND)
-	| 'TRAP' '=' (INT | ID | RAND) ',' (INT | ID | RAND)
-	| 'KEY' '=' (INT | ID) ',' (INT | ID)
-	| 'GATE' '=' (INT | ID) ',' (INT | ID)
-	| 'GUARD' '=' (INT | ID) ',' (INT | ID) ',' INT code* 'GUARD' INT '{' guard_extra_code* '}'
-	| 'MAP' '=' INT ',' INT 
-    | 'PLAYER' '=' INT ',' INT 
-    | 'EXIT' '=' INT ',' INT;
+	'WALL' '=' (expr | ID | RAND) ',' (expr | ID | RAND)
+	| 'TRAP' '=' (expr | ID | RAND) ',' (expr | ID | RAND)
+	| 'KEY' '=' (expr | ID) ',' (expr | ID)
+	| 'GATE' '=' (expr | ID) ',' (expr | ID)
+	| 'GUARD' '=' (expr | ID) ',' (expr | ID) ',' expr '{' guard_extra_code* '}'
+	| 'MAP' '=' expr ',' expr 
+    | 'PLAYER' '=' expr ',' expr 
+    | 'EXIT' '=' expr ',' expr
+	| 'PRINT' '(' argument ')';
 
+argument: condition
+		  | expr;
+
+// INT DECLARATION
+variables: 'INT' ID '=' expr
+		   | ID '=' expr
+		   | 'BOOLEAN' ID '=' condition;
+
+comparison: expr (EQUALS | NOT_EQUALS | LESS_THAN | GREATER_THAN) expr;
+
+expr: term ((ADD | SUB) term)*;
+
+term: factor ((MUL | DIV) factor)*;
+
+factor: ID | INT | LPAREN expr RPAREN;
+
+
+// COMMANDS
 commands:
-	'IF' '(' condition ')' '{' expressions* '}'
+	'IF' '(' condition ')' '{' expressions* '}' ('ELSE' '{' expressions* '}')?
 	| 'WHILE' '(' condition ')' '{' expressions* '}'
-	| 'FOR' '(' ID 'IN' INT ')' '{' expressions* '}'
-	| ID ('(' ID (',' ID)* ')')?;
+	| 'FOR' '(' ID 'IN' expr ')' '{' expressions* '}';
+	
+	//FOR (x IN 10) {*code*}
 
+expressions: objects | commands | variables | return | use_fun;
+
+// FUNCTIONS
 function_declaration:
-	'FUN' ID ('(' ID (',' ID)* ')')? '{' expressions* '}';
+	fun_type 'FUN' ID '('( var_type ID (',' var_type ID)* )?')' '{' expressions* '}';
 
-expressions: objects | commands;
 
+fun_type: 'VOID'
+		  | 'INT'
+		  | 'BOOLEAN';
+
+var_type: 'INT'
+		  | 'BOOLEAN';
+
+fun_expressions: objects | fun_commands | variables | return;
+
+return: RETURN (expr)?;
+
+fun_commands:
+	'IF' '(' condition ')' '{' fun_expressions* '}' ('ELSE' '{' fun_expressions* '}')?
+	| 'WHILE' '(' condition ')' '{' fun_expressions* '}'
+	| 'FOR' '(' ID 'IN' expr ')' '{' fun_expressions* '}'
+	| use_fun;
+
+use_fun: 'USE' ID '('( (expr | condition) (',' (expr | condition))* )?')';
+
+// GUARD
 guard_extra_code: commands | guard_control;
 
 guard_control:
-	'DIRECTION' '=' (INT | ID)
-	| 'TURNLEFT'
-	| 'TURNRIGHT'
-	| 'STEP';
+	'LEFT'
+	| 'RIGHT'
+	| 'UP'
+	| 'DOWN'
+	| 'AUTO'
+	| 'RAND';
 
-condition:
-	'IFWALL'
-	| 'IFDIRECTION' '=' (INT | ID)
-	| 'IFGUARD'
-	| 'IFTRAP'
-	| 'IFGATE'
-	| 'NO' condition
-	| 'TRUE'
+
+// BOOLEANS
+value_comparison: expr (EQUALS | NOT_EQUALS | LESS_THAN | GREATER_THAN) expr;
+
+booleanValue : 'TRUE'
 	| 'FALSE'
-	| condition 'AND' condition
-	| condition 'OR' condition
-	| '(' condition ')';
+	| value_comparison
+	| variable_value
+	;
 
+variable_value: ID;
+
+condition :                
+	| condition_product (OR condition)*
+	;      
+
+condition_product : '(' condition ')'
+	| booleanValue (AND condition_product)*
+	| booleanValue (EQUALS condition_product)*
+	| booleanValue (NOT_EQUALS condition_product)*
+	| NOT booleanValue
+	| NOT '(' condition ')'
+	;	
+
+RETURN: 'RETURN';
+EQUALS : '==' ;
+NOT_EQUALS : '!=' ;
+LESS_THAN : '<' ;
+GREATER_THAN : '>' ;
+LPAREN: '(';
+RPAREN: ')';
+AND: 'AND';
+NOT: 'NOT';
+OR: 'OR';
+MUL: '*';
+DIV: '/';
+ADD: '+';
+SUB: '-';
 COMMENT: '#' ~[\r\n]* -> skip;
 ID: [a-zA-Z][a-zA-Z0-9]*;
 RAND: 'RANDOM' '(' INT ',' INT ')';
@@ -148,85 +232,11 @@ WS: [ \t\n\r]+ -> skip;
 ```
 </details>
 
-## Przykłady kodu
 <details>
-<summary>#1</summary>
-</br>
+<summary>Grammar tree with an instance program</summary>
+</br> 
 
-```
-# na początku określamy wielkość mapy, podając najpierw współrzędną X, a potem Y
-MAP=5,5
-
-# następnie dodajemy gracza i wyjście
-PLAYER = 1,1
-EXIT=9,5
-
-# dopiero potem możemy dodawać inne obiekty
-WALL = 1,5
-WALL = 2,5
-WALL = 3,5
-WALL = 4,5
-WALL = 5,5
-WALL = 6,5
-
-# można ułatwić sobie ustawianie dużej ilości obiektów używając pętli
-
-# kod poniżej zrobi ściany dookoła mapy
-FOR(i IN 5)
-{
-    WALL = 0,i
-    WALL = 9,i
-    WALL = i,0
-    WALL = i,9
-}
-
-KEY = 2,8
-
-GATE = 8,5
-
-TRAP = 5,5
-TRAP = 3,4
-
-# strażnika deklarujemy przez podanie współrzędnej X, potem Y, następnie unikalnego id strażnika
-GUARD = 4,4,0
-
-# aby zadeklarować poruszanie się strażnika trzeba najpierw napisać słowo klucz GUARD, następnie id strażnika
-GUARD 0 
-{
-    # wykonaj dwa kroki do przodu, następnie zrób obrót w prawo
-    STEP
-    STEP
-    TURNRIGHT
-    
-    # jeżeli przed strażnikiem nie ma ściany, a brama została otwarta, zrób dodatkowy krok
-    IF(NO IFWALL AND NO IFGATE)
-    {
-        STEP
-    }
-    
-    # instrukcje te będą automatycznie zapętlane
-}
-# strażnik będzie się przemieszczał po każdym ruchu gracza
-
-# losowo poruszający się strażnik
-GUARD1 
-{
-    DIRECTION = RANDOM(0, 3)
-    IF (NO WALL AND NO GATE)
-    {
-      STEP
-    }
-}
-```
-
-### Drzewo wyprowadzenia kodu:
-
+## Grammar tree generated from instance program:
 ![pobrany plik](https://user-images.githubusercontent.com/92331353/226716062-dc7a5c32-20d7-4dde-8b61-28fca4b69470.svg)
 </details>
-
-
-
-## Interakcja
-* ``` wasd ```- przechodzi o jedno pole
-
 

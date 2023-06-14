@@ -20,8 +20,7 @@ class IDVisitor(ParseTreeListener):
     def visitTerminal(self, node):
         if node.symbol.type == JailBreakLangLexer.ID:
             if node.symbol.text not in set_of_vars:
-                warnings.warn("Cannot use undeclared variable")
-                exit()
+                raise SyntaxError("Cannot use undeclared variable:", node.symbol.text)
                 
         #self.ids.add(node.symbol.text)
 

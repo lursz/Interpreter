@@ -1,0 +1,49 @@
+MAP=10,10
+PLAYER=6,1
+EXIT=1,6
+
+
+
+GUARD=3,3,0
+{
+    AUTO
+}
+
+GUARD=6,3,1
+{
+    RAND
+}
+
+
+VOID FUN GenerateWalls (INT a, INT b, INT l, BOOLEAN horizontal){
+    INT i = 0
+    l = l-1
+    IF(horizontal == TRUE)
+    {
+        FOR (i IN l)
+        {
+            WALL = a, b+i
+        }
+    }
+    ELSE
+    {
+        FOR (i IN l)
+        {
+            WALL = a+i, b
+        }
+    }
+}
+
+VOID FUN wallprt (INT a, INT b, BOOLEAN c){
+    IF (a>4){
+        RETURN
+    }
+    WALL=a,b
+	USE wallprt(a+1, b, TRUE)
+}
+
+USE wallprt(2, 1, TRUE)
+USE GenerateWalls(2, 5, 3, TRUE)
+USE GenerateWalls(6, 2, 3, FALSE)
+USE GenerateWalls(5, 8, 1, TRUE)
+

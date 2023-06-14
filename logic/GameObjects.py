@@ -56,7 +56,7 @@ class GameObjects:
             exit()
         
         for _ in range(height):
-            self.game_board.append([","] * width)
+            self.game_board.append([" "] * width)
 
         self.is_map_defined = True
         return self.game_board
