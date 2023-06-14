@@ -4,7 +4,7 @@ The JailBreakLang language enables a programmer to create simple game boards, co
 
 The language aims to introduce users to the intricacies of programming in an enjoyable manner, while also allowing more creative developers to showcase their skills in level creation.
 
-Once completed, the game board can be immediately tested and completed.
+Once completed, the game board can be immediately tested and played on.
 
 ## Run
 Install Python3 (ver >= 3.10.8), then install all dependencies from `requirements.txt`
